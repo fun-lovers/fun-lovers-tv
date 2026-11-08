@@ -1,0 +1,163 @@
+{
+  "name": "TVBox 可用源索引",
+  "version": 1,
+  "updateTime": "2026-11-08",
+  "description": "31 条线路，全部于 2026-11-08 实测 HTTP 200 且可正常解析为 TVBox 配置。本文件用于 TVBox / 影视仓 / OK影视 的「多仓」配置地址。",
+  "urls": [
+    {
+      "name": "01 高天流云 js版（298站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/js.json",
+      "homepage": "https://github.com/gaotianliuyun/gao"
+    },
+    {
+      "name": "02 刘备 m.json（234站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/liu673cn/box/main/m.json",
+      "homepage": "https://github.com/liu673cn/box"
+    },
+    {
+      "name": "03 哈吉米（171站）",
+      "url": "https://17264.kstore.space/哈基米.png",
+      "homepage": "https://17264.kstore.space"
+    },
+    {
+      "name": "04 TVBox.org 官方聚合（160站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/TVboxorg/TVbox/main/dist/official.json",
+      "homepage": "https://www.tvbox.org/"
+    },
+    {
+      "name": "05 心魔（151站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/yw88075/tvbox/main/yw.json",
+      "homepage": "https://github.com/yw88075/tvbox"
+    },
+    {
+      "name": "06 幸福年年（123站）",
+      "url": "http://150.158.52.248/tgyg/bbm.json",
+      "homepage": ""
+    },
+    {
+      "name": "07 摸鱼（104站）",
+      "url": "https://6800.kstore.vip/fish.json",
+      "homepage": "https://6800.kstore.vip"
+    },
+    {
+      "name": "08 clun（101站）",
+      "url": "https://clun.top/box.json",
+      "homepage": "https://clun.top"
+    },
+    {
+      "name": "09 王二小（100站）",
+      "url": "https://9280.kstore.vip/aiwex.json",
+      "homepage": "https://9280.kstore.vip"
+    },
+    {
+      "name": "10 王二小 备用（100站）",
+      "url": "https://9280.kstore.space/aiwex.json",
+      "homepage": ""
+    },
+    {
+      "name": "11 嗷呜（80站）",
+      "url": "https://9763.kstore.vip/aowu.json",
+      "homepage": "https://9763.kstore.vip"
+    },
+    {
+      "name": "12 Lightconer 聚合（78站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/Lightconer/tvbox-source/main/tvbox.json",
+      "homepage": "https://github.com/Lightconer/tvbox-source"
+    },
+    {
+      "name": "13 星微VIP（66站）",
+      "url": "https://7337.kstore.vip/xw/测试勿传",
+      "homepage": "https://7337.kstore.vip"
+    },
+    {
+      "name": "14 健康家用（64站）",
+      "url": "https://gitlab.com/noimank/tvbox/-/raw/main/tvbox1.json",
+      "homepage": "https://gitlab.com/noimank/tvbox"
+    },
+    {
+      "name": "15 凯弟1线（63站）",
+      "url": "https://jihulab.com/jyqhkd1/kai/-/raw/main/机缘巧盒凯弟.json",
+      "homepage": "https://jihulab.com/jyqhkd1/kai"
+    },
+    {
+      "name": "16 小马（62站）",
+      "url": "https://szyyds.cn/tv/x.json",
+      "homepage": "https://szyyds.cn"
+    },
+    {
+      "name": "17 香雅情（55站）",
+      "url": "https://play.iptv365.org/香雅情/api.json",
+      "homepage": "https://play.iptv365.org"
+    },
+    {
+      "name": "18 聚玩（54站）",
+      "url": "http://xhztv.top/xhz",
+      "homepage": "http://xhztv.top"
+    },
+    {
+      "name": "19 高天流云 XYQ版（49站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/XYQ.json",
+      "homepage": ""
+    },
+    {
+      "name": "20 香雅情 XYQ（48站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json",
+      "homepage": "https://github.com/xyq254245/xyqonlinerule"
+    },
+    {
+      "name": "21 真六（47站）",
+      "url": "https://cccimg.com/down.php/7d1f30263b3f2bf3deda2d7faeef4844.zhen6",
+      "homepage": "https://cccimg.com"
+    },
+    {
+      "name": "22 挺好（46站）",
+      "url": "https://ztha.top/TVBox/thdjk.json",
+      "homepage": "https://ztha.top"
+    },
+    {
+      "name": "23 小米（45站）",
+      "url": "https://gh-proxy.org/raw.githubusercontent.com/ggrrttyyiii/CatVodSpider/refs/heads/main/json/demo.json",
+      "homepage": "https://github.com/ggrrttyyiii/CatVodSpider"
+    },
+    {
+      "name": "24 夏夏影视（43站）",
+      "url": "https://11405.kstore.space/xiaye/qk4k.json",
+      "homepage": "https://11405.kstore.space"
+    },
+    {
+      "name": "25 高天流云 0827版（33站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/0827.json",
+      "homepage": ""
+    },
+    {
+      "name": "26 凯弟3线（28站）",
+      "url": "https://jihulab.com/jyqhkd/kd/-/raw/main/kai.json",
+      "homepage": "https://jihulab.com/jyqhkd/kd"
+    },
+    {
+      "name": "27 动漫（27站）",
+      "url": "https://www.yingm.cc/dm/dm.json",
+      "homepage": "https://www.yingm.cc"
+    },
+    {
+      "name": "28 凯弟2线（25站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/box",
+      "homepage": "https://github.com/zhoujck/config"
+    },
+    {
+      "name": "29 俊宇（24站）",
+      "url": "http://home.jundie.top:81/top98.json",
+      "homepage": "http://home.jundie.top:81"
+    },
+    {
+      "name": "30 老张（19站）",
+      "url": "https://zhangqun1818.serv00.net/zq/api.json",
+      "homepage": "https://zhangqun1818.serv00.net"
+    },
+    {
+      "name": "31 jiusanzhou 聚合（8站）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/jiusanzhou/tvbox/main/tvbox.json",
+      "homepage": "https://github.com/jiusanzhou/tvbox"
+    }
+  ]
+}
