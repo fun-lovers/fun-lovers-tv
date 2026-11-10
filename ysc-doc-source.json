@@ -1,171 +1,14 @@
 {
   "name": "TVBox 可用源索引",
-  "version": 2,
+  "version": 3,
   "updateTime": "2026-11-10",
-  "description": "原有 31 条 TVBox 多仓配置线路（2026-11-08 实测 HTTP 200）；新增 iptvSources 分组，收录经核验的国内合法直播渠道、自建工具与开源索引。新增部分仅包含官方公开入口与开源项目，不含任何第三方转播流、付费频道破解或境外频道聚合。本文件用于 TVBox / 影视仓 / OK影视 的「多仓」配置地址。",
+  "description": "按最近15天GitHub提交活跃度筛选的TVBox仓库索引；活跃不代表直播授权，未经逐条授权审核的第三方直播列表不自动导入。",
   "complianceNote": {
-    "scope": "新增内容限于：① 电视台/平台官方公开直播入口；② 开源自建工具与台标等辅助数据；③ 国际开源社区维护的公开频道索引（仅作技术参考，内容需自行甄别）。",
-    "excluded": "未授权转播的央视/卫视 m3u8、私人 IP 转播服务、付费频道破解、港澳台及境外频道聚合、含宗教/敏感内容的列表。实测发现网络流传的「国内可用 IPTV 源」多属此类，故未纳入。",
-    "legal": "请通过运营商 IPTV、有线电视或各平台官方客户端观看；分发或使用未授权直播源可能侵犯广播组织权与著作权，并违反《专网及定向传播视听节目服务管理规定》。",
-    "verifiedAt": "2026-11-10 15:14 UTC+8"
+    "scope": "仅将最近15天内有提交的仓库列为活跃候选；候选配置仍需逐条核验来源授权、频道权利和实际播放。",
+    "excluded": "未授权转播、付费频道破解、私人/内网IP及版权状态不明的第三方直播流不导入TVBox配置。",
+    "legal": "公开可访问或仓库活跃不等于获得广播转播授权。"
   },
-  "urls": [
-    {
-      "name": "01 高天流云 js版（298站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/js.json",
-      "homepage": "https://github.com/gaotianliuyun/gao"
-    },
-    {
-      "name": "02 刘备 m.json（234站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liu673cn/box/main/m.json",
-      "homepage": "https://github.com/liu673cn/box"
-    },
-    {
-      "name": "03 哈吉米（171站）",
-      "url": "https://17264.kstore.space/哈基米.png",
-      "homepage": "https://17264.kstore.space"
-    },
-    {
-      "name": "04 TVBox.org 官方聚合（160站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/TVboxorg/TVbox/main/dist/official.json",
-      "homepage": "https://www.tvbox.org/"
-    },
-    {
-      "name": "05 心魔（151站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/yw88075/tvbox/main/yw.json",
-      "homepage": "https://github.com/yw88075/tvbox"
-    },
-    {
-      "name": "06 幸福年年（123站）",
-      "url": "http://150.158.52.248/tgyg/bbm.json",
-      "homepage": ""
-    },
-    {
-      "name": "07 摸鱼（104站）",
-      "url": "https://6800.kstore.vip/fish.json",
-      "homepage": "https://6800.kstore.vip"
-    },
-    {
-      "name": "08 clun（101站）",
-      "url": "https://clun.top/box.json",
-      "homepage": "https://clun.top"
-    },
-    {
-      "name": "09 王二小（100站）",
-      "url": "https://9280.kstore.vip/aiwex.json",
-      "homepage": "https://9280.kstore.vip"
-    },
-    {
-      "name": "10 王二小 备用（100站）",
-      "url": "https://9280.kstore.space/aiwex.json",
-      "homepage": ""
-    },
-    {
-      "name": "11 嗷呜（80站）",
-      "url": "https://9763.kstore.vip/aowu.json",
-      "homepage": "https://9763.kstore.vip"
-    },
-    {
-      "name": "12 Lightconer 聚合（78站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/Lightconer/tvbox-source/main/tvbox.json",
-      "homepage": "https://github.com/Lightconer/tvbox-source"
-    },
-    {
-      "name": "13 星微VIP（66站）",
-      "url": "https://7337.kstore.vip/xw/测试勿传",
-      "homepage": "https://7337.kstore.vip"
-    },
-    {
-      "name": "14 健康家用（64站）",
-      "url": "https://gitlab.com/noimank/tvbox/-/raw/main/tvbox1.json",
-      "homepage": "https://gitlab.com/noimank/tvbox"
-    },
-    {
-      "name": "15 凯弟1线（63站）",
-      "url": "https://jihulab.com/jyqhkd1/kai/-/raw/main/机缘巧盒凯弟.json",
-      "homepage": "https://jihulab.com/jyqhkd1/kai"
-    },
-    {
-      "name": "16 小马（62站）",
-      "url": "https://szyyds.cn/tv/x.json",
-      "homepage": "https://szyyds.cn"
-    },
-    {
-      "name": "17 香雅情（55站）",
-      "url": "https://play.iptv365.org/香雅情/api.json",
-      "homepage": "https://play.iptv365.org"
-    },
-    {
-      "name": "18 聚玩（54站）",
-      "url": "http://xhztv.top/xhz",
-      "homepage": "http://xhztv.top"
-    },
-    {
-      "name": "19 高天流云 XYQ版（49站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/XYQ.json",
-      "homepage": ""
-    },
-    {
-      "name": "20 香雅情 XYQ（48站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json",
-      "homepage": "https://github.com/xyq254245/xyqonlinerule"
-    },
-    {
-      "name": "21 真六（47站）",
-      "url": "https://cccimg.com/down.php/7d1f30263b3f2bf3deda2d7faeef4844.zhen6",
-      "homepage": "https://cccimg.com"
-    },
-    {
-      "name": "22 挺好（46站）",
-      "url": "https://ztha.top/TVBox/thdjk.json",
-      "homepage": "https://ztha.top"
-    },
-    {
-      "name": "23 小米（45站）",
-      "url": "https://gh-proxy.org/raw.githubusercontent.com/ggrrttyyiii/CatVodSpider/refs/heads/main/json/demo.json",
-      "homepage": "https://github.com/ggrrttyyiii/CatVodSpider"
-    },
-    {
-      "name": "24 夏夏影视（43站）",
-      "url": "https://11405.kstore.space/xiaye/qk4k.json",
-      "homepage": "https://11405.kstore.space"
-    },
-    {
-      "name": "25 高天流云 0827版（33站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/0827.json",
-      "homepage": ""
-    },
-    {
-      "name": "26 凯弟3线（28站）",
-      "url": "https://jihulab.com/jyqhkd/kd/-/raw/main/kai.json",
-      "homepage": "https://jihulab.com/jyqhkd/kd"
-    },
-    {
-      "name": "27 动漫（27站）",
-      "url": "https://www.yingm.cc/dm/dm.json",
-      "homepage": "https://www.yingm.cc"
-    },
-    {
-      "name": "28 凯弟2线（25站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/box",
-      "homepage": "https://github.com/zhoujck/config"
-    },
-    {
-      "name": "29 俊宇（24站）",
-      "url": "http://home.jundie.top:81/top98.json",
-      "homepage": "http://home.jundie.top:81"
-    },
-    {
-      "name": "30 老张（19站）",
-      "url": "https://zhangqun1818.serv00.net/zq/api.json",
-      "homepage": "https://zhangqun1818.serv00.net"
-    },
-    {
-      "name": "31 jiusanzhou 聚合（8站）",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/jiusanzhou/tvbox/main/tvbox.json",
-      "homepage": "https://github.com/jiusanzhou/tvbox"
-    }
-  ],
+  "urls": [],
   "iptvSources": [
     {
       "name": "01 央视网 · 直播大厅（官方）",
@@ -242,6 +85,86 @@
       "homepage": "https://github.com/fanmingming/live",
       "verified": "2026-11-10 HTTP 200",
       "note": "开源频道台标/EPG 辅助资源，配合自建 m3u 使用；不包含任何直播流。"
+    }
+  ],
+  "activeRepositories": [
+    {
+      "repository": "TVboxorg/TVbox",
+      "latestCommit": "2026-11-10T01:04:18Z",
+      "sha": "382a1996b7300d4017bca8ebebd51d0c8bd8a782",
+      "configPath": "dist/official.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置包含多条第三方直播列表、私人IP/HTTP地址及版权状态不明的转播入口"
+    },
+    {
+      "repository": "Lightconer/tvbox-source",
+      "latestCommit": "2026-11-10T01:16:12Z",
+      "sha": "dcfb5a6d2c05bb7f6555258f43c4c291fe0f10d8",
+      "configPath": "tvbox.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置含第三方聚合直播、付费频道分组及未逐条核验授权的播放列表"
+    },
+    {
+      "repository": "ggrrttyyiii/CatVodSpider",
+      "latestCommit": "2026-11-09T06:03:03Z",
+      "sha": "c7ae49ea9a6e1682a2ca4a94897a68cf5e25e5f8",
+      "configPath": "json/demo.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置含外部直播列表，未能确认该列表的广播授权和持续可用性"
+    },
+    {
+      "repository": "zhoujck/config",
+      "latestCommit": "2026-11-10T06:06:26Z",
+      "sha": "69b89112f5adacf55d13fd5bce2f9ad17c5bafbd",
+      "configPath": "box",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置含运营商内网/相对路径源及第三方直播地址，不适合直接导入公共配置"
+    },
+    {
+      "repository": "jiusanzhou/tvbox",
+      "latestCommit": "2026-11-10T13:05:51Z",
+      "sha": "a7c29eaea2cf244964c8ad41f2e6ea2d74f7820f",
+      "configPath": "tvbox.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "虽有自动探活提交，但其直播配置含第三方聚合列表，未逐条确认版权和官方授权"
+    },
+    {
+      "repository": "iptv-org/iptv",
+      "latestCommit": "2026-11-10T00:10:46Z",
+      "sha": "a5111755cc33abdd37b5f8fb68958b06908d9d48",
+      "configPath": "streams/cn.m3u",
+      "decision": "reference-only",
+      "reason": "开源索引并非内容授权证明；仅作发现线索，不批量导入播放列表"
+    },
+    {
+      "repository": "fanmingming/live",
+      "latestCommit": "2026-11-10T08:23:05Z",
+      "sha": "09c002984ceb651b09ac991d951fe6e05e70c513",
+      "configPath": "EPG/logo assets",
+      "decision": "asset-only",
+      "reason": "台标与EPG辅助资源，不提供直播流"
+    }
+  ],
+  "inactiveRepositories": [
+    {
+      "repository": "gaotianliuyun/gao",
+      "latestCommit": "2024-11-17T14:05:01Z"
+    },
+    {
+      "repository": "liu673cn/box",
+      "latestCommit": "2026-08-16T02:08:02Z"
+    },
+    {
+      "repository": "yw88075/tvbox",
+      "latestCommit": "2025-04-01T05:06:19Z"
+    },
+    {
+      "repository": "xyq254245/xyqonlinerule",
+      "latestCommit": "2026-06-11T02:30:34Z"
+    },
+    {
+      "repository": "Guovin/iptv-api",
+      "latestCommit": "2026-10-14T01:21:34Z"
     }
   ]
 }
