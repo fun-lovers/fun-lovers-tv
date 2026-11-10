@@ -1,0 +1,43 @@
+name: VOD source health check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'ysc-doc-source.json'
+      - 'scripts/check_vod_sources.py'
+      - '.github/workflows/vod-health-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check-vod-apis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check catalog, detail and sample play URL fields
+        run: >-
+          python scripts/check_vod_sources.py
+          --json-out reports/vod-health.json
+          --markdown-out reports/vod-health.md
+          --summary "$GITHUB_STEP_SUMMARY"
+      - name: Upload health report
+        uses: actions/upload-artifact@v4
+        with:
+          name: vod-source-health-${{ github.run_number }}
+          path: |
+            reports/vod-health.json
+            reports/vod-health.md
+          if-no-files-found: error
+          retention-days: 30
