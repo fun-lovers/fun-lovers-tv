@@ -279,6 +279,7 @@ def main() -> int:
     parser.add_argument("--json-out", default="reports/vod-health.json")
     parser.add_argument("--markdown-out", default="reports/vod-health.md")
     parser.add_argument("--summary", default=None, help="optional GitHub Actions step summary file")
+    parser.add_argument("--fail-on-unavailable", action="store_true", help="return a non-zero status if any configured API check fails")
     args = parser.parse_args()
 
     index = json.loads(Path(args.index).read_text(encoding="utf-8"))
@@ -317,7 +318,8 @@ def main() -> int:
     if args.summary:
         Path(args.summary).write_text(md_text, encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False))
-    return 0
+    has_failures = bool(config_errors) or any(item.get("list_status") != "ok" or item.get("detail_status") != "ok" or item.get("play_url_status") != "http_url_found" for item in results)
+    return 2 if args.fail_on_unavailable and has_failures else 0
 
 
 if __name__ == "__main__":
