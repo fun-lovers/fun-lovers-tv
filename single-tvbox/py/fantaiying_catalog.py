@@ -82,7 +82,7 @@ class Spider:
                 continue
         return {"list": cards}
 
-    def _cards(self, data):
+    def _cards(self, data, site_key=None):
         if isinstance(data, list):
             rows = data
         elif isinstance(data, dict):
@@ -100,7 +100,7 @@ class Spider:
             if ident is None or not name:
                 continue
             result.append({
-                "vod_id": str(ident),
+                "vod_id": (str(site_key) + "@@" + str(ident)) if site_key else str(ident),
                 "vod_name": str(name),
                 "vod_pic": str(item.get("vod_pic") or item.get("pic") or ""),
                 "vod_remarks": str(item.get("vod_remarks") or item.get("remarks") or ""),
@@ -115,7 +115,7 @@ class Spider:
             return {"list": [], "page": int(pg), "pagecount": 1, "limit": 20, "total": 0}
         try:
             data = self._request_json(site["api"], {"ac": "videolist", "pg": max(1, int(pg))})
-            cards = self._cards(data)
+            cards = self._cards(data, str(tid))
             total = 0
             if isinstance(data, dict):
                 total = int(data.get("total") or data.get("pagecount") or 0)
@@ -131,7 +131,7 @@ class Spider:
                 data = self._request_json(site["api"], {
                     "ac": "videolist", "wd": str(key), "pg": max(1, int(pg))
                 })
-                cards.extend(self._cards(data))
+                cards.extend(self._cards(data, str(site.get("key") or site.get("name") or "")))
             except Exception:
                 continue
         return {"list": cards, "page": int(pg), "pagecount": 1, "limit": len(cards), "total": len(cards)}
