@@ -1,0 +1,110 @@
+{
+  "name": "TVBox source activity and compliance audit",
+  "updatedAt": "2026-11-10",
+  "activityWindow": {
+    "from": "2026-10-26T13:36:00Z",
+    "to": "2026-11-10T13:36:00Z",
+    "days": 15,
+    "basis": "GitHub latest commit timestamp"
+  },
+  "summary": {
+    "recentlyActiveRepositories": 7,
+    "tvboxConfigRepositoriesReviewed": 5,
+    "directlyImportedThirdPartyRepositories": 0,
+    "officialLiveChannels": 6
+  },
+  "activeRepositories": [
+    {
+      "repository": "TVboxorg/TVbox",
+      "latestCommit": "2026-11-10T01:04:18Z",
+      "sha": "382a1996b7300d4017bca8ebebd51d0c8bd8a782",
+      "configPath": "dist/official.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置包含多条第三方直播列表、私人IP/HTTP地址及版权状态不明的转播入口"
+    },
+    {
+      "repository": "Lightconer/tvbox-source",
+      "latestCommit": "2026-11-10T01:16:12Z",
+      "sha": "dcfb5a6d2c05bb7f6555258f43c4c291fe0f10d8",
+      "configPath": "tvbox.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置含第三方聚合直播、付费频道分组及未逐条核验授权的播放列表"
+    },
+    {
+      "repository": "ggrrttyyiii/CatVodSpider",
+      "latestCommit": "2026-11-09T06:03:03Z",
+      "sha": "c7ae49ea9a6e1682a2ca4a94897a68cf5e25e5f8",
+      "configPath": "json/demo.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置含外部直播列表，未能确认该列表的广播授权和持续可用性"
+    },
+    {
+      "repository": "zhoujck/config",
+      "latestCommit": "2026-11-10T06:06:26Z",
+      "sha": "69b89112f5adacf55d13fd5bce2f9ad17c5bafbd",
+      "configPath": "box",
+      "decision": "excluded-from-auto-import",
+      "reason": "配置含运营商内网/相对路径源及第三方直播地址，不适合直接导入公共配置"
+    },
+    {
+      "repository": "jiusanzhou/tvbox",
+      "latestCommit": "2026-11-10T13:05:51Z",
+      "sha": "a7c29eaea2cf244964c8ad41f2e6ea2d74f7820f",
+      "configPath": "tvbox.json",
+      "decision": "excluded-from-auto-import",
+      "reason": "虽有自动探活提交，但其直播配置含第三方聚合列表，未逐条确认版权和官方授权"
+    },
+    {
+      "repository": "iptv-org/iptv",
+      "latestCommit": "2026-11-10T00:10:46Z",
+      "sha": "a5111755cc33abdd37b5f8fb68958b06908d9d48",
+      "configPath": "streams/cn.m3u",
+      "decision": "reference-only",
+      "reason": "开源索引并非内容授权证明；仅作发现线索，不批量导入播放列表"
+    },
+    {
+      "repository": "fanmingming/live",
+      "latestCommit": "2026-11-10T08:23:05Z",
+      "sha": "09c002984ceb651b09ac991d951fe6e05e70c513",
+      "configPath": "EPG/logo assets",
+      "decision": "asset-only",
+      "reason": "台标与EPG辅助资源，不提供直播流"
+    }
+  ],
+  "excludedAsInactive": [
+    {
+      "repository": "gaotianliuyun/gao",
+      "latestCommit": "2024-11-17T14:05:01Z"
+    },
+    {
+      "repository": "liu673cn/box",
+      "latestCommit": "2026-08-16T02:08:02Z"
+    },
+    {
+      "repository": "yw88075/tvbox",
+      "latestCommit": "2025-04-01T05:06:19Z"
+    },
+    {
+      "repository": "xyq254245/xyqonlinerule",
+      "latestCommit": "2026-06-11T02:30:34Z"
+    },
+    {
+      "repository": "Guovin/iptv-api",
+      "latestCommit": "2026-10-14T01:21:34Z"
+    }
+  ],
+  "policy": [
+    "仓库最近15天有提交，只能证明维护活跃，不证明其配置中的直播流获得授权。",
+    "逐一读取候选仓库配置后，发现多份配置包含第三方转播列表、付费频道分组、内网地址或版权状态不明的流，因此不整仓导入。",
+    "iptv-org 仅保留为公开索引参考，不直接导入；fanmingming/live 仅作台标/EPG资产参考。",
+    "TVBox主配置仅指向CGTN官方域名上的公开HLS地址。"
+  ],
+  "playbackValidation": {
+    "jsonSyntax": "passed",
+    "m3uStructure": "passed",
+    "httpsUrlFormat": "passed",
+    "externalHlsFetch": "not-run",
+    "deviceDecode": "not-run",
+    "reason": "执行环境未完成外网HLS拉流与终端解码验证"
+  }
+}
