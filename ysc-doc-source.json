@@ -11,13 +11,16 @@
     "formatCheck": "已读取并成功解析的JSON标为json-parsed；无法直接读取内容的条目会在audit中标注，不将未验证说成已验证。"
   },
   "reviewSummary": {
-    "reviewed": 31,
-    "recentActivity": 6,
-    "included": 6,
+    "reviewed": 34,
+    "recentActivity": 9,
+    "included": 9,
     "stale": 6,
     "activityUnverified": 19,
-    "jsonParsed": 5,
-    "contentNotDirectlyVerified": 1
+    "jsonParsed": 8,
+    "playlistCountAddedThisRound": 8,
+    "playlistEntriesAddedThisRound": 2770,
+    "addedSourcesThisRound": 3,
+    "playbackFullyVerifiedAddedThisRound": 0
   },
   "urls": [
     {
@@ -49,6 +52,21 @@
       "name": "jiusanzhou 聚合",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/jiusanzhou/tvbox/main/tvbox.json",
       "homepage": "https://github.com/jiusanzhou/tvbox"
+    },
+    {
+      "name": "32 IPTV-org 多地区直播（1,819条）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-live-iptvorg.json",
+      "homepage": "https://github.com/iptv-org/iptv"
+    },
+    {
+      "name": "33 Best-Fan 中国直播（199条）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-live-bestfan.json",
+      "homepage": "https://github.com/best-fan/iptv-sources"
+    },
+    {
+      "name": "34 XJ 自动更新直播（752条）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-live-xiongjian.json",
+      "homepage": "https://github.com/xiongjian83/TvBox"
     }
   ],
   "audit": [
@@ -348,6 +366,87 @@
       "validationStatus": "json-parsed",
       "reason": "上游tvbox.json于2026-11-10更新，近期多次执行直播探活和更新；已读取并成功解析JSON。",
       "evidence": "https://github.com/jiusanzhou/tvbox/commit/a7c29eaea2cf244964c8ad41f2e6ea2d74f7820f"
+    },
+    {
+      "name": "32 IPTV-org 多地区直播（1819条）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-live-iptvorg.json",
+      "homepage": "https://github.com/iptv-org/iptv",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-10T00:10:46Z",
+      "decision": "included",
+      "validationStatus": "json-parsed; m3u-parsed",
+      "channelEntries": 1819,
+      "playlistCount": 6,
+      "playbackStatus": "not-fully-verified",
+      "reason": "新增TVBox lives封装JSON已回读并解析。中国大陆/日本/美国/香港/台湾/韩国6份M3U均以#EXTM3U开头，逐条检查共1819个EXTINF条目且全部有播放URL；各列表文件最近提交日期为2026-11-05至2026-11-10。外部流媒体的端到端播放未能全部从当前执行环境验证。",
+      "evidence": "https://github.com/iptv-org/iptv/commit/2384ce199bd1d9b75491c267b0cf42478865ce2b",
+      "playlistDetails": [
+        {
+          "region": "CN",
+          "entries": 518,
+          "lastActivity": "2026-11-07",
+          "evidence": "https://github.com/iptv-org/iptv/commit/d504281992a0613a304f86a309b3269a990a0e18"
+        },
+        {
+          "region": "JP",
+          "entries": 20,
+          "lastActivity": "2026-11-05",
+          "evidence": "https://github.com/iptv-org/iptv/commit/547e81f759a564393a0c282207b2d29b7f1e4b27"
+        },
+        {
+          "region": "US",
+          "entries": 1111,
+          "lastActivity": "2026-11-10",
+          "evidence": "https://github.com/iptv-org/iptv/commit/2384ce199bd1d9b75491c267b0cf42478865ce2b"
+        },
+        {
+          "region": "HK",
+          "entries": 26,
+          "lastActivity": "2026-11-05",
+          "evidence": "https://github.com/iptv-org/iptv/commit/547e81f759a564393a0c282207b2d29b7f1e4b27"
+        },
+        {
+          "region": "TW",
+          "entries": 56,
+          "lastActivity": "2026-11-05",
+          "evidence": "https://github.com/iptv-org/iptv/commit/547e81f759a564393a0c282207b2d29b7f1e4b27"
+        },
+        {
+          "region": "KR",
+          "entries": 88,
+          "lastActivity": "2026-11-05",
+          "evidence": "https://github.com/iptv-org/iptv/commit/547e81f759a564393a0c282207b2d29b7f1e4b27"
+        }
+      ]
+    },
+    {
+      "name": "33 Best-Fan 中国直播（199条）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-live-bestfan.json",
+      "homepage": "https://github.com/best-fan/iptv-sources",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-09T06:11:47Z",
+      "decision": "included",
+      "validationStatus": "json-parsed; m3u-parsed",
+      "channelEntries": 199,
+      "playlistCount": 1,
+      "playbackStatus": "partially-unverified",
+      "reason": "上游每日自动采集、校验并生成播放列表；2026-11-09构建的cn_all.m3u8包含199条EXTINF与199个播放URL，记录附带response-time字段。当前执行环境抽测的首条流连接被拒绝，不能据此推断所有频道失效，因此保留为候选并明确标记未完成端到端播放验证。",
+      "evidence": "https://github.com/best-fan/iptv-sources/commit/7930346a3775ed890c009fa797f7437d7c5c8656"
+    },
+    {
+      "name": "34 XJ 自动更新直播（752条）",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-live-xiongjian.json",
+      "homepage": "https://github.com/xiongjian83/TvBox",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-09T18:38:43Z",
+      "decision": "included",
+      "validationStatus": "json-parsed; m3u-parsed",
+      "channelEntries": 752,
+      "playlistCount": 1,
+      "playbackStatus": "not-fully-verified",
+      "reason": "上游live.m3u于2026-11-09自动更新；文件以#EXTM3U开头，752个EXTINF条目均找到对应播放URL，并包含EPG声明。部分播放地址为动态或网络相关链接，当前执行环境未能完成端到端播放验证。",
+      "evidence": "https://github.com/xiongjian83/TvBox/commit/7d70e2089cab078043f075bf1930ce9ee167847a"
     }
-  ]
+  ],
+  "lastReviewedAt": "2026-11-10 21:48 Asia/Tokyo"
 }
