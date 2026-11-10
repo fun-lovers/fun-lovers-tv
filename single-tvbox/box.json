@@ -1,0 +1,306 @@
+{
+  "name": "single-tvbox",
+  "version": 1,
+  "description": "单仓 TVBox 配置：资源站、直播、脚本及规则集中维护于 fun-lovers/fun-lovers-tv/single-tvbox。",
+  "spider": "",
+  "sites": [
+    {
+      "key": "douban",
+      "name": "豆瓣推荐",
+      "type": 3,
+      "api": "./py/douban.py",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 1,
+      "changeable": 0
+    },
+    {
+      "key": "hongguo",
+      "name": "红果短剧",
+      "type": 3,
+      "api": "./py/hongguo.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "ruyi",
+      "name": "如意视频",
+      "type": 3,
+      "api": "./py/ruyishipin.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "ffzy",
+      "name": "非凡资源",
+      "type": 1,
+      "api": "https://ffzy5.tv/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "guangsu",
+      "name": "光速资源",
+      "type": 1,
+      "api": "https://api.guangsuapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "jinying",
+      "name": "金鹰资源",
+      "type": 1,
+      "api": "https://jinyingzy.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "jszy",
+      "name": "极速资源",
+      "type": 1,
+      "api": "https://jszyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "lzizy",
+      "name": "量子资源",
+      "type": 1,
+      "api": "https://lzizy.net/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "suoni",
+      "name": "索尼资源",
+      "type": 1,
+      "api": "https://suoniapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "subo",
+      "name": "速播资源",
+      "type": 1,
+      "api": "https://www.subozy.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "xinlang",
+      "name": "新浪资源",
+      "type": 1,
+      "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "bfzy",
+      "name": "暴风资源",
+      "type": 1,
+      "api": "https://bfzyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "sdzy",
+      "name": "闪电资源",
+      "type": 1,
+      "api": "https://sdzyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "wujin",
+      "name": "无尽资源",
+      "type": 1,
+      "api": "https://api.wujinapi.net/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    }
+  ],
+  "lives": [
+    {
+      "name": "IPTV-org 中国大陆",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u"
+    },
+    {
+      "name": "IPTV-org 日本",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/jp.m3u"
+    },
+    {
+      "name": "IPTV-org 香港",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/hk.m3u"
+    },
+    {
+      "name": "IPTV-org 台湾",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tw.m3u"
+    },
+    {
+      "name": "IPTV-org 韩国",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/kr.m3u"
+    },
+    {
+      "name": "IPTV-org 美国",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us.m3u"
+    }
+  ],
+  "doh": [
+    {
+      "name": "腾讯 DNS",
+      "url": "https://doh.pub/dns-query",
+      "ips": [
+        "119.29.29.29"
+      ]
+    },
+    {
+      "name": "阿里 DNS",
+      "url": "https://dns.alidns.com/dns-query",
+      "ips": [
+        "223.5.5.5",
+        "223.6.6.6"
+      ]
+    },
+    {
+      "name": "Cloudflare",
+      "url": "https://cloudflare-dns.com/dns-query",
+      "ips": [
+        "1.1.1.1",
+        "1.0.0.1"
+      ]
+    },
+    {
+      "name": "Google",
+      "url": "https://dns.google/dns-query",
+      "ips": [
+        "8.8.8.8",
+        "8.8.4.4"
+      ]
+    },
+    {
+      "name": "Quad9",
+      "url": "https://dns.quad9.net/dns-query",
+      "ips": [
+        "9.9.9.9",
+        "149.112.112.112"
+      ]
+    }
+  ],
+  "proxy": [],
+  "hosts": [],
+  "rules": [],
+  "headers": [],
+  "ads": [],
+  "parses": [],
+  "flags": [
+    "youku",
+    "qq",
+    "qiyi",
+    "iqiyi",
+    "mgtv",
+    "bilibili",
+    "sohu",
+    "pptv",
+    "migu"
+  ],
+  "ijk": [
+    {
+      "group": "软解码",
+      "options": [
+        {
+          "category": 4,
+          "name": "mediacodec",
+          "value": "0"
+        },
+        {
+          "category": 4,
+          "name": "framedrop",
+          "value": "1"
+        },
+        {
+          "category": 4,
+          "name": "reconnect",
+          "value": "1"
+        },
+        {
+          "category": 1,
+          "name": "http-detect-range-support",
+          "value": "0"
+        },
+        {
+          "category": 1,
+          "name": "fflags",
+          "value": "fastseek"
+        }
+      ]
+    },
+    {
+      "group": "硬解码",
+      "options": [
+        {
+          "category": 4,
+          "name": "mediacodec",
+          "value": "1"
+        },
+        {
+          "category": 4,
+          "name": "mediacodec-auto-rotate",
+          "value": "1"
+        },
+        {
+          "category": 4,
+          "name": "mediacodec-handle-resolution-change",
+          "value": "1"
+        },
+        {
+          "category": 4,
+          "name": "mediacodec-hevc",
+          "value": "1"
+        },
+        {
+          "category": 4,
+          "name": "reconnect",
+          "value": "1"
+        },
+        {
+          "category": 1,
+          "name": "http-detect-range-support",
+          "value": "0"
+        }
+      ]
+    }
+  ],
+  "warningText": "本配置中的资源站和直播列表均为第三方上游地址，连通性及内容授权状态可能变化；请仅使用有权访问的内容。"
+}

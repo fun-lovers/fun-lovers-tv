@@ -1,0 +1,58 @@
+{
+  "name": "single-tvbox-source-catalog",
+  "version": 1,
+  "updated": "2026-11-10",
+  "notes": [
+    "box.json 是唯一 TVBox 导入入口。",
+    "点播 API 是 MacCMS 风格候选接口，未在本次提交中声称完成逐条播放验证。",
+    "直播 M3U 直接引用 iptv-org 上游；播放成功率受频道方、地域和网络影响。",
+    "Python 脚本来自 cluntop/tvbox 上游 MIT 项目，保留其 MIT 许可文本。"
+  ],
+  "pythonScripts": [
+    {
+      "name": "豆瓣推荐",
+      "path": "../py/douban.py",
+      "upstream": "https://github.com/cluntop/tvbox/blob/main/py/douban.py",
+      "runtime": "TVBox Python Spider API"
+    },
+    {
+      "name": "红果短剧",
+      "path": "../py/hongguo.py",
+      "upstream": "https://github.com/cluntop/tvbox/blob/main/py/hongguo.py",
+      "runtime": "TVBox Python Spider API"
+    },
+    {
+      "name": "如意视频",
+      "path": "../py/ruyishipin.py",
+      "upstream": "https://github.com/cluntop/tvbox/blob/main/py/ruyishipin.py",
+      "runtime": "TVBox Python Spider API"
+    }
+  ],
+  "livePlaylists": [
+    {
+      "name": "IPTV-org CN",
+      "url": "https://github.com/iptv-org/iptv/blob/master/streams/cn.m3u"
+    },
+    {
+      "name": "IPTV-org JP",
+      "url": "https://github.com/iptv-org/iptv/blob/master/streams/jp.m3u"
+    },
+    {
+      "name": "IPTV-org HK",
+      "url": "https://github.com/iptv-org/iptv/blob/master/streams/hk.m3u"
+    },
+    {
+      "name": "IPTV-org TW",
+      "url": "https://github.com/iptv-org/iptv/blob/master/streams/tw.m3u"
+    },
+    {
+      "name": "IPTV-org KR",
+      "url": "https://github.com/iptv-org/iptv/blob/master/streams/kr.m3u"
+    },
+    {
+      "name": "IPTV-org US",
+      "url": "https://github.com/iptv-org/iptv/blob/master/streams/us.m3u"
+    }
+  ],
+  "vodApiPolicy": "MacCMS API URL presence and JSON schema should be checked by the repository health workflow; source list membership does not guarantee the provider is online or that content is authorized."
+}
