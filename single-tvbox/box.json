@@ -163,6 +163,16 @@
       "quickSearch": 1,
       "filterable": 1,
       "changeable": 1
+    },
+    {
+      "key": "fantaiying_aggregate",
+      "name": "饭太硬点播聚合（动态提取）",
+      "type": 3,
+      "api": "./py/fantaiying_catalog.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
     }
   ],
   "lives": [

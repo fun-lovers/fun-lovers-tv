@@ -13,7 +13,8 @@
     "新增播放列表为上游动态资源，仅完成 URL 结构配置；未对所有频道逐一进行端到端播放验证。",
     "点播扩充新增 Internet Archive 公共领域影视与 NASA SVS 科学影像两个 Python 爬虫。",
     "Internet Archive 爬虫仅列出 metadata 中明确标记 public domain 的项目，并在详情页再次检查许可字段；实际版权状态仍应以单条项目权利说明为准。",
-    "NASA SVS 官方说明其内容通常属于 public domain，但个别项目可能标注第三方许可；使用者应核对单条内容说明。"
+    "NASA SVS 官方说明其内容通常属于 public domain，但个别项目可能标注第三方许可；使用者应核对单条内容说明。",
+    "新增饭太硬多仓配置适配器：运行时读取其配置，仅筛选 type=1 的 HTTP(S) API 项；上游配置及第三方站点会动态变化，未对所有子站点逐一做播放验证。"
   ],
   "pythonScripts": [
     {
@@ -47,6 +48,13 @@
       "upstream": "https://svs.gsfc.nasa.gov/help/",
       "runtime": "TVBox Python Spider API",
       "rightsFilter": "NASA SVS media generally public domain unless otherwise noted"
+    },
+    {
+      "name": "饭太硬点播聚合（动态提取）",
+      "path": "../py/fantaiying_catalog.py",
+      "upstream": "http://www.xn--fhq1a75e.cc/tv",
+      "runtime": "TVBox Python Spider API",
+      "adapter": "Reads upstream TVBox JSON and exposes only type=1 HTTP(S) site APIs; availability and rights are not guaranteed."
     }
   ],
   "livePlaylists": [
@@ -267,6 +275,13 @@
       "searchApi": "https://svs.gsfc.nasa.gov/api/search/",
       "detailApi": "https://svs.gsfc.nasa.gov/api/{id}/",
       "rights": "NASA SVS says content is public domain unless otherwise noted"
+    },
+    {
+      "name": "饭太硬多仓配置中的 MacCMS 站点",
+      "provider": "饭太硬 TVBox 配置",
+      "config": "http://www.xn--fhq1a75e.cc/tv",
+      "adapter": "../py/fantaiying_catalog.py",
+      "rights": "动态第三方站点目录；逐站核验内容授权和播放状态"
     }
   ]
 }

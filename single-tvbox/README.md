@@ -71,3 +71,14 @@ Python 脚本来源： [cluntop/tvbox](https://github.com/cluntop/tvbox)（MIT L
 - [NASA SVS API 与媒体说明](https://svs.gsfc.nasa.gov/help/)
 
 这两个来源主要补充公共领域电影、历史影像、科学纪录短片和教育视频，不是商业院线影视库。爬虫依赖客户端 Python 运行时与 requests；尚未在所有 TVBox 分支实机验证。
+
+## 饭太硬多仓点播扩充（2026-11-10）
+
+新增 `py/fantaiying_catalog.py` 适配器。脚本启动后读取饭太硬 TVBox JSON 配置，只提取 `type: 1` 且具有 HTTP(S) API 地址的站点，并将它们映射为一个可搜索的 Python Spider 入口。这样避免把完整 TVBox 多仓 JSON 错误地当成单个 MacCMS API。
+
+- 上游配置：`http://www.xn--fhq1a75e.cc/tv`（饭太硬 .cc 域名的 IDN 编码）
+- 聚合器会动态读取站点列表，子站点失效时会跳过该站点，不保证所有条目可播放。
+- 当前仅适配标准 MacCMS 风格 `type: 1` API；JS 爬虫、解析器、网盘和其他类型不会被自动导入。
+- 聚合器不绕过登录、付费或访问控制；上游站点内容权利与可用性需分别核验。
+
+社区公开整理资料还提及 liucn、OK猫、讴歌、高天流云等多仓/单仓配置。它们属于完整配置或导航入口，并非统一的 MacCMS API，因此本次没有将其伪装成单站点接口写入 `sites`。如后续确认其 JSON 结构和授权/可用状态，可再分别开发适配器。
