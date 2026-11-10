@@ -38,6 +38,27 @@ Python 脚本来源： [cluntop/tvbox](https://github.com/cluntop/tvbox)（MIT L
 直播列表来源： [iptv-org/iptv](https://github.com/iptv-org/iptv)。
 点播 API 候选清单基于本仓库既有的 `addons/tvbox-vod-verified.json` 与 cluntop 配置中出现的 MacCMS 接口类型整理；可用性需定期复核。
 
+## 点播源复核与更新（2026-11-11）
+
+本次对以下 Apple/MacCMS 风格 JSON 接口执行了 `?ac=list` 在线探测，均观察到 `code=1` 的 JSON 列表响应，且样本条目的 `vod_time` 位于 2026-11-10 至 2026-11-11：
+
+| 站点 | TVBox API | 探测结果 | 样本最新 vod_time |
+|---|---|---|---|
+| 非凡资源 | `https://api.ffzyapi.com/api.php/provide/vod/` | JSON / code=1 | 2026-11-11 02:02:46 |
+| 量子资源 | `https://cj.lziapi.com/api.php/provide/vod/` | JSON / code=1 | 2026-11-11 04:53:23 |
+| 无尽资源 | `https://api.wujinapi.com/api.php/provide/vod/` | JSON / code=1 | 2026-11-10 19:20:50 |
+| 丫丫资源 | `https://cj.yayazy.net/api.php/provide/vod/` | JSON / code=1 | 2026-11-10 20:33:58 |
+
+非凡、量子、无尽为原有站点切换至本次成功探测的 API 地址；丫丫为新增站点。未能取得有效 JSON 响应的候选未加入。百度云类候选因涉及网盘相关内容而排除。
+
+**验证边界：**以上验证只确认 API 列表端点可访问、返回 CMS JSON 结构并包含近期更新记录；没有逐个搜索、获取详情、请求播放地址或实际解码播放。可访问性不代表内容授权状态，请仅使用有权访问的内容。
+
+候选索引参考：
+- [cms-player/vod-source](https://github.com/cms-player/vod-source/blob/main/source.json)
+- [fangkuia/XPTV](https://github.com/fangkuia/XPTV/blob/main/allinone.json)
+- [xiahouzuoxin/HuTV](https://github.com/xiahouzuoxin/HuTV/blob/main/README.md)
+- [jiusanzhou/tvbox](https://github.com/jiusanzhou/tvbox/blob/main/tvbox.json)
+
 ## 直播资源扩充（2026-11-10）
 
 直播列表现包含 iptv-org 的国家、地区、语言、分类切片，以及 Free-TV 社区精选列表。每个 M3U 直播项配置了 iptv-org XMLTV EPG 地址：

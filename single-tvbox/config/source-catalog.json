@@ -1,16 +1,16 @@
 {
   "name": "single-tvbox-source-catalog",
   "version": 1,
-  "updated": "2026-11-10",
+  "updated": "2026-11-11",
   "notes": [
     "box.json 是唯一 TVBox 导入入口。",
-    "点播 API 是 MacCMS 风格候选接口，未在本次提交中声称完成逐条播放验证。",
     "直播 M3U 直接引用 iptv-org 上游；播放成功率受频道方、地域和网络影响。",
     "Python 脚本来自 cluntop/tvbox 上游 MIT 项目，保留其 MIT 许可文本。",
     "直播资源扩充：新增 iptv-org 全球、分类、语言、地区及国家切片，并加入 Free-TV 社区精选播放列表。",
     "iptv-org 提供公开可访问频道链接索引；公开可访问不等于在所有国家/地区均有播放授权，使用者需遵守当地法规和频道版权要求。",
     "EPG 使用 iptv-org/epg XMLTV 汇总指南；频道节目单是否显示取决于 M3U 中 tvg-id 与 XMLTV channel id 匹配情况。",
-    "新增播放列表为上游动态资源，仅完成 URL 结构配置；未对所有频道逐一进行端到端播放验证。"
+    "新增播放列表为上游动态资源，仅完成 URL 结构配置；未对所有频道逐一进行端到端播放验证。",
+    "2026-11-11 点播源复核：对非凡、量子、无尽、丫丫接口执行 ac=list 探测，均返回 code=1 的 CMS JSON 数据；快照中的 vod_time 表明近期有数据更新。该检查不等于单个影片播放地址的端到端验证。"
   ],
   "pythonScripts": [
     {
@@ -228,5 +228,73 @@
     "format": "XMLTV",
     "note": "Channel mapping requires matching tvg-id and XMLTV channel IDs."
   },
-  "vodCollections": []
+  "vodCollections": [],
+  "vodApiChecks": [
+    {
+      "key": "ffzy",
+      "name": "非凡资源",
+      "api": "https://api.ffzyapi.com/api.php/provide/vod/",
+      "probe": "https://api.ffzyapi.com/api.php/provide/vod/?ac=list",
+      "checkedAt": "2026-11-11",
+      "response": "CMS JSON code=1",
+      "total": 99056,
+      "latestVodTime": "2026-11-11 02:02:46",
+      "verification": "列表接口返回有效分类与条目；未逐条测试播放地址"
+    },
+    {
+      "key": "lzizy",
+      "name": "量子资源",
+      "api": "https://cj.lziapi.com/api.php/provide/vod/",
+      "probe": "https://cj.lziapi.com/api.php/provide/vod/?ac=list",
+      "checkedAt": "2026-11-11",
+      "response": "CMS JSON code=1",
+      "total": 163362,
+      "latestVodTime": "2026-11-11 04:53:23",
+      "verification": "列表接口返回有效分类与条目；未逐条测试播放地址"
+    },
+    {
+      "key": "wujin",
+      "name": "无尽资源",
+      "api": "https://api.wujinapi.com/api.php/provide/vod/",
+      "probe": "https://api.wujinapi.com/api.php/provide/vod/?ac=list",
+      "checkedAt": "2026-11-11",
+      "response": "CMS JSON code=1",
+      "total": 124782,
+      "latestVodTime": "2026-11-10 19:20:50",
+      "verification": "列表接口返回有效分类与条目；未逐条测试播放地址"
+    },
+    {
+      "key": "yaya",
+      "name": "丫丫资源",
+      "api": "https://cj.yayazy.net/api.php/provide/vod/",
+      "probe": "https://cj.yayazy.net/api.php/provide/vod/?ac=list",
+      "checkedAt": "2026-11-11",
+      "response": "CMS JSON code=1",
+      "total": 123807,
+      "latestVodTime": "2026-11-10 20:33:58",
+      "verification": "列表接口返回有效分类与条目；未逐条测试播放地址"
+    }
+  ],
+  "upstreamCatalogs": [
+    {
+      "name": "cms-player/vod-source",
+      "url": "https://github.com/cms-player/vod-source/blob/main/source.json",
+      "note": "MacCMS 风格接口收录参考；仅作为候选发现依据"
+    },
+    {
+      "name": "fangkuia/XPTV",
+      "url": "https://github.com/fangkuia/XPTV/blob/main/allinone.json",
+      "note": "含丫丫等采集接口配置；仅作为候选发现依据"
+    },
+    {
+      "name": "xiahouzuoxin/HuTV",
+      "url": "https://github.com/xiahouzuoxin/HuTV/blob/main/README.md",
+      "note": "公开列出多项 CMS JSON 接口，作为候选交叉核对"
+    },
+    {
+      "name": "jiusanzhou/tvbox",
+      "url": "https://github.com/jiusanzhou/tvbox/blob/main/tvbox.json",
+      "note": "2026-11-10 生成的配置快照，用于核对维护时间与源类型"
+    }
+  ]
 }
