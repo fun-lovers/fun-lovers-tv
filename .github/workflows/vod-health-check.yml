@@ -32,7 +32,9 @@ jobs:
           --json-out reports/vod-health.json
           --markdown-out reports/vod-health.md
           --summary "$GITHUB_STEP_SUMMARY"
+          --fail-on-unavailable
       - name: Upload health report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: vod-source-health-${{ github.run_number }}
