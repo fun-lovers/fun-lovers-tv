@@ -1,169 +1,351 @@
 {
-  "name": "TVBox 可用源索引",
+  "name": "TVBox 可用源索引（15天活跃与合规筛选）",
   "version": 2,
   "updateTime": "2026-11-10",
-  "description": "本文件用于 TVBox / 影视仓 / OK影视 的「多仓」配置地址。",
+  "description": "本文件用于 TVBox / 影视仓 / OK影视 的「多仓」配置地址。仅 urls 中条目作为可导入仓库；本轮按近15天上游活动和内容授权可核实性逐项筛选。",
   "complianceNote": {
-    "scope": "",
-    "excluded": "",
-    "legal": "",
-    "verifiedAt": "2026-11-10 15:14 UTC+8"
+    "scope": "仅保留2026-10-26至2026-11-10期间有可追溯上游活动证据，且媒体内容来源/转播授权可核实的官方来源或开放源项目。",
+    "excluded": "已移除无法证明近期活跃、格式无法核实，或虽近期更新但包含授权不明第三方影视采集/直播转链的条目。公开可访问、仓库开源、接口探活成功均不等于内容已获授权。",
+    "legal": "本轮未找到同时满足15天活跃、TVBox JSON格式可用及内容授权可核实的条目。为避免误纳未经授权转播源，urls暂置空；逐条记录保存在audit中。",
+    "verifiedAt": "2026-11-10 21:48 Asia/Tokyo"
   },
-  "urls": [
+  "activityWindow": {
+    "days": 15,
+    "from": "2026-10-26",
+    "to": "2026-11-10",
+    "rule": "以对应上游文件的提交/更新时间为准；仅有当前可访问状态不视为近期活跃。"
+  },
+  "reviewSummary": {
+    "reviewed": 31,
+    "recentActivityCandidates": 6,
+    "staleKnown": 6,
+    "activityUnverified": 19,
+    "passedAuthorizationReview": 0,
+    "included": 0
+  },
+  "audit": [
     {
       "name": "01 高天流云 js版（298站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/js.json",
-      "homepage": "https://github.com/gaotianliuyun/gao"
+      "homepage": "https://github.com/gaotianliuyun/gao",
+      "activityStatus": "stale",
+      "lastActivity": "2024-11-17",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "上游仓库最近提交早于15天窗口；源内站点授权亦未逐项证明。",
+      "evidence": "https://github.com/gaotianliuyun/gao/commit/8213bb046f4dce746b5f2ddcddb13a336d0b0d60"
     },
     {
       "name": "02 刘备 m.json（234站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/liu673cn/box/main/m.json",
-      "homepage": "https://github.com/liu673cn/box"
+      "homepage": "https://github.com/liu673cn/box",
+      "activityStatus": "stale",
+      "lastActivity": "2026-08-16",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "上游最近提交为2026-08-16，超过15天窗口；未发现近期更新证据。",
+      "evidence": "https://github.com/liu673cn/box/commit/dc875d22eb61cec925e85bb870a8db2e503c4e9f"
     },
     {
       "name": "03 哈吉米（171站）",
       "url": "https://17264.kstore.space/哈基米.png",
-      "homepage": "https://17264.kstore.space"
+      "homepage": "https://17264.kstore.space",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有可追溯的上游更新时间或版本记录；链接后缀为PNG，无法据此验证TVBox JSON配置格式。"
     },
     {
       "name": "04 TVBox.org 官方聚合（160站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/TVboxorg/TVbox/main/dist/official.json",
-      "homepage": "https://www.tvbox.org/"
+      "homepage": "https://www.tvbox.org/",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-08",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "近15天有更新，但仓库说明其汇总第三方公开接口；实际配置含大量第三方影视采集/秒播接口和多种直播转链，不能证明每个上游内容均获授权。“官方聚合”名称不等于内容授权证明。",
+      "evidence": "https://github.com/TVboxorg/TVbox/commit/a5de3cbd375ebddd5e37604b113ab36d771453da"
     },
     {
       "name": "05 心魔（151站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/yw88075/tvbox/main/yw.json",
-      "homepage": "https://github.com/yw88075/tvbox"
+      "homepage": "https://github.com/yw88075/tvbox",
+      "activityStatus": "stale",
+      "lastActivity": "2025-04-01",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "上游仓库最近提交为2025-04-01，超过15天窗口。",
+      "evidence": "https://github.com/yw88075/tvbox/commit/5df857abc263fda3c3e6cb1c285229f4d5e02230"
     },
     {
       "name": "06 幸福年年（123站）",
       "url": "http://150.158.52.248/tgyg/bbm.json",
-      "homepage": ""
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "HTTP裸IP地址，没有公开版本库或可核对的更新时间；当前无法证明近15天活跃及内容授权。"
     },
     {
       "name": "07 摸鱼（104站）",
       "url": "https://6800.kstore.vip/fish.json",
-      "homepage": "https://6800.kstore.vip"
+      "homepage": "https://6800.kstore.vip",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有找到可追溯的上游提交/更新时间记录，无法确认近15天活跃及来源授权。"
     },
     {
       "name": "08 clun（101站）",
       "url": "https://clun.top/box.json",
-      "homepage": "https://clun.top"
+      "homepage": "https://clun.top",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-04",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "公开仓库目录显示box.json于2026-11-04更新，满足时间条件；但该配置为自用聚合接口，未提供各影视/直播源的授权依据，故不纳入可导入列表。",
+      "evidence": "https://gitea.lihaso.com/dong/fun/src/branch/main"
     },
     {
       "name": "09 王二小（100站）",
       "url": "https://9280.kstore.vip/aiwex.json",
-      "homepage": "https://9280.kstore.vip"
+      "homepage": "https://9280.kstore.vip",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "未找到可复核的近15天上游更新记录或各来源授权信息。"
     },
     {
       "name": "10 王二小 备用（100站）",
       "url": "https://9280.kstore.space/aiwex.json",
-      "homepage": ""
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "备用地址没有独立的版本记录或近期更新时间；不能仅凭与主源同名推定活跃。"
     },
     {
       "name": "11 嗷呜（80站）",
       "url": "https://9763.kstore.vip/aowu.json",
-      "homepage": "https://9763.kstore.vip"
+      "homepage": "https://9763.kstore.vip",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有可追溯的近15天更新证据及内容授权依据。"
     },
     {
       "name": "12 Lightconer 聚合（78站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/Lightconer/tvbox-source/main/tvbox.json",
-      "homepage": "https://github.com/Lightconer/tvbox-source"
+      "homepage": "https://github.com/Lightconer/tvbox-source",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-10",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "上游近期自动更新；配置含新6V、电影天堂、80S、美剧天堂及多组第三方影视采集接口，直播列表还含Adult分组，无法证明相关内容均获授权。",
+      "evidence": "https://github.com/Lightconer/tvbox-source/commit/dcfb5a6d2c05bb7f6555258f43c4c291fe0f10d8"
     },
     {
       "name": "13 星微VIP（66站）",
       "url": "https://7337.kstore.vip/xw/测试勿传",
-      "homepage": "https://7337.kstore.vip"
+      "homepage": "https://7337.kstore.vip",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "未找到近期更新时间；链接路径含“测试勿传”，缺少公开分发授权及可复核的JSON格式证据。"
     },
     {
       "name": "14 健康家用（64站）",
       "url": "https://gitlab.com/noimank/tvbox/-/raw/main/tvbox1.json",
-      "homepage": "https://gitlab.com/noimank/tvbox"
+      "homepage": "https://gitlab.com/noimank/tvbox",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "当前无法取得可核对的近15天提交记录；未证明所含影视/直播源授权。"
     },
     {
       "name": "15 凯弟1线（63站）",
       "url": "https://jihulab.com/jyqhkd1/kai/-/raw/main/机缘巧盒凯弟.json",
-      "homepage": "https://jihulab.com/jyqhkd1/kai"
+      "homepage": "https://jihulab.com/jyqhkd1/kai",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有取得可验证的上游近期提交记录及逐项内容授权信息。"
     },
     {
       "name": "16 小马（62站）",
       "url": "https://szyyds.cn/tv/x.json",
-      "homepage": "https://szyyds.cn"
+      "homepage": "https://szyyds.cn",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "自有站点链接未提供公开更新日志或版本历史，无法核实近15天活跃状态。"
     },
     {
       "name": "17 香雅情（55站）",
       "url": "https://play.iptv365.org/香雅情/api.json",
-      "homepage": "https://play.iptv365.org"
+      "homepage": "https://play.iptv365.org",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有可复核的近期上游活动记录及源内容授权依据。"
     },
     {
       "name": "18 聚玩（54站）",
       "url": "http://xhztv.top/xhz",
-      "homepage": "http://xhztv.top"
+      "homepage": "http://xhztv.top",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "HTTP地址没有公开版本历史或近15天更新时间，且未提供各转播源授权证明。"
     },
     {
       "name": "19 高天流云 XYQ版（49站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/XYQ.json",
-      "homepage": ""
+      "homepage": "",
+      "activityStatus": "stale",
+      "lastActivity": "2024-11-17",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "与高天流云仓库关联，上游最近提交为2024-11-17，超过15天窗口。",
+      "evidence": "https://github.com/gaotianliuyun/gao/commit/8213bb046f4dce746b5f2ddcddb13a336d0b0d60"
     },
     {
       "name": "20 香雅情 XYQ（48站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json",
-      "homepage": "https://github.com/xyq254245/xyqonlinerule"
+      "homepage": "https://github.com/xyq254245/xyqonlinerule",
+      "activityStatus": "stale",
+      "lastActivity": "2026-06-11",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "上游最近提交为2026-06-11，超过15天窗口。",
+      "evidence": "https://github.com/xyq254245/xyqonlinerule/commit/e72edb16454dbecc32af5f6bdd7a315a63d8792b"
     },
     {
       "name": "21 真六（47站）",
       "url": "https://cccimg.com/down.php/7d1f30263b3f2bf3deda2d7faeef4844.zhen6",
-      "homepage": "https://cccimg.com"
+      "homepage": "https://cccimg.com",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "下载地址不是常规JSON文件路径，缺少可追溯版本信息，无法核实格式、更新时间和内容授权。"
     },
     {
       "name": "22 挺好（46站）",
       "url": "https://ztha.top/TVBox/thdjk.json",
-      "homepage": "https://ztha.top"
+      "homepage": "https://ztha.top",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有可复核的近15天上游更新时间及源内容授权信息。"
     },
     {
       "name": "23 小米（45站）",
       "url": "https://gh-proxy.org/raw.githubusercontent.com/ggrrttyyiii/CatVodSpider/refs/heads/main/json/demo.json",
-      "homepage": "https://github.com/ggrrttyyiii/CatVodSpider"
+      "homepage": "https://github.com/ggrrttyyiii/CatVodSpider",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-09",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "demo.json近15天内多次更新，但配置主要包含第三方影视采集、秒播和外部App接口；无法证明这些内容分发权，不能因仓库开源就推定播放内容已授权。",
+      "evidence": "https://github.com/ggrrttyyiii/CatVodSpider/commit/c7ae49ea9a6e1682a2ca4a94897a68cf5e25e5f8"
     },
     {
       "name": "24 夏夏影视（43站）",
       "url": "https://11405.kstore.space/xiaye/qk4k.json",
-      "homepage": "https://11405.kstore.space"
+      "homepage": "https://11405.kstore.space",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有公开更新时间或版本记录，也没有源内容授权证明。"
     },
     {
       "name": "25 高天流云 0827版（33站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/0827.json",
-      "homepage": ""
+      "homepage": "",
+      "activityStatus": "stale",
+      "lastActivity": "2024-11-17",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "与高天流云仓库关联，上游最近提交为2024-11-17，超过15天窗口。",
+      "evidence": "https://github.com/gaotianliuyun/gao/commit/8213bb046f4dce746b5f2ddcddb13a336d0b0d60"
     },
     {
       "name": "26 凯弟3线（28站）",
       "url": "https://jihulab.com/jyqhkd/kd/-/raw/main/kai.json",
-      "homepage": "https://jihulab.com/jyqhkd/kd"
+      "homepage": "https://jihulab.com/jyqhkd/kd",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有取得可验证的近15天提交记录及逐项内容授权信息。"
     },
     {
       "name": "27 动漫（27站）",
       "url": "https://www.yingm.cc/dm/dm.json",
-      "homepage": "https://www.yingm.cc"
+      "homepage": "https://www.yingm.cc",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "缺少公开更新日志及可核验的内容授权信息。"
     },
     {
       "name": "28 凯弟2线（25站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/box",
-      "homepage": "https://github.com/zhoujck/config"
+      "homepage": "https://github.com/zhoujck/config",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-07",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "配置文件近15天内有更新，但包含多组第三方“秒播”点播入口和外部直播列表，未提供这些内容的授权依据。",
+      "evidence": "https://github.com/zhoujck/config/commit/d97e379cbe10041f18138f83f8bd972eee46de18"
     },
     {
       "name": "29 俊宇（24站）",
       "url": "http://home.jundie.top:81/top98.json",
-      "homepage": "http://home.jundie.top:81"
+      "homepage": "http://home.jundie.top:81",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "HTTP非标准端口地址，没有可追溯的公开版本时间及授权资料。"
     },
     {
       "name": "30 老张（19站）",
       "url": "https://zhangqun1818.serv00.net/zq/api.json",
-      "homepage": "https://zhangqun1818.serv00.net"
+      "homepage": "https://zhangqun1818.serv00.net",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "没有可复核的近15天更新记录和内容授权信息。"
     },
     {
       "name": "31 jiusanzhou 聚合（8站）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/jiusanzhou/tvbox/main/tvbox.json",
-      "homepage": "https://github.com/jiusanzhou/tvbox"
+      "homepage": "https://github.com/jiusanzhou/tvbox",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-10",
+      "rightsStatus": "unverified",
+      "decision": "excluded",
+      "reason": "上游近期持续探活并更新，但配置含多个第三方MacCMS影视API，直播列表还含Adult分组；未能核实播放内容授权，故不纳入。",
+      "evidence": "https://github.com/jiusanzhou/tvbox/commit/a7c29eaea2cf244964c8ad41f2e6ea2d74f7820f"
     }
-  ]
+  ],
+  "urls": []
 }
