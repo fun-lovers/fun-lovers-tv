@@ -473,7 +473,7 @@
       "siteCount": 22,
       "validationStatus": "json-parsed; site-schema-checked; api-list-detail-tested",
       "playbackStatus": "18-of-22-site-entries-returned-list-detail-and-sample-play-url",
-      "reason": "上游配置结构正常。2026-11-10 GitHub Actions 真实接口复测：22条站点记录/22个唯一API中18个目录与详情接口正常且含HTTP(S)样例播放地址；4个异常：dbzy.tv、mtzy.me、www.feisuzy.com DNS解析失败，p2100.net返回HTTP 403，taopianapi.com返回HTTP 404（其中前三项中前两项+feisu共3个DNS，另外403/404各1个；本组实际失败为4个）。该原始配置已由37号经实测筛选、去重的26接口合并配置替代，不再放入主导入urls。",
+      "reason": "上游配置结构正常。2026-11-10 GitHub Actions 真实接口复测：22条站点记录/22个唯一API中18个目录与详情接口正常且含HTTP(S)样例播放地址；4个异常：dbzy.tv与mtzy.me DNS解析失败，p2100.net返回HTTP 403，taopianapi.com返回HTTP 404。该原始配置已由37号经实测筛选、去重的26接口合并配置替代，不再放入主导入urls。",
       "evidence": "https://github.com/hezvenzer/tvbox-harvest-cms/commit/91a401298d83dfc8a70bb80e713c1cd711268224",
       "testSummary": {
         "siteEntries": 22,
@@ -531,7 +531,41 @@
         "detailOk": 26,
         "samplePlayUrlPresent": 26,
         "failed": 8
-      }
+      },
+      "excludedApiDetails": [
+        {
+          "host": "dbzy.tv",
+          "status": "DNS lookup failed"
+        },
+        {
+          "host": "mtzy.me",
+          "status": "DNS lookup failed"
+        },
+        {
+          "host": "p2100.net",
+          "status": "HTTP 403"
+        },
+        {
+          "host": "taopianapi.com",
+          "status": "HTTP 404"
+        },
+        {
+          "host": "hw8.live",
+          "status": "invalid JSON response"
+        },
+        {
+          "host": "www.heimuer.tv",
+          "status": "TLS certificate verification failed"
+        },
+        {
+          "host": "collect.wolongzyw.com",
+          "status": "invalid JSON response"
+        },
+        {
+          "host": "www.feisuzy.com",
+          "status": "DNS lookup failed"
+        }
+      ]
     }
   ],
   "lastReviewedAt": "2026-11-10 23:39 Asia/Tokyo"
