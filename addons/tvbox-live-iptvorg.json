@@ -1,0 +1,35 @@
+{
+  "spider": "",
+  "lives": [
+    {
+      "name": "IPTV-org 中国大陆（518条）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u"
+    },
+    {
+      "name": "IPTV-org 日本（20条）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/jp.m3u"
+    },
+    {
+      "name": "IPTV-org 美国（1111条）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us.m3u"
+    },
+    {
+      "name": "IPTV-org 香港（26条）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/hk.m3u"
+    },
+    {
+      "name": "IPTV-org 台湾（56条）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tw.m3u"
+    },
+    {
+      "name": "IPTV-org 韩国（88条）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/kr.m3u"
+    }
+  ]
+}
