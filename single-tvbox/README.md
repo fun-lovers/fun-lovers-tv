@@ -57,3 +57,17 @@ Python 脚本来源： [cluntop/tvbox](https://github.com/cluntop/tvbox)（MIT L
 - [Free-TV/IPTV 精选播放列表](https://github.com/Free-TV/IPTV)
 
 以上为社区索引/精选清单，公开访问不代表每个频道在所有地区均有授权。频道可用性会变化，尚未逐条完成端到端播放验证。
+
+ 
+## 点播与爬虫扩充（2026-11-10）
+
+新增两个以公开 API 为基础的 Python Spider：
+
+- **Internet Archive 公共领域影像**：使用官方 Advanced Search API 与 Item Metadata API，按 `licenseurl` 过滤明确标记为 public domain 的电影；详情页再次核对许可并选择 MP4/WebM/OGV 等可播放文件。每个条目的权利说明仍需单独确认。
+- **NASA 科学影像**：使用 NASA Scientific Visualization Studio 官方 Search API 与 Page API，提供地球、太阳系、太空探索和气候变化分类，播放官方发布的 MP4/WebM 文件。NASA SVS 说明其内容通常为公有领域，但第三方音乐/素材可能例外。
+
+文档：
+- [Internet Archive API](https://archive.org/developers/)
+- [NASA SVS API 与媒体说明](https://svs.gsfc.nasa.gov/help/)
+
+这两个来源主要补充公共领域电影、历史影像、科学纪录短片和教育视频，不是商业院线影视库。爬虫依赖客户端 Python 运行时与 requests；尚未在所有 TVBox 分支实机验证。

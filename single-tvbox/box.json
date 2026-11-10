@@ -35,6 +35,26 @@
       "changeable": 1
     },
     {
+      "key": "archive_pd",
+      "name": "Internet Archive 公共领域影像",
+      "type": 3,
+      "api": "./py/archive_public_domain.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
+      "key": "nasa_svs",
+      "name": "NASA 科学影像",
+      "type": 3,
+      "api": "./py/nasa_svs.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1
+    },
+    {
       "key": "ffzy",
       "name": "非凡资源",
       "type": 1,

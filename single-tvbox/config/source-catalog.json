@@ -10,7 +10,10 @@
     "直播资源扩充：新增 iptv-org 全球、分类、语言、地区及国家切片，并加入 Free-TV 社区精选播放列表。",
     "iptv-org 提供公开可访问频道链接索引；公开可访问不等于在所有国家/地区均有播放授权，使用者需遵守当地法规和频道版权要求。",
     "EPG 使用 iptv-org/epg XMLTV 汇总指南；频道节目单是否显示取决于 M3U 中 tvg-id 与 XMLTV channel id 匹配情况。",
-    "新增播放列表为上游动态资源，仅完成 URL 结构配置；未对所有频道逐一进行端到端播放验证。"
+    "新增播放列表为上游动态资源，仅完成 URL 结构配置；未对所有频道逐一进行端到端播放验证。",
+    "点播扩充新增 Internet Archive 公共领域影视与 NASA SVS 科学影像两个 Python 爬虫。",
+    "Internet Archive 爬虫仅列出 metadata 中明确标记 public domain 的项目，并在详情页再次检查许可字段；实际版权状态仍应以单条项目权利说明为准。",
+    "NASA SVS 官方说明其内容通常属于 public domain，但个别项目可能标注第三方许可；使用者应核对单条内容说明。"
   ],
   "pythonScripts": [
     {
@@ -30,6 +33,20 @@
       "path": "../py/ruyishipin.py",
       "upstream": "https://github.com/cluntop/tvbox/blob/main/py/ruyishipin.py",
       "runtime": "TVBox Python Spider API"
+    },
+    {
+      "name": "Internet Archive 公共领域影像",
+      "path": "../py/archive_public_domain.py",
+      "upstream": "https://archive.org/developers/",
+      "runtime": "TVBox Python Spider API",
+      "rightsFilter": "Only metadata explicitly marked public domain"
+    },
+    {
+      "name": "NASA 科学影像",
+      "path": "../py/nasa_svs.py",
+      "upstream": "https://svs.gsfc.nasa.gov/help/",
+      "runtime": "TVBox Python Spider API",
+      "rightsFilter": "NASA SVS media generally public domain unless otherwise noted"
     }
   ],
   "livePlaylists": [
@@ -235,5 +252,21 @@
     "upstream": "https://github.com/iptv-org/epg",
     "format": "XMLTV",
     "note": "Channel mapping requires matching tvg-id and XMLTV channel IDs."
-  }
+  },
+  "vodCollections": [
+    {
+      "name": "Internet Archive 公共领域电影",
+      "provider": "Internet Archive",
+      "api": "https://archive.org/advancedsearch.php",
+      "detailApi": "https://archive.org/metadata/{identifier}",
+      "rights": "Spider filters records with public-domain license metadata; verify each item"
+    },
+    {
+      "name": "NASA 科学影像",
+      "provider": "NASA Scientific Visualization Studio",
+      "searchApi": "https://svs.gsfc.nasa.gov/api/search/",
+      "detailApi": "https://svs.gsfc.nasa.gov/api/{id}/",
+      "rights": "NASA SVS says content is public domain unless otherwise noted"
+    }
+  ]
 }
