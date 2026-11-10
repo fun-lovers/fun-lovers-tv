@@ -1,9 +1,0 @@
-services:
-  alist-tvbox:
-    image: haroldli/alist-tvbox:latest
-    container_name: alist-tvbox
-    restart: unless-stopped
-    ports:
-      - "4567:4567"
-    volumes:
-      - ./data:/data

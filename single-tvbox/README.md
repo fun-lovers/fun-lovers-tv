@@ -38,11 +38,6 @@ Python 脚本来源： [cluntop/tvbox](https://github.com/cluntop/tvbox)（MIT L
 直播列表来源： [iptv-org/iptv](https://github.com/iptv-org/iptv)。
 点播 API 候选清单基于本仓库既有的 `addons/tvbox-vod-verified.json` 与 cluntop 配置中出现的 MacCMS 接口类型整理；可用性需定期复核。
 
-## 网盘支持
-
-网盘通过可选的 AList-TvBox 后端接入，支持阿里云盘、百度、夸克、UC、115、123、天翼、移动、迅雷、PikPak、光鸭等上游文档列出的平台。部署和 TVBox 二级订阅方法见 [cloud-drive/README.md](cloud-drive/README.md)。网盘账号凭证不得提交到公开仓库。
-
- 
 ## 直播资源扩充（2026-11-10）
 
 直播列表现包含 iptv-org 的国家、地区、语言、分类切片，以及 Free-TV 社区精选列表。每个 M3U 直播项配置了 iptv-org XMLTV EPG 地址：
@@ -57,28 +52,3 @@ Python 脚本来源： [cluntop/tvbox](https://github.com/cluntop/tvbox)（MIT L
 - [Free-TV/IPTV 精选播放列表](https://github.com/Free-TV/IPTV)
 
 以上为社区索引/精选清单，公开访问不代表每个频道在所有地区均有授权。频道可用性会变化，尚未逐条完成端到端播放验证。
-
- 
-## 点播与爬虫扩充（2026-11-10）
-
-新增两个以公开 API 为基础的 Python Spider：
-
-- **Internet Archive 公共领域影像**：使用官方 Advanced Search API 与 Item Metadata API，按 `licenseurl` 过滤明确标记为 public domain 的电影；详情页再次核对许可并选择 MP4/WebM/OGV 等可播放文件。每个条目的权利说明仍需单独确认。
-- **NASA 科学影像**：使用 NASA Scientific Visualization Studio 官方 Search API 与 Page API，提供地球、太阳系、太空探索和气候变化分类，播放官方发布的 MP4/WebM 文件。NASA SVS 说明其内容通常为公有领域，但第三方音乐/素材可能例外。
-
-文档：
-- [Internet Archive API](https://archive.org/developers/)
-- [NASA SVS API 与媒体说明](https://svs.gsfc.nasa.gov/help/)
-
-这两个来源主要补充公共领域电影、历史影像、科学纪录短片和教育视频，不是商业院线影视库。爬虫依赖客户端 Python 运行时与 requests；尚未在所有 TVBox 分支实机验证。
-
-## 饭太硬多仓点播扩充（2026-11-10）
-
-新增 `py/fantaiying_catalog.py` 适配器。脚本启动后读取饭太硬 TVBox JSON 配置，只提取 `type: 1` 且具有 HTTP(S) API 地址的站点，并将它们映射为一个可搜索的 Python Spider 入口。这样避免把完整 TVBox 多仓 JSON 错误地当成单个 MacCMS API。
-
-- 上游配置：`http://www.xn--fhq1a75e.cc/tv`（饭太硬 .cc 域名的 IDN 编码）
-- 聚合器会动态读取站点列表，子站点失效时会跳过该站点，不保证所有条目可播放。
-- 当前仅适配标准 MacCMS 风格 `type: 1` API；JS 爬虫、解析器、网盘和其他类型不会被自动导入。
-- 聚合器不绕过登录、付费或访问控制；上游站点内容权利与可用性需分别核验。
-
-社区公开整理资料还提及 liucn、OK猫、讴歌、高天流云等多仓/单仓配置。它们属于完整配置或导航入口，并非统一的 MacCMS API，因此本次没有将其伪装成单站点接口写入 `sites`。如后续确认其 JSON 结构和授权/可用状态，可再分别开发适配器。

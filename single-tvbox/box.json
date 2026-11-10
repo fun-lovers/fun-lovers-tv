@@ -35,26 +35,6 @@
       "changeable": 1
     },
     {
-      "key": "archive_pd",
-      "name": "Internet Archive 公共领域影像",
-      "type": 3,
-      "api": "./py/archive_public_domain.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 1
-    },
-    {
-      "key": "nasa_svs",
-      "name": "NASA 科学影像",
-      "type": 3,
-      "api": "./py/nasa_svs.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 1
-    },
-    {
       "key": "ffzy",
       "name": "非凡资源",
       "type": 1,
@@ -159,16 +139,6 @@
       "name": "无尽资源",
       "type": 1,
       "api": "https://api.wujinapi.net/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 1
-    },
-    {
-      "key": "fantaiying_aggregate",
-      "name": "饭太硬点播聚合（动态提取）",
-      "type": 3,
-      "api": "./py/fantaiying_catalog.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
