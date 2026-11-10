@@ -6,7 +6,11 @@
     "box.json 是唯一 TVBox 导入入口。",
     "点播 API 是 MacCMS 风格候选接口，未在本次提交中声称完成逐条播放验证。",
     "直播 M3U 直接引用 iptv-org 上游；播放成功率受频道方、地域和网络影响。",
-    "Python 脚本来自 cluntop/tvbox 上游 MIT 项目，保留其 MIT 许可文本。"
+    "Python 脚本来自 cluntop/tvbox 上游 MIT 项目，保留其 MIT 许可文本。",
+    "直播资源扩充：新增 iptv-org 全球、分类、语言、地区及国家切片，并加入 Free-TV 社区精选播放列表。",
+    "iptv-org 提供公开可访问频道链接索引；公开可访问不等于在所有国家/地区均有播放授权，使用者需遵守当地法规和频道版权要求。",
+    "EPG 使用 iptv-org/epg XMLTV 汇总指南；频道节目单是否显示取决于 M3U 中 tvg-id 与 XMLTV channel id 匹配情况。",
+    "新增播放列表为上游动态资源，仅完成 URL 结构配置；未对所有频道逐一进行端到端播放验证。"
   ],
   "pythonScripts": [
     {
@@ -30,28 +34,190 @@
   ],
   "livePlaylists": [
     {
-      "name": "IPTV-org CN",
-      "url": "https://github.com/iptv-org/iptv/blob/master/streams/cn.m3u"
+      "name": "IPTV-org 中国大陆",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "existing"
     },
     {
-      "name": "IPTV-org JP",
-      "url": "https://github.com/iptv-org/iptv/blob/master/streams/jp.m3u"
+      "name": "IPTV-org 日本",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/jp.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "existing"
     },
     {
-      "name": "IPTV-org HK",
-      "url": "https://github.com/iptv-org/iptv/blob/master/streams/hk.m3u"
+      "name": "IPTV-org 香港",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/hk.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "existing"
     },
     {
-      "name": "IPTV-org TW",
-      "url": "https://github.com/iptv-org/iptv/blob/master/streams/tw.m3u"
+      "name": "IPTV-org 台湾",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tw.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "existing"
     },
     {
-      "name": "IPTV-org KR",
-      "url": "https://github.com/iptv-org/iptv/blob/master/streams/kr.m3u"
+      "name": "IPTV-org 韩国",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/kr.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "existing"
     },
     {
-      "name": "IPTV-org US",
-      "url": "https://github.com/iptv-org/iptv/blob/master/streams/us.m3u"
+      "name": "IPTV-org 美国",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "existing"
+    },
+    {
+      "name": "IPTV-org 全球总表（较大）",
+      "url": "https://iptv-org.github.io/iptv/index.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 新闻",
+      "url": "https://iptv-org.github.io/iptv/categories/news.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 教育",
+      "url": "https://iptv-org.github.io/iptv/categories/education.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 纪录片",
+      "url": "https://iptv-org.github.io/iptv/categories/documentary.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 文化",
+      "url": "https://iptv-org.github.io/iptv/categories/culture.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 儿童",
+      "url": "https://iptv-org.github.io/iptv/categories/kids.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 音乐",
+      "url": "https://iptv-org.github.io/iptv/categories/music.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 体育",
+      "url": "https://iptv-org.github.io/iptv/categories/sports.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 电影",
+      "url": "https://iptv-org.github.io/iptv/categories/movies.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 英语频道",
+      "url": "https://iptv-org.github.io/iptv/languages/eng.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 日语频道",
+      "url": "https://iptv-org.github.io/iptv/languages/jpn.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 中文频道",
+      "url": "https://iptv-org.github.io/iptv/languages/zho.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 韩语频道",
+      "url": "https://iptv-org.github.io/iptv/languages/kor.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 亚洲",
+      "url": "https://iptv-org.github.io/iptv/regions/asia.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 亚太",
+      "url": "https://iptv-org.github.io/iptv/regions/apac.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 欧洲",
+      "url": "https://iptv-org.github.io/iptv/regions/eur.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 英国",
+      "url": "https://iptv-org.github.io/iptv/countries/uk.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 加拿大",
+      "url": "https://iptv-org.github.io/iptv/countries/ca.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 澳大利亚",
+      "url": "https://iptv-org.github.io/iptv/countries/au.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 新加坡",
+      "url": "https://iptv-org.github.io/iptv/countries/sg.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 德国",
+      "url": "https://iptv-org.github.io/iptv/countries/de.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 法国",
+      "url": "https://iptv-org.github.io/iptv/countries/fr.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 意大利",
+      "url": "https://iptv-org.github.io/iptv/countries/it.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "IPTV-org 西班牙",
+      "url": "https://iptv-org.github.io/iptv/countries/es.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "iptv-org/iptv"
+    },
+    {
+      "name": "Free-TV 精选公开频道",
+      "url": "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml",
+      "source": "Free-TV/IPTV"
     }
   ],
   "vodApiPolicy": "MacCMS API URL presence and JSON schema should be checked by the repository health workflow; source list membership does not guarantee the provider is online or that content is authorized.",
@@ -62,5 +228,12 @@
     "providerCatalog": "../cloud-drive/providers.json",
     "compose": "../cloud-drive/docker-compose.yml",
     "note": "Cloud-drive subscription is generated by the backend and added to TVBox as a separate subscription. No credentials are stored in this repository."
+  },
+  "epg": {
+    "name": "IPTV-org XMLTV",
+    "url": "https://iptv-org.github.io/epg/guides/all.xml",
+    "upstream": "https://github.com/iptv-org/epg",
+    "format": "XMLTV",
+    "note": "Channel mapping requires matching tvg-id and XMLTV channel IDs."
   }
 }

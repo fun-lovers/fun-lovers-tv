@@ -41,3 +41,19 @@ Python 脚本来源： [cluntop/tvbox](https://github.com/cluntop/tvbox)（MIT L
 ## 网盘支持
 
 网盘通过可选的 AList-TvBox 后端接入，支持阿里云盘、百度、夸克、UC、115、123、天翼、移动、迅雷、PikPak、光鸭等上游文档列出的平台。部署和 TVBox 二级订阅方法见 [cloud-drive/README.md](cloud-drive/README.md)。网盘账号凭证不得提交到公开仓库。
+
+ 
+## 直播资源扩充（2026-11-10）
+
+直播列表现包含 iptv-org 的国家、地区、语言、分类切片，以及 Free-TV 社区精选列表。每个 M3U 直播项配置了 iptv-org XMLTV EPG 地址：
+
+`https://iptv-org.github.io/epg/guides/all.xml`
+
+建议优先使用国家/分类/语言切片；全球总表较大，低性能设备可能加载较慢。EPG 依赖频道的 `tvg-id` 与 XMLTV 的 channel ID 匹配，不匹配时节目单可能为空。
+
+上游项目：
+- [iptv-org/iptv 播放列表说明](https://github.com/iptv-org/iptv)
+- [iptv-org/epg 节目单项目](https://github.com/iptv-org/epg)
+- [Free-TV/IPTV 精选播放列表](https://github.com/Free-TV/IPTV)
+
+以上为社区索引/精选清单，公开访问不代表每个频道在所有地区均有授权。频道可用性会变化，尚未逐条完成端到端播放验证。

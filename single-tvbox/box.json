@@ -149,32 +149,188 @@
     {
       "name": "IPTV-org 中国大陆",
       "type": 0,
-      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u"
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
     },
     {
       "name": "IPTV-org 日本",
       "type": 0,
-      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/jp.m3u"
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/jp.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
     },
     {
       "name": "IPTV-org 香港",
       "type": 0,
-      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/hk.m3u"
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/hk.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
     },
     {
       "name": "IPTV-org 台湾",
       "type": 0,
-      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tw.m3u"
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tw.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
     },
     {
       "name": "IPTV-org 韩国",
       "type": 0,
-      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/kr.m3u"
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/kr.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
     },
     {
       "name": "IPTV-org 美国",
       "type": 0,
-      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us.m3u"
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 全球总表（较大）",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/index.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 新闻",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/news.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 教育",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/education.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 纪录片",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/documentary.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 文化",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/culture.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 儿童",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/kids.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 音乐",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/music.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 体育",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/sports.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 电影",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/categories/movies.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 英语频道",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/languages/eng.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 日语频道",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/languages/jpn.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 中文频道",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/languages/zho.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 韩语频道",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/languages/kor.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 亚洲",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/regions/asia.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 亚太",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/regions/apac.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 欧洲",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/regions/eur.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 英国",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/uk.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 加拿大",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/ca.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 澳大利亚",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/au.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 新加坡",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/sg.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 德国",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/de.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 法国",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/fr.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 意大利",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/it.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "IPTV-org 西班牙",
+      "type": 0,
+      "url": "https://iptv-org.github.io/iptv/countries/es.m3u",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
+    },
+    {
+      "name": "Free-TV 精选公开频道",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8",
+      "epg": "https://iptv-org.github.io/epg/guides/all.xml"
     }
   ],
   "doh": [
