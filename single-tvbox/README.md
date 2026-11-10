@@ -37,3 +37,7 @@ python single-tvbox/scripts/validate.py
 Python 脚本来源： [cluntop/tvbox](https://github.com/cluntop/tvbox)（MIT License）。
 直播列表来源： [iptv-org/iptv](https://github.com/iptv-org/iptv)。
 点播 API 候选清单基于本仓库既有的 `addons/tvbox-vod-verified.json` 与 cluntop 配置中出现的 MacCMS 接口类型整理；可用性需定期复核。
+
+## 网盘支持
+
+网盘通过可选的 AList-TvBox 后端接入，支持阿里云盘、百度、夸克、UC、115、123、天翼、移动、迅雷、PikPak、光鸭等上游文档列出的平台。部署和 TVBox 二级订阅方法见 [cloud-drive/README.md](cloud-drive/README.md)。网盘账号凭证不得提交到公开仓库。
