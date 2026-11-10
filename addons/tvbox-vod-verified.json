@@ -1,0 +1,488 @@
+{
+  "lives": [],
+  "parses": [
+    {
+      "name": "洛雪4K",
+      "type": 1,
+      "url": "https://tv.lxyy.club/json-player.php?route=official_musbpyqz&url=",
+      "ext": {
+        "player_codes": [
+          "qq",
+          "bilibili",
+          "rrmj",
+          "hmdj"
+        ],
+        "official_only": true
+      }
+    }
+  ],
+  "flags": [],
+  "rules": [],
+  "spider": "",
+  "author": "tvbox-harvest",
+  "wallpaper": "",
+  "ua": "",
+  "requestHeader": {},
+  "version": "direct-42806333322",
+  "sites": [
+    {
+      "key": "aosikazy9",
+      "name": "🔞奥斯卡资源站9",
+      "type": 1,
+      "api": "https://aosikazy9.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "api-wsyzy-net",
+      "name": "无水印资源",
+      "type": 1,
+      "api": "https://api.wsyzy.net/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "cj-yayazy-net",
+      "name": "鸭鸭资源站",
+      "type": 1,
+      "api": "https://cj.yayazy.net/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "ffzy",
+      "name": "非凡影视",
+      "type": 1,
+      "api": "https://ffzy5.tv/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "guangsu",
+      "name": "光速资源",
+      "type": 1,
+      "api": "https://api.guangsuapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "hlzy-my",
+      "name": "红楼",
+      "type": 1,
+      "api": "https://www.hlzy.my/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "jinyingzy",
+      "name": "金鹰资源",
+      "type": 1,
+      "api": "https://jinyingzy.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "jszy",
+      "name": "极速资源",
+      "type": 1,
+      "api": "https://jszyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "kuaichezy",
+      "name": "快车资源",
+      "type": 1,
+      "api": "https://caiji.kuaichezy.org/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "lzizy",
+      "name": "量子影视",
+      "type": 1,
+      "api": "https://lzizy.net/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "niuniuzy",
+      "name": "牛牛资源",
+      "type": 1,
+      "api": "https://api.niuniuzy.me/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "ok",
+      "name": "OK资源",
+      "type": 1,
+      "api": "https://api.okzyw.net/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "subozy",
+      "name": "速播资源",
+      "type": 1,
+      "api": "https://www.subozy.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "suoniapi-com",
+      "name": "索尼资源",
+      "type": 1,
+      "api": "https://suoniapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "tyyszy",
+      "name": "天涯影视",
+      "type": 1,
+      "api": "https://tyyszyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "validation-lziapi",
+      "name": "聚合影视接口",
+      "type": 1,
+      "api": "https://cj.lziapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "xsd-sdzyapi-com",
+      "name": "闪电资源",
+      "type": 1,
+      "api": "https://xsd.sdzyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "zuida",
+      "name": "最大资源",
+      "type": 1,
+      "api": "https://zuida.xyz/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "playerType": 2,
+      "style": {
+        "type": "rect",
+        "ratio": 1.4
+      }
+    },
+    {
+      "key": "火狐",
+      "name": "茶杯狐",
+      "type": 1,
+      "api": "https://hhzyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 1,
+      "categories": [
+        "内地剧",
+        "韩剧",
+        "香港剧",
+        "台湾剧",
+        "欧美剧",
+        "日剧",
+        "动作片",
+        "科幻片",
+        "战争片",
+        "喜剧片",
+        "爱情片",
+        "恐怖片",
+        "犯罪片",
+        "剧情片",
+        "冒险片",
+        "记录片",
+        "大陆综艺",
+        "日韩综艺",
+        "台湾综艺",
+        "伦理片",
+        "欧美综艺",
+        "动画片",
+        "中国动漫",
+        "日本动漫",
+        "欧美动漫"
+      ]
+    },
+    {
+      "key": "虎牙采集",
+      "name": "🍁虎牙采集🍁|cdn2020",
+      "type": 1,
+      "api": "https://www.huyaapi.com/api.php/provide/vod/",
+      "style": {
+        "ratio": 1.7
+      }
+    },
+    {
+      "key": "金鹰采集",
+      "name": "🍁金鹰采集🍁|cdn2020",
+      "type": 1,
+      "api": "https://jyzyapi.com/provide/vod/",
+      "style": {
+        "ratio": 1.7
+      }
+    },
+    {
+      "key": "非凡采集",
+      "name": "🍁非凡采集🍁|cdn2020",
+      "type": 1,
+      "api": "http://cj.ffzyapi.com/api.php/provide/vod/",
+      "style": {
+        "ratio": 1.7
+      }
+    },
+    {
+      "key": "暴风采集",
+      "name": "🍁暴风采集🍁|cdn2020",
+      "type": 1,
+      "api": "https://bfzyapi.com/api.php/provide/vod/",
+      "style": {
+        "ratio": 1.7
+      }
+    },
+    {
+      "key": "新浪影视",
+      "name": "新浪影视",
+      "type": 1,
+      "api": "http://api.xinlangapi.com/xinlangapi.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": [
+        "国产剧",
+        "短剧",
+        "韩国剧",
+        "香港剧",
+        "台湾剧",
+        "欧美剧",
+        "动作片",
+        "科幻片",
+        "战争片",
+        "奇幻片",
+        "喜剧片",
+        "爱情片",
+        "恐怖片",
+        "犯罪片",
+        "悬疑片",
+        "惊悚片",
+        "剧情片",
+        "冒险片",
+        "记录片",
+        "动作片",
+        "日本剧",
+        "泰剧",
+        "国产综艺",
+        "港台综艺",
+        "欧美综艺",
+        "日韩综艺",
+        "国产动漫",
+        "港台动漫",
+        "日韩动漫"
+      ]
+    },
+    {
+      "key": "红牛影视",
+      "name": "红牛影视",
+      "type": 1,
+      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
+      "searchable": 0,
+      "quickSearch": 0,
+      "categories": [
+        "国产剧",
+        "短剧",
+        "韩国剧",
+        "香港剧",
+        "台湾剧",
+        "欧美剧",
+        "动作片",
+        "科幻片",
+        "战争片",
+        "奇幻片",
+        "喜剧片",
+        "爱情片",
+        "恐怖片",
+        "犯罪片",
+        "悬疑片",
+        "惊悚片",
+        "剧情片",
+        "冒险片",
+        "记录片",
+        "动作片",
+        "日本剧",
+        "泰剧",
+        "国产综艺",
+        "港台综艺",
+        "欧美综艺",
+        "日韩综艺",
+        "国产动漫",
+        "港台动漫",
+        "日韩动漫"
+      ]
+    },
+    {
+      "key": "闪电影视",
+      "name": "闪电影视",
+      "type": 1,
+      "api": "http://sdzyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": [
+        "国产剧",
+        "短剧",
+        "韩国剧",
+        "香港剧",
+        "台湾剧",
+        "欧美剧",
+        "动作片",
+        "科幻片",
+        "战争片",
+        "奇幻片",
+        "喜剧片",
+        "爱情片",
+        "恐怖片",
+        "犯罪片",
+        "悬疑片",
+        "惊悚片",
+        "剧情片",
+        "冒险片",
+        "记录片",
+        "动作片",
+        "日本剧",
+        "泰剧",
+        "国产综艺",
+        "港台综艺",
+        "欧美综艺",
+        "日韩综艺",
+        "国产动漫",
+        "港台动漫",
+        "日韩动漫"
+      ]
+    }
+  ]
+}
