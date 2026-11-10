@@ -1,0 +1,68 @@
+{
+  "name": "直播源审核记录",
+  "version": 1,
+  "updatedAt": "2026-11-10",
+  "policy": {
+    "included": "仅收录官方运营方域名上的公开直连 HLS；不使用第三方转播、私人 IP、付费频道破解、带登录令牌或绕过地域限制的地址。",
+    "openIndex": "iptv-org 中国频道 M3U 是公开索引，不是授权证明。该列表包含多种来源和地域限制条目，未能逐条确认频道权利及当前播放状态，因此不直接合并进可导入播放列表。",
+    "testLimit": "已检查 M3U 结构、URL 格式及官方域名归属线索；当前执行环境 DNS/外网访问受限，无法完成 HLS 请求及真实解码播放验证。"
+  },
+  "sources": [
+    {
+      "name": "CGTN English",
+      "url": "https://live.cgtn.com/1000/prog_index.m3u8",
+      "operator": "CGTN",
+      "format": "HLS",
+      "decision": "included",
+      "playbackTest": "not-run"
+    },
+    {
+      "name": "CGTN Documentary",
+      "url": "https://news.cgtn.com/resource/live/document/cgtn-doc.m3u8",
+      "operator": "CGTN",
+      "format": "HLS",
+      "decision": "included",
+      "playbackTest": "not-run"
+    },
+    {
+      "name": "CGTN Español",
+      "url": "https://livees.cgtn.com/1000e/prog_index.m3u8",
+      "operator": "CGTN",
+      "format": "HLS",
+      "decision": "included",
+      "playbackTest": "not-run"
+    },
+    {
+      "name": "CGTN Arabic",
+      "url": "https://news.cgtn.com/resource/live/arabic/cgtn-a.m3u8",
+      "operator": "CGTN",
+      "format": "HLS",
+      "decision": "included",
+      "playbackTest": "not-run"
+    },
+    {
+      "name": "CGTN Français",
+      "url": "https://news.cgtn.com/resource/live/french/cgtn-f.m3u8",
+      "operator": "CGTN",
+      "format": "HLS",
+      "decision": "included",
+      "playbackTest": "not-run"
+    },
+    {
+      "name": "CGTN Русский",
+      "url": "https://news.cgtn.com/resource/live/russian/cgtn-r.m3u8",
+      "operator": "CGTN",
+      "format": "HLS",
+      "decision": "included",
+      "playbackTest": "not-run"
+    },
+    {
+      "name": "iptv-org China M3U",
+      "url": "https://iptv-org.github.io/iptv/countries/cn.m3u",
+      "operator": "Community-maintained index",
+      "format": "M3U",
+      "decision": "excluded-pending-per-channel-rights-and-playback-review",
+      "playbackTest": "not-run"
+    }
+  ]
+}
