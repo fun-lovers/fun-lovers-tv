@@ -11,16 +11,19 @@
     "formatCheck": "已读取并成功解析的JSON标为json-parsed；无法直接读取内容的条目会在audit中标注，不将未验证说成已验证。"
   },
   "reviewSummary": {
-    "reviewed": 34,
-    "recentActivity": 9,
-    "included": 9,
+    "reviewed": 36,
+    "recentActivity": 11,
+    "included": 11,
     "stale": 6,
     "activityUnverified": 19,
-    "jsonParsed": 8,
+    "jsonParsed": 10,
     "playlistCountAddedThisRound": 8,
     "playlistEntriesAddedThisRound": 2770,
-    "addedSourcesThisRound": 3,
-    "playbackFullyVerifiedAddedThisRound": 0
+    "addedSourcesThisRound": 5,
+    "playbackFullyVerifiedAddedThisRound": 0,
+    "vodSourcesAddedThisRound": 2,
+    "vodSitesAddedThisRound": 36,
+    "vodEndpointsFullyProbedThisRound": 0
   },
   "urls": [
     {
@@ -67,6 +70,16 @@
       "name": "34 XJ 自动更新直播（752条）",
       "url": "https://gh-proxy.com/raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-live-xiongjian.json",
       "homepage": "https://github.com/xiongjian83/TvBox"
+    },
+    {
+      "name": "35 Harvest CMS 点播聚合（22站）",
+      "url": "https://raw.githubusercontent.com/hezvenzer/tvbox-harvest-cms/main/data/tvbox/index.json",
+      "homepage": "https://github.com/hezvenzer/tvbox-harvest-cms"
+    },
+    {
+      "name": "36 LibreTV VOD 直连接口（14站）",
+      "url": "https://raw.githubusercontent.com/kygn2000-bot/tvbox-source/main/libretv-vod-direct.json",
+      "homepage": "https://github.com/kygn2000-bot/tvbox-source"
     }
   ],
   "audit": [
@@ -446,7 +459,35 @@
       "playbackStatus": "not-fully-verified",
       "reason": "上游live.m3u于2026-11-09自动更新；文件以#EXTM3U开头，752个EXTINF条目均找到对应播放URL，并包含EPG声明。部分播放地址为动态或网络相关链接，当前执行环境未能完成端到端播放验证。",
       "evidence": "https://github.com/xiongjian83/TvBox/commit/7d70e2089cab078043f075bf1930ce9ee167847a"
+    },
+    {
+      "name": "35 Harvest CMS 点播聚合（22站）",
+      "url": "https://raw.githubusercontent.com/hezvenzer/tvbox-harvest-cms/main/data/tvbox/index.json",
+      "homepage": "https://github.com/hezvenzer/tvbox-harvest-cms",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-10T11:29:18Z",
+      "decision": "included",
+      "sourceType": "vod",
+      "siteCount": 22,
+      "validationStatus": "json-parsed; site-schema-checked",
+      "playbackStatus": "api-endpoints-not-probed",
+      "reason": "上游每日采集，TVBox index.json于2026-11-10 11:27 UTC生成；22个站点均为type:1，key/name/api字段完整，API地址均为HTTP(S)形式且key无重复。当前执行环境无法直接探测外部CMS API响应，因此仅确认配置结构，不宣称所有接口均可搜索或播放。",
+      "evidence": "https://github.com/hezvenzer/tvbox-harvest-cms/commit/91a401298d83dfc8a70bb80e713c1cd711268224"
+    },
+    {
+      "name": "36 LibreTV VOD 直连接口（14站）",
+      "url": "https://raw.githubusercontent.com/kygn2000-bot/tvbox-source/main/libretv-vod-direct.json",
+      "homepage": "https://github.com/kygn2000-bot/tvbox-source",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-07T00:23:17Z",
+      "decision": "included",
+      "sourceType": "vod",
+      "siteCount": 14,
+      "validationStatus": "json-parsed; site-schema-checked",
+      "playbackStatus": "api-endpoints-not-probed",
+      "reason": "上游于2026-11-07更新libretv-vod-direct.json；配置可正常解析，14个站点均为type:1，key/name/api字段完整且无重复，API地址均为HTTP(S)形式；无自定义spider依赖。当前执行环境无法直接探测外部CMS API响应，因此仅确认配置结构，不宣称所有接口均可搜索或播放。",
+      "evidence": "https://github.com/kygn2000-bot/tvbox-source/commit/ca0cfbc1cf815d65cb9aa401cc3c9271f530e10a"
     }
   ],
-  "lastReviewedAt": "2026-11-10 21:48 Asia/Tokyo"
+  "lastReviewedAt": "2026-11-10 22:05 Asia/Tokyo"
 }
