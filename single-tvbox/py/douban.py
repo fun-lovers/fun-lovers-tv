@@ -29,9 +29,9 @@ GROUPS = {
     "show_global_best_weekly": ("subject_collection/show_global_best_weekly/items", "subject_collection_items"),
 }
 DOUBAN_API = "https://frodo.douban.com/api/v2"
-API_KEY = os.environ.get("DOUBAN_API_KEY", "")
+API_KEY = "0ac44ae016490db2204ce0a042db2916"
 USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36 MicroMessenger/7.0.9.501 NetType/WIFI MiniProgramEnv/Windows WindowsWechat"
-REFERER = os.environ.get("DOUBAN_WECHAT_REFERER", "")
+REFERER = "https://servicewechat.com/wx2f9b06c1de1ccfca/84/page-frame.html"
 PIC_SUFFIX = '@Referer=https://api.douban.com/@User-Agent=Mozilla/5.0%20(Windows%20NT%2010.0;%20Win64;%20x64)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/122.0.0.0%20Safari/537.36'
 TODAY = date.today().isoformat()
 
