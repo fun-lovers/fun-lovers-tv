@@ -1,0 +1,22 @@
+{
+  "_readme": [
+    "TVBox 合法自用配置模板（单仓 JSON）。可直接填入 TVBox / 影视仓 的「配置地址」，也可放到局域网 HTTP 服务或你自己的 GitHub 仓库变成一个订阅链接。",
+    "合规边界：sites 故意留空，不加载任何第三方影视聚合源；lives 只指向你自己局域网内、基于已订阅运营商 IPTV 转换出的 m3u。TVBox 本身是开源空壳播放器，合法与否完全取决于填入的配置内容。",
+    "使用前必改：把 lives[0].url 里的 192.168.1.1:23234 换成你的 udpxy 实际地址与端口。组播地址只在自家内网有效，请勿作为公网源分享。",
+    "生成 m3u 的链路：光猫 IPTV 专网口 → OpenWrt/软路由 udpxy（UDP/RTP 组播转 HTTP 单播）→ iptv-api 测速去重生成 result.m3u → 用 python3 -m http.server 或路由器静态文件托管，把其 HTTP 地址填到这里。",
+    "未知顶层字段 _readme 会被 TVBox 忽略，不影响解析；如客户端较严格可直接删除本字段。"
+  ],
+  "sites": [],
+  "parses": [],
+  "flags": [],
+  "lives": [
+    {
+      "name": "我家直播 · 运营商IPTV（内网）",
+      "type": 0,
+      "url": "http://192.168.1.1:23234/playlist.m3u",
+      "epg": "",
+      "logo": "",
+      "playerType": 1
+    }
+  ]
+}
