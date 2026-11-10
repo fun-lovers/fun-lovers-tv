@@ -1,0 +1,10 @@
+{
+  "spider": "",
+  "lives": [
+    {
+      "name": "Best-Fan 中国直播（199条·含响应时间）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_all.m3u8"
+    }
+  ]
+}
