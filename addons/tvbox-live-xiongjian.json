@@ -1,0 +1,10 @@
+{
+  "spider": "",
+  "lives": [
+    {
+      "name": "XJ 直播列表（752条）",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/xiongjian83/TvBox/main/live.m3u"
+    }
+  ]
+}
