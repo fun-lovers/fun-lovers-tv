@@ -11,19 +11,26 @@
     "formatCheck": "已读取并成功解析的JSON标为json-parsed；无法直接读取内容的条目会在audit中标注，不将未验证说成已验证。"
   },
   "reviewSummary": {
-    "reviewed": 36,
-    "recentActivity": 11,
-    "included": 11,
+    "reviewed": 37,
+    "recentActivity": 12,
+    "included": 10,
     "stale": 6,
     "activityUnverified": 19,
-    "jsonParsed": 10,
+    "jsonParsed": 11,
     "playlistCountAddedThisRound": 8,
     "playlistEntriesAddedThisRound": 2770,
     "addedSourcesThisRound": 5,
     "playbackFullyVerifiedAddedThisRound": 0,
-    "vodSourcesAddedThisRound": 2,
-    "vodSitesAddedThisRound": 36,
-    "vodEndpointsFullyProbedThisRound": 0
+    "vodSourcesAddedThisRound": 1,
+    "vodSitesAddedThisRound": 26,
+    "vodEndpointsFullyProbedThisRound": 26,
+    "vodSourceConfigsReviewedThisRound": 2,
+    "vodSiteEntriesReviewedThisRound": 36,
+    "vodUniqueEndpointsTestedThisRound": 34,
+    "vodCatalogEndpointsOkThisRound": 26,
+    "vodDetailEndpointsOkThisRound": 26,
+    "vodSamplePlayUrlPresentThisRound": 26,
+    "vodEndpointsFailedThisRound": 8
   },
   "urls": [
     {
@@ -72,14 +79,9 @@
       "homepage": "https://github.com/xiongjian83/TvBox"
     },
     {
-      "name": "35 Harvest CMS 点播聚合（22站）",
-      "url": "https://raw.githubusercontent.com/hezvenzer/tvbox-harvest-cms/main/data/tvbox/index.json",
-      "homepage": "https://github.com/hezvenzer/tvbox-harvest-cms"
-    },
-    {
-      "name": "36 LibreTV VOD 直连接口（14站）",
-      "url": "https://raw.githubusercontent.com/kygn2000-bot/tvbox-source/main/libretv-vod-direct.json",
-      "homepage": "https://github.com/kygn2000-bot/tvbox-source"
+      "name": "37 点播接口实测合并版（26个唯一接口）",
+      "url": "https://raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-vod-verified.json",
+      "homepage": "https://github.com/fun-lovers/fun-lovers-tv"
     }
   ],
   "audit": [
@@ -466,13 +468,22 @@
       "homepage": "https://github.com/hezvenzer/tvbox-harvest-cms",
       "activityStatus": "recent",
       "lastActivity": "2026-11-10T11:29:18Z",
-      "decision": "included",
+      "decision": "superseded",
       "sourceType": "vod",
       "siteCount": 22,
-      "validationStatus": "json-parsed; site-schema-checked",
-      "playbackStatus": "api-endpoints-not-probed",
-      "reason": "上游每日采集，TVBox index.json于2026-11-10 11:27 UTC生成；22个站点均为type:1，key/name/api字段完整，API地址均为HTTP(S)形式且key无重复。当前执行环境无法直接探测外部CMS API响应，因此仅确认配置结构，不宣称所有接口均可搜索或播放。",
-      "evidence": "https://github.com/hezvenzer/tvbox-harvest-cms/commit/91a401298d83dfc8a70bb80e713c1cd711268224"
+      "validationStatus": "json-parsed; site-schema-checked; api-list-detail-tested",
+      "playbackStatus": "18-of-22-site-entries-returned-list-detail-and-sample-play-url",
+      "reason": "上游配置结构正常。2026-11-10 GitHub Actions 真实接口复测：22条站点记录/22个唯一API中18个目录与详情接口正常且含HTTP(S)样例播放地址；4个异常：dbzy.tv、mtzy.me、www.feisuzy.com DNS解析失败，p2100.net返回HTTP 403，taopianapi.com返回HTTP 404（其中前三项中前两项+feisu共3个DNS，另外403/404各1个；本组实际失败为4个）。该原始配置已由37号经实测筛选、去重的26接口合并配置替代，不再放入主导入urls。",
+      "evidence": "https://github.com/hezvenzer/tvbox-harvest-cms/commit/91a401298d83dfc8a70bb80e713c1cd711268224",
+      "testSummary": {
+        "siteEntries": 22,
+        "uniqueApiEndpoints": 22,
+        "listOk": 18,
+        "detailOk": 18,
+        "samplePlayUrlPresent": 18,
+        "failed": 4
+      },
+      "testRun": "https://github.com/fun-lovers/fun-lovers-tv/actions/runs/42835439901"
     },
     {
       "name": "36 LibreTV VOD 直连接口（14站）",
@@ -480,14 +491,48 @@
       "homepage": "https://github.com/kygn2000-bot/tvbox-source",
       "activityStatus": "recent",
       "lastActivity": "2026-11-07T00:23:17Z",
-      "decision": "included",
+      "decision": "superseded",
       "sourceType": "vod",
       "siteCount": 14,
-      "validationStatus": "json-parsed; site-schema-checked",
-      "playbackStatus": "api-endpoints-not-probed",
-      "reason": "上游于2026-11-07更新libretv-vod-direct.json；配置可正常解析，14个站点均为type:1，key/name/api字段完整且无重复，API地址均为HTTP(S)形式；无自定义spider依赖。当前执行环境无法直接探测外部CMS API响应，因此仅确认配置结构，不宣称所有接口均可搜索或播放。",
-      "evidence": "https://github.com/kygn2000-bot/tvbox-source/commit/ca0cfbc1cf815d65cb9aa401cc3c9271f530e10a"
+      "validationStatus": "json-parsed; site-schema-checked; api-list-detail-tested",
+      "playbackStatus": "10-of-14-site-entries-returned-list-detail-and-sample-play-url",
+      "reason": "上游配置结构正常。2026-11-10 GitHub Actions 真实接口复测：14条站点记录对应13个唯一API，其中9个唯一接口目录与详情正常并含HTTP(S)样例播放地址；4个唯一接口异常：hw8.live返回非JSON、www.heimuer.tv TLS证书校验失败、collect.wolongzyw.com返回非JSON、www.feisuzy.com DNS解析失败。由于配置内HHZY接口重复，原始条目数与唯一API数不同。该原始配置已由37号经实测筛选、去重的26接口合并配置替代，不再放入主导入urls。",
+      "evidence": "https://github.com/kygn2000-bot/tvbox-source/commit/ca0cfbc1cf815d65cb9aa401cc3c9271f530e10a",
+      "testSummary": {
+        "siteEntries": 14,
+        "uniqueApiEndpoints": 13,
+        "listOk": 9,
+        "detailOk": 9,
+        "samplePlayUrlPresent": 9,
+        "failed": 4
+      },
+      "testRun": "https://github.com/fun-lovers/fun-lovers-tv/actions/runs/42835439901"
+    },
+    {
+      "name": "37 点播接口实测合并版（26个唯一接口）",
+      "url": "https://raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-vod-verified.json",
+      "homepage": "https://github.com/fun-lovers/fun-lovers-tv",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-10T14:39:07Z",
+      "decision": "included",
+      "sourceType": "vod",
+      "siteCount": 26,
+      "uniqueApiCount": 26,
+      "validationStatus": "json-parsed; site-schema-checked; api-list-detail-tested",
+      "playbackStatus": "26-of-26-list-detail-ok;sample-http-url-present;media-not-fetched",
+      "reason": "由Harvest CMS与LibreTV两份近期配置合并而成。第一次与复测结果一致：36条原始站点记录去重为34个API；26个API的ac=list与ac=detail均返回数据，详情样例均含HTTP(S)播放地址。8个异常API未纳入本导入版。样例播放地址仅检查字段与格式，未下载媒体流，不能保证实际播放。",
+      "evidence": "https://github.com/fun-lovers/fun-lovers-tv/commit/e7276e5c5969bd42fbf6f4380c4872da41ff8477",
+      "testRun": "https://github.com/fun-lovers/fun-lovers-tv/actions/runs/42835439901",
+      "testSummary": {
+        "sourceConfigs": 2,
+        "siteEntriesReviewed": 36,
+        "uniqueApiEndpointsTested": 34,
+        "listOk": 26,
+        "detailOk": 26,
+        "samplePlayUrlPresent": 26,
+        "failed": 8
+      }
     }
   ],
-  "lastReviewedAt": "2026-11-10 22:05 Asia/Tokyo"
+  "lastReviewedAt": "2026-11-10 23:39 Asia/Tokyo"
 }
