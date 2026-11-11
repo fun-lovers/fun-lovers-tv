@@ -8,6 +8,7 @@ on:
       - 'drpy2/**'
       - 'unified-tvbox-bundle.zip'
       - 'scripts/validate_unified_bundle.py'
+      - 'scripts/unpack_unified_bundle.py'
       - '.github/workflows/deploy-drpy2-pages.yml'
 
 permissions:
@@ -50,18 +51,7 @@ jobs:
         run: |
           set -euo pipefail
           if [ -f unified-tvbox-bundle.zip ]; then
-            python - <<'PY'
-            from pathlib import Path
-            import shutil, tempfile, zipfile
-            with tempfile.TemporaryDirectory() as td:
-                with zipfile.ZipFile("unified-tvbox-bundle.zip") as z:
-                    z.extractall(td)
-                source = Path(td) / "unified-deliverable"
-                if not (source / "tvbox-unified.json").is_file():
-                    raise SystemExit("Bundle is missing unified-deliverable/tvbox-unified.json")
-                target = Path("dist/unified")
-                shutil.copytree(source, target, dirs_exist_ok=True)
-            PY
+            python scripts/unpack_unified_bundle.py unified-tvbox-bundle.zip dist/unified
             python scripts/validate_unified_bundle.py dist/unified
           else
             echo "Unified crawler bundle not uploaded; existing drpy2 Pages deployment continues."
