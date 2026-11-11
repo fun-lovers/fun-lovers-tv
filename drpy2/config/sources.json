@@ -1,0 +1,12 @@
+[
+  {
+    "key": "bilibili_open",
+    "name": "哔哩哔哩（官方公开元数据）",
+    "rule_file": "bilibili_open.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "调用官方公开搜索和详情元数据接口；播放跳转官方页面，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  }
+]
