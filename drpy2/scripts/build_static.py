@@ -41,16 +41,17 @@ def main():
     output.mkdir(parents=True)
     shutil.copytree(root / "public/js", output / "js")
     shutil.copytree(root / "public/libs", output / "libs")
+    # Use the standard TVBox schema. Most TVBox clients read "sites", not
+    # the non-standard localized key "网站".
     config = {
-        "免嗅": 0,
-        "网站": sites,
-        "解析": [],
-        "广告": [],
-        "drpy2_project": {
-            "name": "fun-lovers-tv-drpy2",
-            "deployment": "github-pages-static",
-            "notice": "Python runs only during GitHub Actions build; no online FastAPI service.",
-        },
+        "name": "fun-lovers-tv-drpy2",
+        "version": 1,
+        "description": "drpy2 static configuration hosted on GitHub Pages",
+        "spider": "",
+        "sites": sites,
+        "lives": [],
+        "parses": [],
+        "rules": [],
     }
     config_path = output / "tvbox.json"
     config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
