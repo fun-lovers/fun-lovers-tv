@@ -2,7 +2,7 @@
   "name": "TVBox 可用源索引",
   "version": 2,
   "updateTime": "2026-11-10",
-  "description": "本文件用于 TVBox / 影视仓 / OK影视 的「多仓」配置地址。urls仅保留有可追溯上游更新证据且更新时间位于近15天窗口内的配置。",
+  "description": "本文件用于 TVBox / 影视仓 / OK影视 的「多仓」配置地址。urls仅保留有可追溯上游更新证据、符合当前导入结构要求的配置；未能读取或结构不兼容的候选保留在audit。",
   "filterRule": {
     "activityWindowDays": 15,
     "from": "2026-10-26",
@@ -30,7 +30,14 @@
     "vodCatalogEndpointsOkThisRound": 26,
     "vodDetailEndpointsOkThisRound": 26,
     "vodSamplePlayUrlPresentThisRound": 26,
-    "vodEndpointsFailedThisRound": 8
+    "vodEndpointsFailedThisRound": 8,
+    "submittedInterfaceOccurrences": 57,
+    "submittedInterfaceUniqueUrls": 55,
+    "submittedInterfaceDuplicates": 2,
+    "submittedInterfaceReviewedThisRound": 55,
+    "submittedInterfaceJsonParsedThisRound": 1,
+    "submittedInterfaceCompatibleAndIncludedThisRound": 0,
+    "submittedInterfaceExcludedThisRound": 55
   },
   "urls": [
     {
@@ -151,7 +158,9 @@
       "activityStatus": "unknown",
       "lastActivity": null,
       "decision": "excluded",
-      "reason": "未找到可追溯的上游更新时间，无法确认15天内是否有更新。"
+      "reason": "2026-11-11直接读取并成功解析JSON；但配置包含外置Spider JAR、多个csp_*自定义爬虫及编码ext参数，依赖特定壳子/爬虫运行环境，不符合当前仓库仅收录可直接导入的标准配置入口要求，因此继续排除。",
+      "validationStatus": "json-parsed; incompatible-dependencies",
+      "lastReviewedAt": "2026-11-11"
     },
     {
       "name": "08 clun（101站）",
@@ -566,7 +575,497 @@
           "status": "DNS lookup failed"
         }
       ]
+    },
+    {
+      "name": "枫斗主接口",
+      "url": "http://枫斗.top/tv",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "饭太硬主域名",
+      "url": "http://www.饭太硬.cc/tv",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "html-landing",
+      "reason": "本轮读取结果为HTML导航/说明页，不是可直接导入的TVBox JSON配置。"
+    },
+    {
+      "name": "饭太硬备用域名",
+      "url": "http://www.饭太硬.net/tv",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "饭太硬 xxooo 备用",
+      "url": "http://fty.xxooo.cf/tv",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "饭太硬 art 备用",
+      "url": "http://www.饭太硬.art/tv",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "饭太硬 888484 备用",
+      "url": "http://fty.888484.xyz/tv",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "饭太硬 333232 备用",
+      "url": "http://fty.333232.xyz/tv",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "肥猫根地址",
+      "url": "http://肥猫.net/",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "肥猫 hello 子域",
+      "url": "http://hello.肥猫.net",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "肥猫 kstore ONE",
+      "url": "https://9877.kstore.space/ONE/one.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "摸鱼儿主地址",
+      "url": "http://我不是.摸鱼儿.top",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "小不点主地址",
+      "url": "http://www.小不点.com",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "王二小 newwex",
+      "url": "https://9280.kstore.vip/newwex.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "王二小主域名",
+      "url": "http://tvbox.王二小放牛娃.top",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "王二小 999888987",
+      "url": "http://tv.999888987.xyz/",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "王二小 999888123",
+      "url": "http://tv.999888123.xyz/",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "王二小 wex",
+      "url": "https://9280.kstore.vip/wex.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "王二小 iyouhun",
+      "url": "https://www.iyouhun.com/tv/wex",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "王二小 xn-- 域名",
+      "url": "http://tvbox.xn--4kq62z5rby2qupq9ub.top",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "欧歌 apitv id3",
+      "url": "https://xn--sdds-rp5imh.v.nxog.top/apitv.php?id=3",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "欧歌 apib id2",
+      "url": "https://xn--54qz74d.u.xn--dkw.xn--6qq986b3xl/apib.php?id=2",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "欧歌 apib id3",
+      "url": "https://xn--i8sz35d1yr.u.nxog.top/apib.php?id=3",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "欧歌 apib id4",
+      "url": "https://xn--z7x900a.e.nxog.top/apib.php?id=4",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "小盒子4K",
+      "url": "http://xhztv.top/4k.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "二月红",
+      "url": "https://700sjro44343.vicp.fun/eggp/0211/tv.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "菜妮丝站点",
+      "url": "https://tv.菜妮丝.top",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "html-landing",
+      "reason": "本轮读取结果为HTML导航/说明页，不是可直接导入的TVBox JSON配置。"
+    },
+    {
+      "name": "宝盒接口",
+      "url": "https://宝盒接口.top",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "潇洒接口",
+      "url": "https://qist.wyfc.qzz.io/xiaosa/api.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "苍蓝接口",
+      "url": "http://xn--6orr3pi6g9uu.top",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "catbox",
+      "url": "https://catbox.n13.club/jk/t4.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "影视仓配置分发首页",
+      "url": "http://影视仓.com/",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "html-landing",
+      "reason": "本轮读取结果为HTML导航/说明页，不是可直接导入的TVBox JSON配置。"
+    },
+    {
+      "name": "UUCCC",
+      "url": "http://xn--5mqx81b535a.com",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "html-landing",
+      "reason": "本轮读取结果为HTML导航/说明页，不是可直接导入的TVBox JSON配置。"
+    },
+    {
+      "name": "日后接口",
+      "url": "http://rihou.cc:555/nzk/nzk0722.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "真心接口",
+      "url": "https://cnb.cool/fish2018/zx/-/git/raw/master/FongMi.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "传说接口",
+      "url": "https://chuanshuo.77blog.cn/tv.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "蓝天接口",
+      "url": "https://gitee.com/lukei7/lib/raw/Luck/%E8%87%AA%E5%BB%BA.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "毒盒接口",
+      "url": "https://xn--8owq8u.com/tv/",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "蜗牛接口",
+      "url": "https://tv.xn--11x555b.top/svip",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "朱雀接口",
+      "url": "https://gitee.com/yiwu369/6758/raw/master/朱雀/api.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "茄子接口",
+      "url": "https://700sjro44343.vicp.fun/eggp/qzku/tv.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "肥猫 com 域名",
+      "url": "http://肥猫.com",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "parked-domain",
+      "reason": "域名当前显示为待售/停放页面，不是可用配置。"
+    },
+    {
+      "name": "小米接口",
+      "url": "http://miqk.cc/小米/DEMO.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "vox接口",
+      "url": "https://code.onedev.io/vox/~raw/master/demo.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "L佬接口",
+      "url": "https://android.lushunming.qzz.io/json/index.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "分享接口",
+      "url": "http://hucongrong.web3v.work/风水/fxz/fxz.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "喵影接口",
+      "url": "https://bitbucket.org/xduo/duoapi/raw/master/xpg.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "脑斧接口",
+      "url": "https://6492.kstore.space/xnf/xnf.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "timeout",
+      "reason": "请求超时，未能取得配置内容，不能判断JSON结构与接口可用性。"
+    },
+    {
+      "name": "雷蒙接口",
+      "url": "https://fastgit.cc/https://raw.githubusercontent.com/n3rddd/N3RD/master/JN/lemj.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "道长接口",
+      "url": "https://gitlab.com/duomv/dzhipy/-/raw/main/index.json",
+      "homepage": "",
+      "activityStatus": "unknown",
+      "lastActivity": null,
+      "decision": "excluded",
+      "validationStatus": "not-retrievable",
+      "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
     }
   ],
-  "lastReviewedAt": "2026-11-10 23:39 Asia/Tokyo"
+  "lastReviewedAt": "2026-11-11 20:09 Asia/Tokyo"
 }
