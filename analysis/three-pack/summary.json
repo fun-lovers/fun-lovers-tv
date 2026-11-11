@@ -1,0 +1,41 @@
+{
+  "sourcePackages": [
+    "星微",
+    "潇洒",
+    "宝盒"
+  ],
+  "siteRecords": 1563,
+  "files": {
+    "js": {
+      "paths": 273,
+      "unique": 190,
+      "duplicates": 83
+    },
+    "python": {
+      "paths": 145,
+      "unique": 129,
+      "duplicates": 16
+    },
+    "jar": {
+      "paths": 24,
+      "unique": 21,
+      "duplicates": 3
+    }
+  },
+  "uniqueFiles": 340,
+  "duplicatePathsRemoved": 102,
+  "runtimeAssetsKept": {
+    "js": 163,
+    "python": 122,
+    "jar": 7
+  },
+  "unifiedMainSites": 197,
+  "jarLineConfigs": 6,
+  "jarLineSites": 247,
+  "unresolvedNativeOrRemoteSites": 203,
+  "excludedSites": 916,
+  "excludedJars": 10,
+  "missingLocalReferences": 0,
+  "availability": "Not verified by live website or target TVBox playback tests",
+  "deployment": "Analysis-only branch; runtime assets are in the local delivery ZIP and have not yet been published to GitHub Pages"
+}
