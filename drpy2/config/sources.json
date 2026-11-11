@@ -1,132 +1,54 @@
 [
   {
     "key": "bilibili_open",
-    "name": "哔哩哔哩（综合）",
+    "name": "哔哩哔哩",
     "rule_file": "bilibili_open.js",
     "enabled": true,
     "searchable": true,
     "quickSearch": true,
-    "description": "官方公开搜索和详情元数据；播放跳转官方网页。",
+    "description": "Bilibili官方公开搜索与详情元数据；播放跳转官方页面。",
     "source": "https://api.bilibili.com/x/web-interface/search/type"
   },
   {
-    "key": "bili_movies",
-    "name": "哔哩哔哩 · 电影",
-    "rule_file": "bili_movies.js",
+    "key": "youtube",
+    "name": "YouTube",
+    "rule_file": "youtube.js",
     "enabled": true,
     "searchable": true,
     "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：电影；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
+    "description": "YouTube Data API v3；需自行配置 API Key，不提供绕过地区、登录或会员限制。",
+    "source": "https://www.googleapis.com/youtube/v3/search",
+    "credential": "YOUTUBE_API_KEY"
   },
   {
-    "key": "bili_tv",
-    "name": "哔哩哔哩 · 电视剧",
-    "rule_file": "bili_tv.js",
+    "key": "peertube",
+    "name": "PeerTube 联邦视频",
+    "rule_file": "peertube.js",
     "enabled": true,
     "searchable": true,
     "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：电视剧；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
+    "description": "PeerTube 官方公开 REST 搜索 API；当前使用公开演示实例，实例可用性可能变化。",
+    "source": "https://peertube.cpy.re/api/v1/search/videos"
   },
   {
-    "key": "bili_docs",
-    "name": "哔哩哔哩 · 纪录片",
-    "rule_file": "bili_docs.js",
+    "key": "dailymotion",
+    "name": "Dailymotion",
+    "rule_file": "dailymotion.js",
     "enabled": true,
     "searchable": true,
     "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：纪录片；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
+    "description": "Dailymotion 视频 API；如服务端要求应用凭据需自行配置。",
+    "source": "https://api.dailymotion.com/videos"
   },
   {
-    "key": "bili_anime",
-    "name": "哔哩哔哩 · 动漫",
-    "rule_file": "bili_anime.js",
+    "key": "vimeo",
+    "name": "Vimeo",
+    "rule_file": "vimeo.js",
     "enabled": true,
     "searchable": true,
     "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：动漫；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_variety",
-    "name": "哔哩哔哩 · 综艺",
-    "rule_file": "bili_variety.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：综艺；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_music",
-    "name": "哔哩哔哩 · 音乐",
-    "rule_file": "bili_music.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：音乐；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_tech",
-    "name": "哔哩哔哩 · 科技",
-    "rule_file": "bili_tech.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：科技；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_knowledge",
-    "name": "哔哩哔哩 · 知识",
-    "rule_file": "bili_knowledge.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：知识；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_life",
-    "name": "哔哩哔哩 · 生活",
-    "rule_file": "bili_life.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：生活；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_sports",
-    "name": "哔哩哔哩 · 体育",
-    "rule_file": "bili_sports.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：体育；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_games",
-    "name": "哔哩哔哩 · 游戏",
-    "rule_file": "bili_games.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：游戏；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
-  },
-  {
-    "key": "bili_education",
-    "name": "哔哩哔哩 · 教育",
-    "rule_file": "bili_education.js",
-    "enabled": true,
-    "searchable": true,
-    "quickSearch": true,
-    "description": "Bilibili官方公开元数据分类检索：教育；播放跳转官方网页，不提取媒体直链。",
-    "source": "https://api.bilibili.com/x/web-interface/search/type"
+    "description": "Vimeo 官方 API；需自行配置 public-scope access token。",
+    "source": "https://api.vimeo.com/videos",
+    "credential": "VIMEO_ACCESS_TOKEN"
   }
 ]
