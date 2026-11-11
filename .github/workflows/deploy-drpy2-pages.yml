@@ -1,4 +1,4 @@
-name: Deploy drpy2 to GitHub Pages
+name: Deploy drpy2 and unified TVBox assets to GitHub Pages
 
 on:
   workflow_dispatch:
@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - 'drpy2/**'
+      - 'unified-tvbox-bundle.zip'
+      - 'scripts/validate_unified_bundle.py'
       - '.github/workflows/deploy-drpy2-pages.yml'
 
 permissions:
@@ -20,7 +22,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,12 +40,32 @@ jobs:
           curl --fail --location --retry 3 --connect-timeout 20 "$URL" -o drpy2/public/libs/drpy2.min.js
           test "$(wc -c < drpy2/public/libs/drpy2.min.js)" -gt 1000
           sha256sum drpy2/public/libs/drpy2.min.js | tee drpy2/runtime-sha256.txt
-      - name: Build static Pages site
+      - name: Build static drpy2 Pages site
         env:
           PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/drpy2
         run: python drpy2/scripts/build_static.py --base-url "$PAGES_BASE_URL" --output dist/drpy2
       - name: Include runtime checksum
         run: cp drpy2/runtime-sha256.txt dist/drpy2/
+      - name: Include unified crawler bundle when uploaded
+        run: |
+          set -euo pipefail
+          if [ -f unified-tvbox-bundle.zip ]; then
+            python - <<'PY'
+            from pathlib import Path
+            import shutil, tempfile, zipfile
+            with tempfile.TemporaryDirectory() as td:
+                with zipfile.ZipFile("unified-tvbox-bundle.zip") as z:
+                    z.extractall(td)
+                source = Path(td) / "unified-deliverable"
+                if not (source / "tvbox-unified.json").is_file():
+                    raise SystemExit("Bundle is missing unified-deliverable/tvbox-unified.json")
+                target = Path("dist/unified")
+                shutil.copytree(source, target, dirs_exist_ok=True)
+            PY
+            python scripts/validate_unified_bundle.py dist/unified
+          else
+            echo "Unified crawler bundle not uploaded; existing drpy2 Pages deployment continues."
+          fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
