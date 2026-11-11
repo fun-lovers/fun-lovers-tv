@@ -1,7 +1,7 @@
 {
   "name": "TVBox 可用源索引",
   "version": 2,
-  "updateTime": "2026-11-10",
+  "updateTime": "2026-11-11",
   "description": "本文件用于 TVBox / 影视仓 / OK影视 的「多仓」配置地址。urls仅保留有可追溯上游更新证据、符合当前导入结构要求的配置；未能读取或结构不兼容的候选保留在audit。",
   "filterRule": {
     "activityWindowDays": 15,
@@ -13,10 +13,10 @@
   "reviewSummary": {
     "reviewed": 37,
     "recentActivity": 12,
-    "included": 10,
+    "included": 11,
     "stale": 6,
     "activityUnverified": 19,
-    "jsonParsed": 11,
+    "jsonParsed": 12,
     "playlistCountAddedThisRound": 8,
     "playlistEntriesAddedThisRound": 2770,
     "addedSourcesThisRound": 5,
@@ -37,7 +37,10 @@
     "submittedInterfaceReviewedThisRound": 55,
     "submittedInterfaceJsonParsedThisRound": 1,
     "submittedInterfaceCompatibleAndIncludedThisRound": 0,
-    "submittedInterfaceExcludedThisRound": 55
+    "submittedInterfaceExcludedThisRound": 55,
+    "dynamicMultiRepoIndexesAddedThisRound": 1,
+    "dynamicMultiRepoChildEntriesListedThisRound": 23,
+    "dynamicMultiRepoChildEntriesPlaybackVerifiedThisRound": 0
   },
   "urls": [
     {
@@ -89,6 +92,11 @@
       "name": "37 点播接口实测合并版（26个唯一接口）",
       "url": "https://raw.githubusercontent.com/fun-lovers/fun-lovers-tv/main/addons/tvbox-vod-verified.json",
       "homepage": "https://github.com/fun-lovers/fun-lovers-tv"
+    },
+    {
+      "name": "TVBox.org 动态多仓列表（23条候选）",
+      "url": "https://raw.githubusercontent.com/TVboxorg/TVbox/main/dist/tvbox.json",
+      "homepage": "https://github.com/TVboxorg/TVbox"
     }
   ],
   "audit": [
@@ -1065,7 +1073,18 @@
       "decision": "excluded",
       "validationStatus": "not-retrievable",
       "reason": "本轮无法直接读取该地址的响应内容，无法核实JSON格式、TVBox字段结构及播放接口；按未验证不纳入主多仓urls。"
+    },
+    {
+      "name": "TVBox.org 动态多仓列表（23条候选）",
+      "url": "https://raw.githubusercontent.com/TVboxorg/TVbox/main/dist/tvbox.json",
+      "homepage": "https://github.com/TVboxorg/TVbox",
+      "activityStatus": "recent",
+      "lastActivity": "2026-11-11T04:08:35Z",
+      "decision": "included",
+      "validationStatus": "json-parsed; multi-repository-schema-checked; child-endpoints-not-individually-verified",
+      "reason": "上游dist/tvbox.json已读取并成功解析，根结构为urls数组，含23个仓库入口；同一上游dist/list.json的探测摘要为38个候选中23个up、15个down。该入口作为一个动态多仓目录加入本仓库；其子仓库是否被影视仓客户端递归展开、以及每个子仓库的实际播放情况，尚未在客户端端到端验证。含外置Spider JAR的子配置不应视为无依赖可用源。",
+      "evidence": "https://github.com/TVboxorg/TVbox/blob/main/dist/tvbox.json"
     }
   ],
-  "lastReviewedAt": "2026-11-11 20:09 Asia/Tokyo"
+  "lastReviewedAt": "2026-11-11T23:00:00+08:00"
 }
