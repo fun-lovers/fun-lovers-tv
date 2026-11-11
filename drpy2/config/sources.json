@@ -1,12 +1,132 @@
 [
   {
     "key": "bilibili_open",
-    "name": "哔哩哔哩（官方公开元数据）",
+    "name": "哔哩哔哩（综合）",
     "rule_file": "bilibili_open.js",
     "enabled": true,
     "searchable": true,
     "quickSearch": true,
-    "description": "调用官方公开搜索和详情元数据接口；播放跳转官方页面，不提取媒体直链。",
+    "description": "官方公开搜索和详情元数据；播放跳转官方网页。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_movies",
+    "name": "哔哩哔哩 · 电影",
+    "rule_file": "bili_movies.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：电影；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_tv",
+    "name": "哔哩哔哩 · 电视剧",
+    "rule_file": "bili_tv.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：电视剧；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_docs",
+    "name": "哔哩哔哩 · 纪录片",
+    "rule_file": "bili_docs.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：纪录片；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_anime",
+    "name": "哔哩哔哩 · 动漫",
+    "rule_file": "bili_anime.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：动漫；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_variety",
+    "name": "哔哩哔哩 · 综艺",
+    "rule_file": "bili_variety.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：综艺；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_music",
+    "name": "哔哩哔哩 · 音乐",
+    "rule_file": "bili_music.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：音乐；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_tech",
+    "name": "哔哩哔哩 · 科技",
+    "rule_file": "bili_tech.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：科技；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_knowledge",
+    "name": "哔哩哔哩 · 知识",
+    "rule_file": "bili_knowledge.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：知识；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_life",
+    "name": "哔哩哔哩 · 生活",
+    "rule_file": "bili_life.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：生活；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_sports",
+    "name": "哔哩哔哩 · 体育",
+    "rule_file": "bili_sports.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：体育；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_games",
+    "name": "哔哩哔哩 · 游戏",
+    "rule_file": "bili_games.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：游戏；播放跳转官方网页，不提取媒体直链。",
+    "source": "https://api.bilibili.com/x/web-interface/search/type"
+  },
+  {
+    "key": "bili_education",
+    "name": "哔哩哔哩 · 教育",
+    "rule_file": "bili_education.js",
+    "enabled": true,
+    "searchable": true,
+    "quickSearch": true,
+    "description": "Bilibili官方公开元数据分类检索：教育；播放跳转官方网页，不提取媒体直链。",
     "source": "https://api.bilibili.com/x/web-interface/search/type"
   }
 ]
