@@ -1,0 +1,404 @@
+{
+  "name": "TVBox 可用源索引",
+  "version": 1,
+  "updateTime": "2026-11-11",
+  "description": "",
+  "urls": [
+    {
+      "name": "TVBox.org 官方聚合",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/TVboxorg/TVbox/main/dist/official.json",
+      "homepage": "https://www.tvbox.org/"
+    },
+    {
+      "name": "clun",
+      "url": "https://clun.top/box.json",
+      "homepage": "https://github.com/cluntop/tvbox"
+    },
+	{
+      "name": "张佬接口",
+      "url": "https://clun.top/aa.json",
+      "homepage": ""
+    },
+	{
+      "name": "PG 接口",
+      "url": "https://clun.top/jsm.json",
+      "homepage": ""
+    },
+	{
+      "name": "18+ 接口",
+      "url": "https://clun.top/fun.json",
+      "homepage": ""
+    },
+    {
+      "name": "Lightconer 聚合",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/Lightconer/tvbox-source/main/tvbox.json",
+      "homepage": "https://github.com/Lightconer/tvbox-source"
+    },
+    {
+      "name": "小米",
+      "url": "https://gh-proxy.org/raw.githubusercontent.com/ggrrttyyiii/CatVodSpider/refs/heads/main/json/demo.json",
+      "homepage": "https://github.com/ggrrttyyiii/CatVodSpider"
+    },
+    {
+      "name": "凯弟2线",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/box",
+      "homepage": "https://github.com/zhoujck/config"
+    },
+    {
+      "name": "jiusanzhou 聚合",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/jiusanzhou/tvbox/main/tvbox.json",
+      "homepage": "https://github.com/jiusanzhou/tvbox"
+    },
+	{
+      "name": "摸鱼",
+      "url": "https://6800.kstore.vip/fish.json",
+      "homepage": "https://6800.kstore.vip"
+    },
+	{
+      "name": "09 王二小",
+      "url": "https://9280.kstore.vip/aiwex.json",
+      "homepage": "https://9280.kstore.vip"
+    },
+    {
+      "name": "10 王二小 备用",
+      "url": "https://9280.kstore.space/aiwex.json",
+      "homepage": ""
+    },
+    {
+      "name": "11 嗷呜",
+      "url": "https://9763.kstore.vip/aowu.json",
+      "homepage": "https://9763.kstore.vip"
+    },
+	{
+      "name": "13 星微VIP",
+      "url": "https://7337.kstore.vip/xw/测试勿传",
+      "homepage": "https://7337.kstore.vip"
+    },
+	{
+      "name": "1健康家用",
+      "url": "https://gitlab.com/noimank/tvbox/-/raw/main/tvbox1.json",
+      "homepage": "https://gitlab.com/noimank/tvbox"
+    },
+    {
+      "name": "凯弟1线",
+      "url": "https://jihulab.com/jyqhkd1/kai/-/raw/main/机缘巧盒凯弟.json",
+      "homepage": "https://jihulab.com/jyqhkd1/kai"
+    },
+    {
+      "name": "小马",
+      "url": "https://szyyds.cn/tv/x.json",
+      "homepage": "https://szyyds.cn"
+    },
+    {
+      "name": "香雅情",
+      "url": "https://play.iptv365.org/香雅情/api.json",
+      "homepage": "https://play.iptv365.org"
+    },
+    {
+      "name": "聚玩",
+      "url": "http://xhztv.top/xhz",
+      "homepage": "http://xhztv.top"
+    },
+    {
+      "name": "高天流云 XYQ版",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/XYQ.json",
+      "homepage": "https://github.com/gaotianliuyun/gao"
+    },
+    {
+      "name": "香雅情 XYQ",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json",
+      "homepage": "https://github.com/xyq254245/xyqonlinerule"
+    },
+    {
+      "name": "真六",
+      "url": "https://cccimg.com/down.php/7d1f30263b3f2bf3deda2d7faeef4844.zhen6",
+      "homepage": "https://cccimg.com"
+    },
+    {
+      "name": "挺好",
+      "url": "https://ztha.top/TVBox/thdjk.json",
+      "homepage": "https://ztha.top"
+    },
+    {
+      "name": "小米",
+      "url": "https://gh-proxy.org/raw.githubusercontent.com/ggrrttyyiii/CatVodSpider/refs/heads/main/json/demo.json",
+      "homepage": "https://github.com/ggrrttyyiii/CatVodSpider"
+    },
+    {
+      "name": "夏夏影视",
+      "url": "https://11405.kstore.space/xiaye/qk4k.json",
+      "homepage": "https://11405.kstore.space"
+    },
+    {
+      "name": "高天流云 0827版",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/0827.json",
+      "homepage": "https://github.com/gaotianliuyun/gao"
+    },
+    {
+      "name": "凯弟3线",
+      "url": "https://jihulab.com/jyqhkd/kd/-/raw/main/kai.json",
+      "homepage": "https://jihulab.com/jyqhkd/kd"
+    },
+    {
+      "name": "动漫",
+      "url": "https://www.yingm.cc/dm/dm.json",
+      "homepage": "https://www.yingm.cc"
+    },
+    {
+      "name": "凯弟2线",
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/box",
+      "homepage": "https://github.com/zhoujck/config"
+    },
+    {
+      "name": "俊宇",
+      "url": "http://home.jundie.top:81/top98.json",
+      "homepage": "http://home.jundie.top:81"
+    },
+    {
+      "name": "老张",
+      "url": "https://zhangqun1818.serv00.net/zq/api.json",
+      "homepage": "https://zhangqun1818.serv00.net"
+    },
+    {
+      "name": "饭太硬主域名",
+      "url": "http://www.饭太硬.cc/tv",
+      "homepage": ""
+    },
+    {
+      "name": "饭太硬备用域名",
+      "url": "http://www.饭太硬.net/tv",
+      "homepage": ""
+    },
+    {
+      "name": "饭太硬 xxooo 备用",
+      "url": "http://fty.xxooo.cf/tv",
+      "homepage": ""
+    },
+    {
+      "name": "饭太硬 art 备用",
+      "url": "http://www.饭太硬.art/tv",
+      "homepage": ""
+    },
+    {
+      "name": "饭太硬 888484 备用",
+      "url": "http://fty.888484.xyz/tv",
+      "homepage": ""
+    },
+    {
+      "name": "饭太硬 333232 备用",
+      "url": "http://fty.333232.xyz/tv",
+      "homepage": ""
+    },
+    {
+      "name": "肥猫根地址",
+      "url": "http://肥猫.net/",
+      "homepage": ""
+    },
+    {
+      "name": "肥猫 hello 子域",
+      "url": "http://hello.肥猫.net",
+      "homepage": ""
+    },
+    {
+      "name": "肥猫 kstore ONE",
+      "url": "https://9877.kstore.space/ONE/one.json",
+      "homepage": ""
+    },
+    {
+      "name": "摸鱼儿主地址",
+      "url": "http://我不是.摸鱼儿.top",
+      "homepage": ""
+    },
+    {
+      "name": "小不点主地址",
+      "url": "http://www.小不点.com",
+      "homepage": ""
+    },
+    {
+      "name": "王二小 newwex",
+      "url": "https://9280.kstore.vip/newwex.json",
+      "homepage": ""
+    },
+    {
+      "name": "王二小主域名",
+      "url": "http://tvbox.王二小放牛娃.top",
+      "homepage": ""
+    },
+    {
+      "name": "王二小 999888987",
+      "url": "http://tv.999888987.xyz/",
+      "homepage": ""
+    },
+    {
+      "name": "王二小 999888123",
+      "url": "http://tv.999888123.xyz/",
+      "homepage": ""
+    },
+    {
+      "name": "王二小 wex",
+      "url": "https://9280.kstore.vip/wex.json",
+      "homepage": ""
+    },
+    {
+      "name": "王二小 iyouhun",
+      "url": "https://www.iyouhun.com/tv/wex",
+      "homepage": ""
+    },
+    {
+      "name": "王二小 xn-- 域名",
+      "url": "http://tvbox.xn--4kq62z5rby2qupq9ub.top",
+      "homepage": ""
+    },
+    {
+      "name": "欧歌 apitv id3",
+      "url": "https://xn--sdds-rp5imh.v.nxog.top/apitv.php?id=3",
+      "homepage": ""
+    },
+    {
+      "name": "欧歌 apib id2",
+      "url": "https://xn--54qz74d.u.xn--dkw.xn--6qq986b3xl/apib.php?id=2",
+      "homepage": ""
+    },
+    {
+      "name": "欧歌 apib id3",
+      "url": "https://xn--i8sz35d1yr.u.nxog.top/apib.php?id=3",
+      "homepage": ""
+    },
+    {
+      "name": "欧歌 apib id4",
+      "url": "https://xn--z7x900a.e.nxog.top/apib.php?id=4",
+      "homepage": ""
+    },
+    {
+      "name": "小盒子4K",
+      "url": "http://xhztv.top/4k.json",
+      "homepage": ""
+    },
+    {
+      "name": "二月红",
+      "url": "https://700sjro44343.vicp.fun/eggp/0211/tv.json",
+      "homepage": ""
+    },
+    {
+      "name": "菜妮丝站点",
+      "url": "https://tv.菜妮丝.top",
+      "homepage": ""
+    },
+    {
+      "name": "宝盒接口",
+      "url": "https://宝盒接口.top",
+      "homepage": ""
+    },
+    {
+      "name": "潇洒接口",
+      "url": "https://qist.wyfc.qzz.io/xiaosa/api.json",
+      "homepage": ""
+    },
+    {
+      "name": "苍蓝接口",
+      "url": "http://xn--6orr3pi6g9uu.top",
+      "homepage": ""
+    },
+    {
+      "name": "catbox",
+      "url": "https://catbox.n13.club/jk/t4.json",
+      "homepage": ""
+    },
+    {
+      "name": "影视仓配置分发首页",
+      "url": "http://影视仓.com/",
+      "homepage": ""
+    },
+    {
+      "name": "UUCCC",
+      "url": "http://xn--5mqx81b535a.com",
+      "homepage": ""
+    },
+    {
+      "name": "日后接口",
+      "url": "http://rihou.cc:555/nzk/nzk0722.json",
+      "homepage": ""
+    },
+    {
+      "name": "真心接口",
+      "url": "https://cnb.cool/fish2018/zx/-/git/raw/master/FongMi.json",
+      "homepage": ""
+    },
+    {
+      "name": "传说接口",
+      "url": "https://chuanshuo.77blog.cn/tv.json",
+      "homepage": ""
+    },
+    {
+      "name": "蓝天接口",
+      "url": "https://gitee.com/lukei7/lib/raw/Luck/%E8%87%AA%E5%BB%BA.json",
+      "homepage": ""
+    },
+    {
+      "name": "毒盒接口",
+      "url": "https://xn--8owq8u.com/tv/",
+      "homepage": ""
+    },
+    {
+      "name": "蜗牛接口",
+      "url": "https://tv.xn--11x555b.top/svip",
+      "homepage": ""
+    },
+    {
+      "name": "朱雀接口",
+      "url": "https://gitee.com/yiwu369/6758/raw/master/朱雀/api.json",
+      "homepage": ""
+    },
+    {
+      "name": "茄子接口",
+      "url": "https://700sjro44343.vicp.fun/eggp/qzku/tv.json",
+      "homepage": ""
+    },
+    {
+      "name": "肥猫 com 域名",
+      "url": "http://肥猫.com",
+      "homepage": ""
+    },
+    {
+      "name": "小米接口",
+      "url": "http://miqk.cc/小米/DEMO.json",
+      "homepage": ""
+    },
+    {
+      "name": "vox接口",
+      "url": "https://code.onedev.io/vox/~raw/master/demo.json",
+      "homepage": ""
+    },
+    {
+      "name": "L佬接口",
+      "url": "https://android.lushunming.qzz.io/json/index.json",
+      "homepage": ""
+    },
+    {
+      "name": "分享接口",
+      "url": "http://hucongrong.web3v.work/风水/fxz/fxz.json",
+      "homepage": ""
+    },
+    {
+      "name": "喵影接口",
+      "url": "https://bitbucket.org/xduo/duoapi/raw/master/xpg.json",
+      "homepage": ""
+    },
+    {
+      "name": "脑斧接口",
+      "url": "https://6492.kstore.space/xnf/xnf.json",
+      "homepage": ""
+    },
+    {
+      "name": "雷蒙接口",
+      "url": "https://fastgit.cc/https://raw.githubusercontent.com/n3rddd/N3RD/master/JN/lemj.json",
+      "homepage": ""
+    },
+    {
+      "name": "道长接口",
+      "url": "https://gitlab.com/duomv/dzhipy/-/raw/main/index.json",
+      "homepage": ""
+    }
+  ],
+  "lastReviewedAt": "2026-11-11T23:00:00+08:00"
+}
