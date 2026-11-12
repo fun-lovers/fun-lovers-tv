@@ -1,0 +1,52 @@
+name: Audit bundled netdisk assets
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Release tag containing unified-tvbox-bundle.zip (blank = latest release)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download unified bundle from Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG_INPUT: ${{ inputs.release_tag }}
+        run: |
+          set -euo pipefail
+          TAG="$RELEASE_TAG_INPUT"
+          if [ -z "$TAG" ]; then
+            TAG="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 1 --json tagName,isDraft --jq '.[] | select(.isDraft == false) | .tagName' | head -n 1)"
+          fi
+          test -n "$TAG"
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "unified-tvbox-bundle.zip" --dir .
+          test -s unified-tvbox-bundle.zip
+          echo "Auditing release tag: $TAG"
+      - name: Inventory existing netdisk and credential schema
+        run: |
+          python scripts/audit_netdisk_bundle.py unified-tvbox-bundle.zip netdisk-audit.json
+          python - <<'PY'
+          import json
+          d=json.load(open("netdisk-audit.json",encoding="utf-8"))
+          print("\\n=== MATCHED FILES ===")
+          for x in d["matched_files"]: print(x)
+          print("\\n=== CREDENTIAL FIELD NAMES ONLY ===")
+          print(", ".join(d["credential_key_names"]))
+          print("\\n=== JSON ENTRY COUNT ===")
+          print(len(d["json_entries"]))
+          PY
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: netdisk-asset-audit
+          path: netdisk-audit.json
+          retention-days: 14
