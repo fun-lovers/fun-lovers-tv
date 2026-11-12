@@ -15,5 +15,18 @@ This branch is an additive refactor workspace. Existing project files and publis
 4. Static checks and GitHub Actions verification.
 5. Client import/playback verification where a real client is available.
 
+## Audit documents
+- [File inventory](inventory.md)
+- [Dependency and call map](dependency-map.md)
+- [Prioritized issue register](issues.md)
+- [Python/JS runtime matrix](runtime-matrix.json)
+- [Implementation and CI validation log](implementation-log.md)
+
+## Current implementation status
+- Static contract checks and GitHub Actions CI are passing on this branch.
+- drpy2 runtime pinning/checksum enforcement, Python import/TLS fixes, YouTube pagination, and ZIP extraction limits have been added.
+- The Release bundle's Android DEX/JAR inventory has been audited and attached as a CI artifact.
+- Client-side playback and JAR loading are still pending real-device/client verification.
+
 ## Important limits
 A successful JSON parse, HTTP status, or GitHub Pages deployment does not prove that a TVBox client can execute a spider or decode a media stream. Those are separate validation layers.
