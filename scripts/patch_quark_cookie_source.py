@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""Patch the released unified bundle to use its existing Quark cloud-drive resolver."""
+from __future__ import annotations
+import json
+import sys
+from pathlib import Path
+
+SITE_KEY = "xw_bad1f_cat_58"
+API = "./sources/星微/tvboxTW/本地【拾光线路】/open/wanpan.js"
+RESOLVER = "sources/星微/tvboxTW/本地【拾光线路】/open/wanpan.js"
+
+def patch(root: Path) -> None:
+    root = root.resolve()
+    config_path = root / "tvbox-unified.json"
+    resolver_path = root / RESOLVER
+    if not config_path.is_file() or not resolver_path.is_file():
+        raise SystemExit("Bundle is missing tvbox-unified.json or the Quark resolver")
+    resolver = resolver_path.read_text(encoding="utf-8")
+    required = ["Quark.getFilesByShareUrl", "Quark.getLiveTranscoding", "Quark.cookie"]
+    missing = [item for item in required if item not in resolver]
+    if missing:
+        raise SystemExit("Quark resolver capability check failed: " + ", ".join(missing))
+    data = json.loads(config_path.read_text(encoding="utf-8"))
+    sites = data.get("sites") if isinstance(data, dict) else None
+    if not isinstance(sites, list):
+        raise SystemExit("Unified config has no sites array")
+    matches = [s for s in sites if isinstance(s, dict) and s.get("key") == SITE_KEY]
+    if len(matches) != 1:
+        raise SystemExit(f"Expected exactly one {SITE_KEY}; found {len(matches)}")
+    site = matches[0]
+    site["api"] = API
+    site["type"] = 3
+    site["searchable"] = 1
+    site["quickSearch"] = 0
+    ext = site.get("ext")
+    if not isinstance(ext, dict):
+        ext = {}
+    ext.setdefault("quark_cookie", "")
+    ext.setdefault("line_order", ["夸克"])
+    ext.setdefault("quark_original", 1)
+    ext.setdefault("quark_infinite", 1)
+    ext.setdefault("quark_transfer", 1)
+    ext.setdefault("threads", "16")
+    site["ext"] = ext
+    # Keep signed Quark/CDN URLs intact; arbitrary query suffixes can invalidate them.
+    old = 'urls.push(name, finalUrl + `&threads=${downThreads}`);'
+    new = "urls.push(name, finalUrl);"
+    if old in resolver:
+        resolver = resolver.replace(old, new, 1)
+        resolver_path.write_text(resolver, encoding="utf-8")
+    elif new not in resolver:
+        raise SystemExit("Could not verify playback URL construction in wanpan.js")
+    config_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    check = json.loads(config_path.read_text(encoding="utf-8"))
+    target = next(s for s in check["sites"] if s.get("key") == SITE_KEY)
+    assert target["api"] == API and isinstance(target["ext"], dict)
+    assert "quark_cookie" in target["ext"] and "Quark.getFilesByShareUrl" in resolver
+    assert "urls.push(name, finalUrl);" in resolver
+    assert old not in resolver
+    print(f"PASS: {SITE_KEY} uses the real Quark resolver; Cookie ext supported; signed URLs preserved.")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        raise SystemExit("Usage: patch_quark_cookie_source.py BUNDLE_ROOT")
+    patch(Path(sys.argv[1]))
