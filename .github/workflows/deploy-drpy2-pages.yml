@@ -12,10 +12,12 @@ on:
   push:
     branches: [main]
     paths:
-      - 'drpy2/**'
-      - 'scripts/validate_unified_bundle.py'
-      - 'scripts/unpack_unified_bundle.py'
-      - '.github/workflows/deploy-drpy2-pages.yml'
+      - "drpy2/**"
+      - "scripts/validate_unified_bundle.py"
+      - "scripts/unpack_unified_bundle.py"
+      - "scripts/audit_netdisk_bundle.py"
+      - ".github/workflows/deploy-drpy2-pages.yml"
+      - ".github/workflows/audit-netdisk-assets.yml"
 
 permissions:
   contents: read
@@ -33,10 +35,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
+
+      - name: Preflight Python tools and regression tests
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/unpack_unified_bundle.py \
+            scripts/validate_unified_bundle.py \
+            scripts/audit_netdisk_bundle.py
+          python scripts/validate_unified_bundle.py --self-test
+          python scripts/audit_netdisk_bundle.py --self-test
+
       - name: Download drpy2 runtime
         env:
           DRPY2_RUNTIME_URL: ${{ vars.DRPY2_RUNTIME_URL }}
@@ -47,12 +61,15 @@ jobs:
           curl --fail --location --retry 3 --connect-timeout 20 "$URL" -o drpy2/public/libs/drpy2.min.js
           test "$(wc -c < drpy2/public/libs/drpy2.min.js)" -gt 1000
           sha256sum drpy2/public/libs/drpy2.min.js | tee drpy2/runtime-sha256.txt
+
       - name: Build static drpy2 Pages site
         env:
           PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/drpy2
         run: python drpy2/scripts/build_static.py --base-url "$PAGES_BASE_URL" --output dist/drpy2
+
       - name: Include runtime checksum
         run: cp drpy2/runtime-sha256.txt dist/drpy2/
+
       - name: Download unified bundle from GitHub Release when available
         env:
           GH_TOKEN: ${{ github.token }}
@@ -70,8 +87,9 @@ jobs:
             TAG="$RELEASE_TAG_INPUT"
             REQUIRED="true"
           else
-            TAG="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 1 --json tagName,isDraft --jq '.[] | select(.isDraft == false) | .tagName' | head -n 1 || true)"
+            TAG="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 20 --json tagName,isDraft --jq '[.[] | select(.isDraft == false)][0].tagName // empty')"
           fi
+
           if [ -z "$TAG" ]; then
             if [ "$REQUIRED" = "true" ]; then
               echo "A release tag is required but was not resolved." >&2
@@ -80,7 +98,8 @@ jobs:
             echo "No published release found; deploying drpy2 only."
             exit 0
           fi
-          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fxq 'unified-tvbox-bundle.zip'; then
+
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fxq "unified-tvbox-bundle.zip"; then
             if [ "$REQUIRED" = "true" ]; then
               echo "Release $TAG does not contain unified-tvbox-bundle.zip." >&2
               exit 1
@@ -88,9 +107,11 @@ jobs:
             echo "Latest release has no unified bundle; deploying drpy2 only."
             exit 0
           fi
+
           gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "unified-tvbox-bundle.zip" --dir .
           test -s unified-tvbox-bundle.zip
-          echo "Downloaded bundle from release $TAG"
+          echo "Downloaded bundle from Release $TAG."
+
       - name: Include and validate unified crawler bundle
         run: |
           set -euo pipefail
@@ -98,12 +119,14 @@ jobs:
             python scripts/unpack_unified_bundle.py unified-tvbox-bundle.zip dist/unified
             python scripts/validate_unified_bundle.py dist/unified
           else
-            echo "Unified crawler bundle not attached to a published release; existing drpy2 Pages deployment continues."
+            echo "No unified bundle attached to a published Release; continuing with the drpy2 site only."
           fi
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
