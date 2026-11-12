@@ -17,6 +17,7 @@ on:
       - "scripts/validate_unified_bundle.py"
       - "scripts/unpack_unified_bundle.py"
       - "scripts/audit_netdisk_bundle.py"
+      - "scripts/build_netdisk_catalog.py"
       - ".github/workflows/deploy-drpy2-pages.yml"
       - ".github/workflows/audit-netdisk-assets.yml"
 
@@ -48,7 +49,8 @@ jobs:
           python -m py_compile \
             scripts/unpack_unified_bundle.py \
             scripts/validate_unified_bundle.py \
-            scripts/audit_netdisk_bundle.py
+            scripts/audit_netdisk_bundle.py \
+            scripts/build_netdisk_catalog.py
           python scripts/validate_unified_bundle.py --self-test
           python scripts/audit_netdisk_bundle.py --self-test
 
@@ -123,6 +125,25 @@ jobs:
             echo "No unified bundle attached to a published Release; continuing with the drpy2 site only."
           fi
 
+      - name: Build TVBox netdisk source catalog from unified config
+        run: |
+          set -euo pipefail
+          if [ -f dist/unified/tvbox-unified.json ]; then
+            python scripts/build_netdisk_catalog.py dist/unified/tvbox-unified.json netdisk/tvbox-sites.json
+            python - <<'PY'
+            import json
+            from pathlib import Path
+            data = json.loads(Path("netdisk/tvbox-sites.json").read_text(encoding="utf-8"))
+            if data["total"] < 1:
+                raise SystemExit("No TVBox netdisk sites found")
+            if any("ext" in site for site in data["sites"]):
+                raise SystemExit("Catalog must not contain ext credential payloads")
+            print("TVBox netdisk catalog validated:", data["total"], "entries")
+            PY
+          else
+            echo "Unified config unavailable; omit dynamic TVBox netdisk catalog."
+          fi
+
       - name: Validate netdisk portal and credential export mappings
         run: |
           set -euo pipefail
@@ -153,6 +174,7 @@ jobs:
           test -s netdisk/index.html
           mkdir -p dist/netdisk
           cp netdisk/index.html dist/netdisk/index.html
+          if [ -s netdisk/tvbox-sites.json ]; then cp netdisk/tvbox-sites.json dist/netdisk/tvbox-sites.json; fi
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
