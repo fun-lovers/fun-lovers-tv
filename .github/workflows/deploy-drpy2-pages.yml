@@ -37,22 +37,37 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Download drpy2 runtime
+      - name: Download pinned drpy2 runtime
         env:
           DRPY2_RUNTIME_URL: ${{ vars.DRPY2_RUNTIME_URL }}
+          DRPY2_RUNTIME_SHA256: ${{ vars.DRPY2_RUNTIME_SHA256 }}
         run: |
           set -euo pipefail
-          URL="${DRPY2_RUNTIME_URL:-https://raw.githubusercontent.com/hjdhnx/dr_py/main/libs/drpy2.min.js}"
+          PINNED_COMMIT="ca23ffdbf5e429c5893ac60158668fc5af7af192"
+          DEFAULT_URL="https://raw.githubusercontent.com/hjdhnx/dr_py/${PINNED_COMMIT}/libs/drpy2.min.js"
+          URL="${DRPY2_RUNTIME_URL:-$DEFAULT_URL}"
+          if [ -n "${DRPY2_RUNTIME_URL}" ] && [ -z "${DRPY2_RUNTIME_SHA256}" ]; then
+            echo "DRPY2_RUNTIME_SHA256 is required when overriding DRPY2_RUNTIME_URL." >&2
+            exit 1
+          fi
           mkdir -p drpy2/public/libs
           curl --fail --location --retry 3 --connect-timeout 20 "$URL" -o drpy2/public/libs/drpy2.min.js
           test "$(wc -c < drpy2/public/libs/drpy2.min.js)" -gt 1000
-          sha256sum drpy2/public/libs/drpy2.min.js | tee drpy2/runtime-sha256.txt
+          ACTUAL_SHA256="$(sha256sum drpy2/public/libs/drpy2.min.js | awk '{print $1}')"
+          if [ -n "${DRPY2_RUNTIME_SHA256}" ] && [ "$ACTUAL_SHA256" != "$DRPY2_RUNTIME_SHA256" ]; then
+            echo "drpy2 runtime SHA-256 mismatch: expected $DRPY2_RUNTIME_SHA256, got $ACTUAL_SHA256" >&2
+            exit 1
+          fi
+          printf '%s  %s\n' "$ACTUAL_SHA256" "drpy2.min.js" | tee drpy2/runtime-sha256.txt
+          printf 'source_url=%s\nsource_commit=%s\n' "$URL" "$PINNED_COMMIT" > drpy2/runtime-source.txt
       - name: Build static drpy2 Pages site
         env:
           PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/drpy2
         run: python drpy2/scripts/build_static.py --base-url "$PAGES_BASE_URL" --output dist/drpy2
-      - name: Include runtime checksum
-        run: cp drpy2/runtime-sha256.txt dist/drpy2/
+      - name: Include runtime provenance
+        run: |
+          cp drpy2/runtime-sha256.txt dist/drpy2/
+          cp drpy2/runtime-source.txt dist/drpy2/
       - name: Download unified bundle from GitHub Release when available
         env:
           GH_TOKEN: ${{ github.token }}
