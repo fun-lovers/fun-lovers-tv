@@ -38,20 +38,22 @@ small{color:var(--muted)}.hide{display:none!important}
 <div><label for="ucToken">UC Token</label><input id="ucToken" type="password" autocomplete="off"></div>
 <div><label for="baiduToken">百度 Token（如爬虫要求）</label><input id="baiduToken" type="password" autocomplete="off"></div>
 <div><label for="aliyunToken">阿里云盘 Token（如爬虫要求）</label><input id="aliyunToken" type="password" autocomplete="off"></div>
+<div><label for="jarToken">JAR ext 专用 token（仅在确认来源后填写）</label><input id="jarToken" type="password" autocomplete="off"></div>
 </div>
 <div class="actions"><button class="btn primary" id="save">保存到本设备</button><button class="btn" id="reveal">显示 / 隐藏凭据</button><button class="btn danger" id="clear">清除本设备凭据</button></div>
 <p id="status" role="status"></p><p class="hint">目前识别到的历史爬虫字段包括 quarkCookie / quark_cookie、baidu_cookie、ucCookie / uc_cookie、uc_token、token、accessToken、refreshToken 等。不同爬虫字段并不统一，保存的表单不会自动注入 TVBox 运行进程。</p>
 </section>
 <section id="transfer"><h2>导入 / 导出账号配置</h2><p class="hint">导出文件仅保存在你的设备下载目录。请勿公开分享，文件可能包含可登录账号的敏感凭据。</p>
 <div class="actions"><button class="btn primary" id="export">导出账号备份</button><button class="btn" id="exportEnv">导出拾光 env 凭据补丁</button><button class="btn" id="exportJar">导出星微 JAR ext 凭据补丁</button><label class="btn" for="importFile">导入 JSON</label><input class="hide" id="importFile" type="file" accept="application/json,.json"></div>
-<p class="hint">已从整合包真实配置结构确认两种字段映射：拾光 env.json 使用 quark_cookie / baidu_cookie / uc_cookie / uc_token；星微 JAR 的两个 ext 配置使用 quarkCookie / ucCookie / token。下面两个“凭据补丁”只包含已核实字段，不会覆盖其他 ext 设置。token 的具体服务归属仍需按对应站点确认。</p></section>
+<p class="hint">已从整合包真实配置结构确认两种字段映射。JAR 的 token 来源尚未确认，因此单独填写，不会自动使用夸克或 UC Token。</p>
+<h3>直接合并到原配置（保留其他设置）</h3><div class="grid"><div><label for="mergeType">原配置类型</label><select id="mergeType"><option value="env">拾光 env.json</option><option value="jar">星微 JAR ext JSON</option></select></div><div><label for="mergeFile">选择原始 JSON 文件</label><input id="mergeFile" type="file" accept="application/json,.json"></div></div><div class="actions"><button class="btn primary" id="mergeDownload">合并凭据并下载</button></div><p class="hint">文件只在本浏览器本地处理，不会上传。JAR 合并仅更新具有 site_urls / url_key / threadinfo 特征的 ext 对象，不改变其他站点配置。</p></section>
 <footer class="hint">版本 1.0 · 不提供账号登录代理、不上传凭据、不绕过会员或访问控制。</footer>
 </main>
 <script>
 (function(){
 'use strict';
 const STORE='funlovers.netdisk.credentials.v1';
-const fields=['quarkCookie','baiduCookie','ucCookie','quarkToken','ucToken','baiduToken','aliyunToken'];
+const fields=['quarkCookie','baiduCookie','ucCookie','quarkToken','ucToken','baiduToken','aliyunToken','jarToken'];
 const $=id=>document.getElementById(id);
 const read=()=>{const out={};fields.forEach(k=>out[k]=$(k).value.trim());return out;};
 const status=m=>{$('status').textContent=m;};
@@ -62,7 +64,37 @@ $('reveal').addEventListener('click',()=>fields.forEach(k=>{const e=$(k);e.type=
 function downloadJson(filename, data){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 $('export').addEventListener('click',()=>{const d=read();const cfg={version:1,updatedAt:new Date().toISOString(),accounts:{quark:{cookie:d.quarkCookie},baidu:{cookie:d.baiduCookie},uc:{cookie:d.ucCookie,token:d.ucToken},aliyun:{token:d.aliyunToken}}};downloadJson('tvbox-netdisk-accounts.local.json',cfg);status('已生成账号备份文件，请妥善保管。');});
 $('exportEnv').addEventListener('click',()=>{const d=read();const patch={quark_cookie:d.quarkCookie,baidu_cookie:d.baiduCookie,uc_cookie:d.ucCookie,uc_token:d.ucToken};downloadJson('shiguang-env-credentials.patch.json',patch);status('已导出拾光 env.json 凭据补丁。请合并到原 env.json，不要直接替换整个文件。');});
-$('exportJar').addEventListener('click',()=>{const d=read();const patch={quarkCookie:d.quarkCookie,ucCookie:d.ucCookie,token:d.quarkToken||d.ucToken};downloadJson('xingwei-jar-ext-credentials.patch.json',patch);status('已导出星微 JAR ext 凭据补丁。token 归属尚未完全确认，请核对对应站点后再使用。');});
+$('exportJar').addEventListener('click',()=>{const d=read();const patch={quarkCookie:d.quarkCookie,ucCookie:d.ucCookie,token:d.jarToken};downloadJson('xingwei-jar-ext-credentials.patch.json',patch);status('已导出星微 JAR ext 凭据补丁。token 归属尚未完全确认，请核对对应站点后再使用。');});
+$('mergeDownload').addEventListener('click',async()=>{
+ const file=$('mergeFile').files[0];
+ if(!file){status('请先选择原始 JSON 配置文件。');return;}
+ try{
+  const original=JSON.parse(await file.text());
+  const d=read();
+  let changed=0;
+  if($('mergeType').value==='env'){
+   if(!original||typeof original!=='object'||Array.isArray(original))throw new Error('env.json 顶层必须是 JSON 对象');
+   const patch={quark_cookie:d.quarkCookie,baidu_cookie:d.baiduCookie,uc_cookie:d.ucCookie,uc_token:d.ucToken};
+   Object.entries(patch).forEach(([k,v])=>{if(v){original[k]=v;changed++;}});
+   if(!changed)throw new Error('没有填写可合并的 Cookie / Token');
+  }else{
+   if(!original||!Array.isArray(original.sites))throw new Error('JAR 配置必须包含 sites 数组');
+   const targets=original.sites.filter(s=>s&&s.ext&&typeof s.ext==='object'&&Array.isArray(s.ext.site_urls)&&typeof s.ext.url_key==='string'&&s.ext.threadinfo&&typeof s.ext.threadinfo==='object');
+   if(!targets.length)throw new Error('没有找到已核实结构的 JAR ext 对象，未修改文件');
+   targets.forEach(s=>{
+    if(d.quarkCookie){s.ext.quarkCookie=d.quarkCookie;changed++;}
+    if(d.ucCookie){s.ext.ucCookie=d.ucCookie;changed++;}
+    if(d.jarToken){s.ext.token=d.jarToken;changed++;}
+   });
+   if(!changed)throw new Error('没有填写可合并的 Cookie / JAR Token');
+  }
+  const blob=new Blob([JSON.stringify(original,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;
+  a.download=$('mergeType').value==='env'?'env.netdisk-merged.json':'jar-config.netdisk-merged.json';
+  a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  status('合并完成：更新 '+changed+' 个凭据字段；其他配置已保留。请在 TVBox 中导入前备份原文件。');
+ }catch(err){status('合并失败：'+err.message);}
+});
 $('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());const a=d.accounts||{};const values={quarkCookie:a.quark?.cookie??d.quarkCookie??d.quark_cookie,baiduCookie:a.baidu?.cookie??d.baidu_cookie,ucCookie:a.uc?.cookie??d.ucCookie??d.uc_cookie,quarkToken:a.quark?.token,ucToken:a.uc?.token??d.uc_token,baiduToken:a.baidu?.token,aliyunToken:a.aliyun?.token};fields.forEach(k=>$(k).value=typeof values[k]==='string'?values[k]:'');status('已导入表单；点击“保存到本设备”后才会写入本地存储。');}catch(err){status('导入失败：文件不是有效的账号 JSON。');}e.target.value='';});
 const hosts={quark:'site:pan.quark.cn',baidu:'site:pan.baidu.com/s',aliyun:'site:alipan.com/s',uc:'site:drive.uc.cn'};
 document.querySelectorAll('[data-search]').forEach(b=>b.addEventListener('click',()=>{const q=$('query').value.trim();if(!q){status('请先输入搜索关键词。');$('query').focus();return;}const url='https://www.google.com/search?q='+encodeURIComponent(hosts[b.dataset.search]+' '+q);window.open(url,'_blank','noopener');}));
