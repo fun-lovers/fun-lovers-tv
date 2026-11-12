@@ -130,16 +130,7 @@ jobs:
           set -euo pipefail
           if [ -f dist/unified/tvbox-unified.json ]; then
             python scripts/build_netdisk_catalog.py dist/unified/tvbox-unified.json netdisk/tvbox-sites.json
-            python - <<'PY'
-            import json
-            from pathlib import Path
-            data = json.loads(Path("netdisk/tvbox-sites.json").read_text(encoding="utf-8"))
-            if data["total"] < 1:
-                raise SystemExit("No TVBox netdisk sites found")
-            if any("ext" in site for site in data["sites"]):
-                raise SystemExit("Catalog must not contain ext credential payloads")
-            print("TVBox netdisk catalog validated:", data["total"], "entries")
-            PY
+            python -c 'import json; from pathlib import Path; d=json.loads(Path("netdisk/tvbox-sites.json").read_text(encoding="utf-8")); assert d["total"] > 0, "No TVBox netdisk sites found"; assert all("ext" not in s for s in d["sites"]), "ext payload leaked"; print("TVBox netdisk catalog validated:", d["total"], "entries")'
           else
             echo "Unified config unavailable; omit dynamic TVBox netdisk catalog."
           fi
