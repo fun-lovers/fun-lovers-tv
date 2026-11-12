@@ -13,6 +13,7 @@ on:
     branches: [main]
     paths:
       - "drpy2/**"
+      - "netdisk/**"
       - "scripts/validate_unified_bundle.py"
       - "scripts/unpack_unified_bundle.py"
       - "scripts/audit_netdisk_bundle.py"
