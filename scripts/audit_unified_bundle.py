@@ -72,7 +72,8 @@ def inspect_dex(data: bytes) -> dict:
         descriptor = strings[string_index]
         if descriptor.startswith("L") and "/" in descriptor:
             parts = descriptor[1:].split("/")
-            package_counts[".".join(parts[:2])] += 1
+            depth = 3 if parts[0] in {"com", "org", "net"} else 2
+            package_counts[".".join(parts[:depth])] += 1
     return {
         "version": data[4:7].decode("ascii", errors="replace"),
         "fileSizeHeader": u32(32),
@@ -125,9 +126,19 @@ def inspect_jar(path: Path, root: Path) -> dict:
                     parts = name.split("/")
                     known_abis = {"armeabi-v7a", "arm64-v8a", "x86", "x86_64", "riscv64"}
                     abi = next((part for part in parts if part in known_abis), "unknown")
+                    raw_elf = jar.read(name)[:20]
+                    machine_names = {3: "x86", 40: "armeabi-v7a", 62: "x86_64", 183: "arm64-v8a", 243: "riscv64"}
+                    machine = None
+                    if len(raw_elf) >= 20 and raw_elf[:4] == bytes([0x7f, 0x45, 0x4c, 0x46]):
+                        endian = "little" if raw_elf[5] == 1 else "big" if raw_elf[5] == 2 else None
+                        if endian:
+                            machine = int.from_bytes(raw_elf[18:20], endian)
+                            if abi == "unknown":
+                                abi = machine_names.get(machine, "unknown")
                     item["nativeLibraries"].append({
                         "path": name,
                         "abi": abi,
+                        "elfMachine": machine,
                         "sizeBytes": jar.getinfo(name).file_size
                     })
                 if name.endswith(".class"):
@@ -180,6 +191,13 @@ def main() -> int:
         references.extend(collect_jar_references(doc, path.relative_to(root).as_posix()))
 
     jars = [inspect_jar(path, root) for path in sorted(root.rglob("*.jar")) if path.is_file()]
+    all_packages = Counter()
+    for item in jars:
+        for dex in item["dexFiles"]:
+            all_packages.update(dex.get("packagePrefixes", {}))
+    native_abis = Counter(
+        lib["abi"] for item in jars for lib in item["nativeLibraries"]
+    )
     report = {
         "bundleRoot": root.name,
         "mainConfig": config_path.relative_to(root).as_posix(),
@@ -192,6 +210,8 @@ def main() -> int:
             for item in jars for dex in item["dexFiles"]
         ).items())),
         "nativeLibraryCount": sum(len(item["nativeLibraries"]) for item in jars),
+        "nativeAbis": dict(native_abis),
+        "packageDependencySummary": dict(all_packages.most_common(40)),
         "jarReferences": references,
         "jars": jars,
         "invalidJars": [item["path"] for item in jars if not item["validZip"]],
@@ -207,6 +227,8 @@ def main() -> int:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(output, encoding="utf-8")
     print(f"JAR audit: {report['jarCount']} JAR(s), {report['jarConfigCount']} JAR config(s), {len(references)} config reference(s)")
+    print(f"DEX versions: {report['dexVersions']}; native ABIs: {report['nativeAbis']}")
+    print(f"Top package dependencies: {report['packageDependencySummary']}")
     for item in jars:
         print(
             f"JAR {item['path']} size={item['sizeBytes']} "
