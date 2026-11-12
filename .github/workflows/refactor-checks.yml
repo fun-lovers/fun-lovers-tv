@@ -8,6 +8,7 @@ on:
       - 'drpy2/config/**'
       - 'drpy2/public/js/**'
       - 'scripts/check_runtime_contracts.py'
+      - 'scripts/check_json_configs.py'
       - 'scripts/unpack_unified_bundle.py'
       - 'scripts/validate_unified_bundle.py'
       - 'scripts/audit_unified_bundle.py'
@@ -47,6 +48,10 @@ jobs:
         run: ruby -e "require 'yaml'; YAML.load_file('.github/workflows/deploy-drpy2-pages.yml'); YAML.load_file('.github/workflows/refactor-checks.yml')"
       - name: Check Python runtime contracts
         run: python scripts/check_runtime_contracts.py
+      - name: Validate all JSON configurations
+        run: python scripts/check_json_configs.py
+      - name: Validate single-tvbox package
+        run: python single-tvbox/scripts/validate.py
       - name: Compile Python sources
         run: python -m compileall -q single-tvbox/py scripts drpy2/scripts
       - name: Smoke-test static drpy2 build
