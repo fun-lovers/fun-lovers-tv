@@ -2,11 +2,17 @@ name: Deploy drpy2 and unified TVBox assets to GitHub Pages
 
 on:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Optional release tag containing unified-tvbox-bundle.zip (blank = latest release)"
+        required: false
+        type: string
+  release:
+    types: [published]
   push:
     branches: [main]
     paths:
       - 'drpy2/**'
-      - 'unified-tvbox-bundle.zip'
       - 'scripts/validate_unified_bundle.py'
       - 'scripts/unpack_unified_bundle.py'
       - '.github/workflows/deploy-drpy2-pages.yml'
@@ -23,7 +29,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,14 +53,52 @@ jobs:
         run: python drpy2/scripts/build_static.py --base-url "$PAGES_BASE_URL" --output dist/drpy2
       - name: Include runtime checksum
         run: cp drpy2/runtime-sha256.txt dist/drpy2/
-      - name: Include unified crawler bundle when uploaded
+      - name: Download unified bundle from GitHub Release when available
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          RELEASE_TAG_EVENT: ${{ github.event.release.tag_name }}
+          RELEASE_TAG_INPUT: ${{ inputs.release_tag }}
+        run: |
+          set -euo pipefail
+          TAG=""
+          REQUIRED="false"
+          if [ "$EVENT_NAME" = "release" ]; then
+            TAG="$RELEASE_TAG_EVENT"
+            REQUIRED="true"
+          elif [ "$EVENT_NAME" = "workflow_dispatch" ] && [ -n "$RELEASE_TAG_INPUT" ]; then
+            TAG="$RELEASE_TAG_INPUT"
+            REQUIRED="true"
+          else
+            TAG="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 1 --json tagName,isDraft --jq '.[] | select(.isDraft == false) | .tagName' | head -n 1 || true)"
+          fi
+          if [ -z "$TAG" ]; then
+            if [ "$REQUIRED" = "true" ]; then
+              echo "A release tag is required but was not resolved." >&2
+              exit 1
+            fi
+            echo "No published release found; deploying drpy2 only."
+            exit 0
+          fi
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fxq 'unified-tvbox-bundle.zip'; then
+            if [ "$REQUIRED" = "true" ]; then
+              echo "Release $TAG does not contain unified-tvbox-bundle.zip." >&2
+              exit 1
+            fi
+            echo "Latest release has no unified bundle; deploying drpy2 only."
+            exit 0
+          fi
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "unified-tvbox-bundle.zip" --dir .
+          test -s unified-tvbox-bundle.zip
+          echo "Downloaded bundle from release $TAG"
+      - name: Include and validate unified crawler bundle
         run: |
           set -euo pipefail
           if [ -f unified-tvbox-bundle.zip ]; then
             python scripts/unpack_unified_bundle.py unified-tvbox-bundle.zip dist/unified
             python scripts/validate_unified_bundle.py dist/unified
           else
-            echo "Unified crawler bundle not uploaded; existing drpy2 Pages deployment continues."
+            echo "Unified crawler bundle not attached to a published release; existing drpy2 Pages deployment continues."
           fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
