@@ -7,6 +7,7 @@ import hashlib
 import json
 import zipfile
 from collections import Counter
+from pathlib import PurePosixPath
 from pathlib import Path
 
 
@@ -38,6 +39,11 @@ def inspect_jar(path: Path, root: Path) -> dict:
         "classMajorVersions": {},
         "manifest": {},
         "nestedJars": [],
+        "entryCount": 0,
+        "entryExtensions": {},
+        "dexFiles": [],
+        "nativeLibraries": [],
+        "sampleEntries": [],
         "error": None,
     }
     try:
@@ -47,8 +53,17 @@ def inspect_jar(path: Path, root: Path) -> dict:
                 item["error"] = f"corrupt entry: {bad}"
                 return item
             item["validZip"] = True
+            names = jar.namelist()
+            item["entryCount"] = len(names)
+            extensions = Counter(PurePosixPath(name).suffix.lower() or "[no extension]" for name in names)
+            item["entryExtensions"] = dict(sorted(extensions.items()))
+            item["sampleEntries"] = names[:20]
             classes = Counter()
-            for name in jar.namelist():
+            for name in names:
+                if name.lower().endswith(".dex"):
+                    item["dexFiles"].append(name)
+                elif name.lower().endswith(".so"):
+                    item["nativeLibraries"].append(name)
                 if name.endswith(".class"):
                     try:
                         header = jar.read(name)[:8]
@@ -123,14 +138,21 @@ def main() -> int:
     for item in jars:
         print(
             f"JAR {item['path']} size={item['sizeBytes']} "
-            f"classes={item['classCount']} majors={item['classMajorVersions']} "
+            f"entries={item['entryCount']} extensions={item['entryExtensions']} "
+            f"classes={item['classCount']} dex={item['dexFiles']} "
             f"valid={item['validZip']} sha256={item['sha256']}"
         )
         if item["error"]:
             print(f"  ERROR: {item['error']}")
+        if item["sampleEntries"]:
+            print(f"  entries sample: {item['sampleEntries']}")
         for key in ("Main-Class", "Implementation-Version", "Build-Jdk", "Build-Jdk-Spec"):
             if key in item["manifest"]:
                 print(f"  {key}: {item['manifest'][key]}")
+    for reference in references[:50]:
+        print(f"JAR REF {reference['where']}: {reference['value']}")
+    if len(references) > 50:
+        print(f"... {len(references) - 50} additional JAR references in JSON report")
     if args.output:
         print(f"JAR audit report written to {args.output}")
     if report["invalidJars"]:
