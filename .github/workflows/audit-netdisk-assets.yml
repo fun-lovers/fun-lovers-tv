@@ -64,10 +64,14 @@ jobs:
       - name: Inventory netdisk assets and credential schema
         run: python scripts/audit_netdisk_bundle.py unified-tvbox-bundle.zip netdisk-audit.json
 
+      - name: Map cloud-drive JavaScript interfaces without secrets
+        run: |
+          python -m py_compile scripts/audit_netdisk_js.py
+          python scripts/audit_netdisk_js.py unified-tvbox-bundle.zip netdisk-js-runtime-map.json
+
       - name: Upload audit report
         uses: actions/upload-artifact@v4
         with:
           name: netdisk-asset-audit
-          path: netdisk-audit.json
-          if-no-files-found: error
+          path: |\n            netdisk-audit.json\n            netdisk-js-runtime-map.json\n          if-no-files-found: error
           retention-days: 14
