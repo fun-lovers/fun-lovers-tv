@@ -133,7 +133,8 @@ jobs:
           required = [
               'id="exportEnv"', 'id="exportJar"',
               'quark_cookie', 'baidu_cookie', 'uc_cookie', 'uc_token',
-              'quarkCookie', 'ucCookie',
+              'quarkCookie', 'ucCookie', 'id="mergeFile"', 'id="mergeDownload"', 'id="jarToken"',
+              'site_urls', 'threadinfo', 'quark_cookie', 'uc_token',
           ]
           missing = [item for item in required if item not in page]
           if missing:
