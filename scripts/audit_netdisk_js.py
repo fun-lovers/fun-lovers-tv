@@ -13,10 +13,27 @@ def main():
     if len(sys.argv) != 3:
         raise SystemExit("usage: audit_netdisk_js.py bundle.zip report.json")
     rows = []
+    tvbox_sites = []
     with zipfile.ZipFile(sys.argv[1]) as z:
         bad = z.testzip()
         if bad:
             raise SystemExit("corrupt member: " + bad)
+        try:
+            config = json.loads(z.read("tvbox-unified.json").decode("utf-8"))
+            for index, site in enumerate(config.get("sites", [])):
+                searchable = " ".join(str(site.get(k, "")) for k in ("key", "name", "api", "类型"))
+                if re.search(r"net.?disk|cloud.?drive|pan|quark|baidu|aliyun|alipan|uc|网盘|云盘|夸克|百度", searchable, re.I):
+                    tvbox_sites.append({
+                        "index": index,
+                        "key": str(site.get("key", ""))[:100],
+                        "name": str(site.get("name", ""))[:120],
+                        "type": site.get("type"),
+                        "searchable": site.get("searchable"),
+                        "quickSearch": site.get("quickSearch"),
+                        "api": str(site.get("api", ""))[:240]
+                    })
+        except (KeyError, UnicodeDecodeError, json.JSONDecodeError):
+            pass
         for info in z.infolist():
             if info.is_dir() or not WANTED.search(PurePosixPath(info.filename).name) or info.file_size > 2_000_000:
                 continue
@@ -36,7 +53,7 @@ def main():
                 "credential_identifiers": sorted(set(m.group(0) for m in CREDENTIALS.finditer(src)), key=str.casefold)[:80],
                 "http_endpoints": sorted(urls)[:80]
             })
-    out = {"source_count": len(rows), "sources": rows,
+    out = {"source_count": len(rows), "sources": rows, "tvbox_netdisk_sites": tvbox_sites,
            "security_note": "No source lines or credential values are included."}
     text = json.dumps(out, ensure_ascii=False, indent=2)
     if re.search(r"(cookie-value-must-not-leak|access-token-must-not-leak|secret-value-must-not-leak)", text):
