@@ -61,9 +61,23 @@ def inspect_jar(path: Path, root: Path) -> dict:
             classes = Counter()
             for name in names:
                 if name.lower().endswith(".dex"):
-                    item["dexFiles"].append(name)
+                    header = jar.read(name)[:112]
+                    dex = {"path": name, "sizeBytes": jar.getinfo(name).file_size}
+                    if len(header) >= 44 and header[:4] == b"dex\\n":
+                        dex.update({
+                            "version": header[4:7].decode("ascii", errors="replace"),
+                            "fileSizeHeader": int.from_bytes(header[32:36], "little"),
+                            "headerSize": int.from_bytes(header[36:40], "little"),
+                            "endianTag": hex(int.from_bytes(header[40:44], "little"))
+                        })
+                    else:
+                        dex["headerError"] = "invalid DEX magic/header"
+                    item["dexFiles"].append(dex)
                 elif name.lower().endswith(".so"):
-                    item["nativeLibraries"].append(name)
+                    item["nativeLibraries"].append({
+                        "path": name,
+                        "sizeBytes": jar.getinfo(name).file_size
+                    })
                 if name.endswith(".class"):
                     try:
                         header = jar.read(name)[:8]
@@ -120,6 +134,12 @@ def main() -> int:
         "siteCount": len(config.get("sites", [])) if isinstance(config.get("sites"), list) else None,
         "jarConfigCount": len(jar_configs),
         "jarCount": len(jars),
+        "totalJarBytes": sum(item["sizeBytes"] for item in jars),
+        "dexVersions": dict(sorted(Counter(
+            dex.get("version", "unknown")
+            for item in jars for dex in item["dexFiles"]
+        ).items())),
+        "nativeLibraryCount": sum(len(item["nativeLibraries"]) for item in jars),
         "jarReferences": references,
         "jars": jars,
         "invalidJars": [item["path"] for item in jars if not item["validZip"]],
@@ -140,15 +160,15 @@ def main() -> int:
             f"JAR {item['path']} size={item['sizeBytes']} "
             f"entries={item['entryCount']} extensions={item['entryExtensions']} "
             f"classes={item['classCount']} dex={item['dexFiles']} "
+            f"native={item['nativeLibraries']} "
             f"valid={item['validZip']} sha256={item['sha256']}"
         )
         if item["error"]:
             print(f"  ERROR: {item['error']}")
         if item["sampleEntries"]:
             print(f"  entries sample: {item['sampleEntries']}")
-        for key in ("Main-Class", "Implementation-Version", "Build-Jdk", "Build-Jdk-Spec"):
-            if key in item["manifest"]:
-                print(f"  {key}: {item['manifest'][key]}")
+        if item["manifest"]:
+            print(f"  manifest: {item['manifest']}")
     for reference in references[:50]:
         print(f"JAR REF {reference['where']}: {reference['value']}")
     if len(references) > 50:
