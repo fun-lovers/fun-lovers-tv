@@ -44,7 +44,7 @@ def main() -> int:
             fail(f"{rel} is missing from runtime-matrix.json")
         entry = declared[rel]
         third_party = set(entry.get("thirdParty", []))
-        optional = set(entry.get("optionalThirdParty", []))
+        optional = set(entry.get("optionalThirdParty", [])) | set(entry.get("optionalImportRoots", []))
         known_host_roots = {"base", "com"}
         imported = set()
         tree = ast.parse(source, filename=rel)
