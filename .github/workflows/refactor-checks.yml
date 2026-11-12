@@ -8,6 +8,7 @@ on:
       - 'drpy2/config/**'
       - 'drpy2/public/js/**'
       - 'scripts/check_runtime_contracts.py'
+      - '.github/workflows/deploy-drpy2-pages.yml'
       - 'refactor/**'
       - '.github/workflows/refactor-checks.yml'
   pull_request:
@@ -39,10 +40,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Check workflow YAML syntax
+        run: ruby -e "require 'yaml'; YAML.load_file('.github/workflows/deploy-drpy2-pages.yml'); YAML.load_file('.github/workflows/refactor-checks.yml')"
       - name: Check Python runtime contracts
         run: python scripts/check_runtime_contracts.py
       - name: Compile Python sources
         run: python -m compileall -q single-tvbox/py scripts drpy2/scripts
+      - name: Smoke-test static drpy2 build
+        run: |
+          mkdir -p drpy2/public/libs
+          python -c "from pathlib import Path; Path('drpy2/public/libs/drpy2.min.js').write_text('/* CI placeholder */' + 'x' * 1500, encoding='utf-8')"
+          python drpy2/scripts/build_static.py --base-url https://example.github.io/fun-lovers-tv/drpy2 --output /tmp/tvbox-drpy2-build
+          python -c "import json; from pathlib import Path; p=Path('/tmp/tvbox-drpy2-build/tvbox.json'); d=json.loads(p.read_text()); assert d['sites'] and all(s['type']==3 for s in d['sites']); assert (Path('/tmp/tvbox-drpy2-build/libs/drpy2.min.js')).is_file()"
       - name: Check JavaScript syntax
         run: |
           set -euo pipefail
