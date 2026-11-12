@@ -1,0 +1,51 @@
+name: Runtime and dependency contract checks
+
+on:
+  push:
+    branches: [main, 'refactor/**']
+    paths:
+      - 'single-tvbox/py/**'
+      - 'drpy2/config/**'
+      - 'drpy2/public/js/**'
+      - 'scripts/check_runtime_contracts.py'
+      - 'refactor/**'
+      - '.github/workflows/refactor-checks.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'single-tvbox/py/**'
+      - 'drpy2/config/**'
+      - 'drpy2/public/js/**'
+      - 'scripts/check_runtime_contracts.py'
+      - 'refactor/**'
+      - '.github/workflows/refactor-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check Python runtime contracts
+        run: python scripts/check_runtime_contracts.py
+      - name: Compile Python sources
+        run: python -m compileall -q single-tvbox/py scripts drpy2/scripts
+      - name: Check JavaScript syntax
+        run: |
+          set -euo pipefail
+          for file in drpy2/public/js/*.js; do
+            node --check "$file"
+          done
