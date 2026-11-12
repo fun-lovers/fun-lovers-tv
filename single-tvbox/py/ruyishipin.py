@@ -8,7 +8,6 @@ from urllib.parse import quote, unquote, urljoin
 import importlib.util
 
 import requests
-import urllib3
 
 # 只有存在 Brotli 解码器时才声明 br，否则响应体无法解压
 _ACCEPT_ENCODING = "gzip, deflate"
@@ -612,7 +611,7 @@ class Spider:
     def _fetch_bin(self, url, head, timeout=15):
         for _ in range(3):
             try:
-                r = self.session.get(url, headers=head, timeout=timeout, verify=False)
+                r = self.session.get(url, headers=head, timeout=timeout, verify=True)
                 if r.status_code == 200 and r.content:
                     return r
             except Exception:
