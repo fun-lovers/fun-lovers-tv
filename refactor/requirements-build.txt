@@ -1,0 +1,4 @@
+# The repository build/check scripts currently use only Python standard-library modules.
+# Python spiders execute inside the target TVBox client's Python host; do not install
+# these packages into the GitHub Pages build environment as a substitute for client support.
+# Runtime dependencies by spider are recorded in runtime-matrix.json.
