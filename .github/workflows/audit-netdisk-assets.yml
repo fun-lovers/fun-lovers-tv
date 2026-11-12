@@ -11,6 +11,7 @@ on:
     branches: [main]
     paths:
       - "scripts/audit_netdisk_bundle.py"
+      - "scripts/audit_netdisk_js.py"
       - ".github/workflows/audit-netdisk-assets.yml"
 
 permissions:
@@ -73,5 +74,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: netdisk-asset-audit
-          path: |\n            netdisk-audit.json\n            netdisk-js-runtime-map.json\n          if-no-files-found: error
+          path: |
+            netdisk-audit.json
+            netdisk-js-runtime-map.json
+          if-no-files-found: error
           retention-days: 14
