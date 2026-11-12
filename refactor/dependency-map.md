@@ -20,7 +20,18 @@ Observed rule-specific dependencies:
 - `scripts/unpack_unified_bundle.py` and `scripts/validate_unified_bundle.py` operate on the unified release archive and its generated output.
 - `single-tvbox/scripts/validate.py` validates the single package; cross-check its coverage against the unified validator before relying on it.
 
-## 4. Configuration relationships
+## 4. Unified JAR bundle runtime findings
+
+The published `tvbox-bundle-v1` archive was unpacked and audited in GitHub Actions:
+- 29 unique JAR files under `shared/jar/`.
+- 25 `jar-configs/*.json` files and 69 JAR references.
+- All 29 JARs are valid ZIP containers with `classes.dex`; they are Android DEX payloads, not ordinary JVM `.class` libraries.
+- DEX versions: 28 files use 035 and one uses 037. At least one target runtime must support DEX 037.
+- The DEX type tables reference CatVod host classes (`com.github.catvod`) and Android APIs, plus libraries/namespaces including protobuf, Gson, Rhino, QuickJS, RxHttp, SLF4J, OkHttp and SMBJ.
+- Four JARs include native libraries: four ARMv7 (`armeabi-v7a`) and four ARM64 (`arm64-v8a`) shared objects across those archives. These require matching Android ABI support.
+- The CI audit checks ZIP integrity, DEX headers/tables, class/type counts, package references, native ELF ABI and SHA-256. It does not execute the JARs or prove each TVBox fork can load them.
+
+## 5. Configuration relationships
 - `ysc-doc-source.json`: source review/audit source of truth candidate.
 - `ysc-doc.json`: companion published index; exact generation/synchronization contract requires further tracing.
 - `addons/*.json`: modular live/VOD inputs.
