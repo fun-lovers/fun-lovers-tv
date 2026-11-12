@@ -59,7 +59,9 @@ jobs:
             exit 1
           fi
           printf '%s  %s\n' "$ACTUAL_SHA256" "drpy2.min.js" | tee drpy2/runtime-sha256.txt
-          printf 'source_url=%s\nsource_commit=%s\n' "$URL" "$PINNED_COMMIT" > drpy2/runtime-source.txt
+          SOURCE_COMMIT="$PINNED_COMMIT"
+          if [ -n "${DRPY2_RUNTIME_URL}" ]; then SOURCE_COMMIT="custom-url"; fi
+          printf 'source_url=%s\nsource_commit=%s\n' "$URL" "$SOURCE_COMMIT" > drpy2/runtime-source.txt
       - name: Build static drpy2 Pages site
         env:
           PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/drpy2
