@@ -9,7 +9,6 @@ import importlib.util
 
 import requests
 import urllib3
-urllib3.disable_warnings()
 
 # 只有存在 Brotli 解码器时才声明 br，否则响应体无法解压
 _ACCEPT_ENCODING = "gzip, deflate"
@@ -127,7 +126,7 @@ class Spider:
                     except Exception:
                         pass
                     try:
-                        s.verify = False
+                        s.verify = True
                     except Exception:
                         pass
                     self._session = s
@@ -168,7 +167,7 @@ class Spider:
         last = None
         for attempt in range(3):
             try:
-                r = self.session.get(self.host + path, headers=hd, timeout=self._TIMEOUT, verify=False)
+                r = self.session.get(self.host + path, headers=hd, timeout=self._TIMEOUT, verify=True)
                 r.raise_for_status()
                 try:
                     r.encoding = r.apparent_encoding or "utf-8"
