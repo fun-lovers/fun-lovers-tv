@@ -52,6 +52,16 @@ jobs:
           python -c "from pathlib import Path; Path('drpy2/public/libs/drpy2.min.js').write_text('/* CI placeholder */' + 'x' * 1500, encoding='utf-8')"
           python drpy2/scripts/build_static.py --base-url https://example.github.io/fun-lovers-tv/drpy2 --output /tmp/tvbox-drpy2-build
           python -c "import json; from pathlib import Path; p=Path('/tmp/tvbox-drpy2-build/tvbox.json'); d=json.loads(p.read_text()); assert d['sites'] and all(s['type']==3 for s in d['sites']); assert (Path('/tmp/tvbox-drpy2-build/libs/drpy2.min.js')).is_file()"
+      - name: Smoke-test unified bundle extraction and validation
+        run: |
+          python - <<'PY'
+          import json, zipfile
+          with zipfile.ZipFile('/tmp/sample-unified.zip', 'w') as z:
+              z.writestr('sample/tvbox-unified.json', json.dumps({'sites': [{'key': 'sample', 'api': 'https://example.invalid/api'}]}))
+              z.writestr('sample/jar-configs/sample.json', '{}')
+          PY
+          python scripts/unpack_unified_bundle.py /tmp/sample-unified.zip /tmp/sample-unified
+          python scripts/validate_unified_bundle.py /tmp/sample-unified
       - name: Check JavaScript syntax
         run: |
           set -euo pipefail
