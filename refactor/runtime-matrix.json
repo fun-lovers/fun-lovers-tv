@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "pythonHost": {
+    "name": "TVBox-compatible Python Spider runtime",
+    "providedByClient": true,
+    "requiredCapabilities": ["base.spider.Spider or compatible Spider contract", "client fetch/request bridge"],
+    "notProvidedByGitHubPages": true
+  },
+  "spiders": {
+    "single-tvbox/py/douban.py": {
+      "python": "3.x client-dependent",
+      "thirdParty": [],
+      "hostModules": ["base.spider"],
+      "network": ["https://frodo.douban.com/api/v2"],
+      "notes": ["Uses standard library modules only beyond the client Spider base.", "Preserve existing embedded API/app configuration during refactor."]
+    },
+    "single-tvbox/py/hongguo.py": {
+      "python": "3.10+ syntax used; verify client interpreter before enabling",
+      "thirdParty": ["requests"],
+      "optionalThirdParty": ["cryptography", "pycryptodome"],
+      "hostModules": ["base.spider"],
+      "network": ["https://hongguoduanju.com", "https://api5-normal-sinfonlineb.fqnovel.com"],
+      "notes": ["AES backend selection is conditional.", "Uses threading, concurrent.futures and http.server; client sandbox support must be tested."]
+    },
+    "single-tvbox/py/ruyishipin.py": {
+      "python": "3.x client-dependent",
+      "thirdParty": ["requests", "urllib3"],
+      "optionalThirdParty": ["brotli", "brotlicffi"],
+      "hostModules": ["com.github.catvod.Proxy"],
+      "network": ["https://rysp.tv"],
+      "notes": ["Uses a client-specific loopback proxy at 127.0.0.1:9978.", "urllib3 warnings are disabled globally in the module."]
+    }
+  },
+  "buildTools": {
+    "python": "3.12",
+    "thirdParty": [],
+    "notes": ["Current static build and source validation scripts use the Python standard library."]
+  },
+  "drpy2": {
+    "runtime": "drpy2.min.js",
+    "runtimeSourceRepository": "hjdhnx/dr_py",
+    "runtimeSourceCommit": "ca23ffdbf5e429c5893ac60158668fc5af7af192",
+    "runtimeVersionObserved": "3.9.49beta40 202400426",
+    "hostApis": ["request", "rule", "VOD", "TVBox/drpy2 rule contract"],
+    "credentialedSources": {
+      "youtube": "YOUTUBE_API_KEY",
+      "vimeo": "VIMEO_ACCESS_TOKEN"
+    }
+  }
+}
