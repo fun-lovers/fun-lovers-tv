@@ -44,8 +44,10 @@ jobs:
         run: |
           set -euo pipefail
           PINNED_COMMIT="ca23ffdbf5e429c5893ac60158668fc5af7af192"
+          PINNED_SHA256="fa829edf7d7e8e2453151322948940b85d9c9258144cbdd7430722e887e95a5d"
           DEFAULT_URL="https://raw.githubusercontent.com/hjdhnx/dr_py/${PINNED_COMMIT}/libs/drpy2.min.js"
           URL="${DRPY2_RUNTIME_URL:-$DEFAULT_URL}"
+          EXPECTED_SHA256="${DRPY2_RUNTIME_SHA256:-$PINNED_SHA256}"
           if [ -n "${DRPY2_RUNTIME_URL}" ] && [ -z "${DRPY2_RUNTIME_SHA256}" ]; then
             echo "DRPY2_RUNTIME_SHA256 is required when overriding DRPY2_RUNTIME_URL." >&2
             exit 1
@@ -54,8 +56,8 @@ jobs:
           curl --fail --location --retry 3 --connect-timeout 20 "$URL" -o drpy2/public/libs/drpy2.min.js
           test "$(wc -c < drpy2/public/libs/drpy2.min.js)" -gt 1000
           ACTUAL_SHA256="$(sha256sum drpy2/public/libs/drpy2.min.js | awk '{print $1}')"
-          if [ -n "${DRPY2_RUNTIME_SHA256}" ] && [ "$ACTUAL_SHA256" != "$DRPY2_RUNTIME_SHA256" ]; then
-            echo "drpy2 runtime SHA-256 mismatch: expected $DRPY2_RUNTIME_SHA256, got $ACTUAL_SHA256" >&2
+          if [ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]; then
+            echo "drpy2 runtime SHA-256 mismatch: expected $EXPECTED_SHA256, got $ACTUAL_SHA256" >&2
             exit 1
           fi
           printf '%s  %s\n' "$ACTUAL_SHA256" "drpy2.min.js" | tee drpy2/runtime-sha256.txt
