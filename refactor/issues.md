@@ -19,6 +19,7 @@
 | RT-015 | P2 | `ysc-doc.json` contains 79 index entries while `ysc-doc-source.json` contains 11; no deterministic generation contract is documented | Published catalogue and audit ledger may drift; the published index also contains 2 repeated URLs | Define whether these are separate roles, then add deterministic sync/deduplication checks without deleting entries silently |
 | RT-016 | P2 | 84 of 87 `ysc-doc-source.json` audit records have no `sourceType` value | Automated audit filters cannot classify most records reliably | Add schema validation and explicit classification rules; preserve unknown records until reviewed |
 | RT-017 | P2 | Unified ZIP unpacker originally had no explicit archive entry/expanded-size limits | Unexpectedly large or highly compressed archives could consume runner disk/time | Fixed on this branch: cap entry count, per-file and total expanded sizes, compression ratio; reject duplicate names, backslashes and symlinks |
+| RT-018 | P2 | YouTube JS rule always sent an empty `pageToken`, so later result pages repeated page one | Search pagination did not follow the YouTube Data API response contract | Fixed on this branch: cache `nextPageToken` per query and request subsequent pages using the returned token |
 
 ## Scope notes
 These are findings from the first-pass workflow/config/code review, not claims that every listed issue has already caused a production failure. Items requiring a full read or an actual TVBox client remain marked for further verification.
