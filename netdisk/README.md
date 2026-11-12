@@ -58,3 +58,17 @@ GitHub Pages 是静态网站。浏览器 localStorage 不会自动同步到 TVBo
 
 ## 搜索说明
 搜索按钮通过外部搜索引擎查询公开索引。结果有效性及授权状态需自行核验；本页不抓取或代理第三方网盘内容。
+
+
+## TVBox 夸克 Cookie 配置页
+
+专用入口：`/netdisk/quark-cookie.html`
+
+- 在浏览器本地填写、保存或清除夸克 Cookie。
+- 页面从公开 Pages 主配置读取 `tvbox-unified.json`，仅在本机内存中修改目标站点 `xw_bad1f_cat_58`。
+- 目标站点改用已存在的 `open/wanpan.js` 真实夸克网盘解析器；Cookie 通过该站点的对象型 `ext.quark_cookie` 传入运行时。
+- 点击生成后下载 `tvbox-quark-cookie.local.json`，再通过 TVBox / 影视仓的本地文件导入功能导入。
+- Cookie 不会写入公开仓库，也不会上传到 Pages。下载配置包含个人 Cookie，必须妥善保管。
+- GitHub Pages 的公开主配置只包含空 Cookie 字段；不同客户端对本地文件导入和对象型 ext 的支持可能不同，需在目标客户端实测。
+
+构建时由 `scripts/patch_quark_cookie_source.py` 对 Release 整合包执行幂等补丁：把目标站点切换到现有 Quark 解析器，并避免在播放地址后附加未经签名的线程查询参数。该操作不把个人 Cookie 写入 Release。
