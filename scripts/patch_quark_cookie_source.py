@@ -24,8 +24,7 @@ def patch(root: Path) -> None:
         "quark_transfer", "enable_proxy", "enable_image", "proxy_url", "proxy_img",
     ]
     for field in object_fields:
-        resolver = resolver.replace(f"= cfg.{field} ||", f"= ext.{field} ||")
-        resolver = resolver.replace(f"= cfg.{field} !==", f"= ext.{field} !==")
+        resolver = resolver.replace(f"cfg.{field}", f"ext.{field}")
     required = ["Quark.getFilesByShareUrl", "Quark.getLiveTranscoding", "Quark.cookie"]
     missing = [item for item in required if item not in resolver]
     if missing:
