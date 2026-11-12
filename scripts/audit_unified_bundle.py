@@ -29,6 +29,59 @@ def manifest_attributes(raw: bytes) -> dict[str, str]:
     return attrs
 
 
+
+def read_uleb128(data: bytes, offset: int) -> tuple[int, int]:
+    value = 0
+    shift = 0
+    while offset < len(data) and shift <= 35:
+        byte = data[offset]
+        offset += 1
+        value |= (byte & 0x7f) << shift
+        if not byte & 0x80:
+            return value, offset
+        shift += 7
+    raise ValueError("invalid DEX ULEB128")
+
+
+def inspect_dex(data: bytes) -> dict:
+    if len(data) < 112 or data[:4] != b"dex\\n":
+        raise ValueError("invalid DEX header")
+    u32 = lambda offset: int.from_bytes(data[offset:offset + 4], "little")
+    string_count, string_off = u32(56), u32(60)
+    type_count, type_off = u32(64), u32(68)
+    class_count = u32(96)
+    if string_count > 2_000_000 or type_count > 2_000_000:
+        raise ValueError("unreasonable DEX table size")
+    if string_off + string_count * 4 > len(data) or type_off + type_count * 4 > len(data):
+        raise ValueError("DEX string/type table outside file")
+
+    strings = []
+    for index in range(string_count):
+        item_off = u32(string_off + index * 4)
+        _, start = read_uleb128(data, item_off)
+        end = data.find(b"\\0", start)
+        if end < 0:
+            raise ValueError("unterminated DEX string")
+        strings.append(data[start:end].decode("utf-8", errors="replace"))
+
+    package_counts = Counter()
+    for index in range(type_count):
+        string_index = u32(type_off + index * 4)
+        if string_index >= len(strings):
+            continue
+        descriptor = strings[string_index]
+        if descriptor.startswith("L") and "/" in descriptor:
+            parts = descriptor[1:].split("/")
+            package_counts[".".join(parts[:2])] += 1
+    return {
+        "version": data[4:7].decode("ascii", errors="replace"),
+        "fileSizeHeader": u32(32),
+        "headerSize": u32(36),
+        "classDefinitionCount": class_count,
+        "typeCount": type_count,
+        "packagePrefixes": dict(package_counts.most_common(20))
+    }
+
 def inspect_jar(path: Path, root: Path) -> dict:
     item = {
         "path": path.relative_to(root).as_posix(),
@@ -61,21 +114,20 @@ def inspect_jar(path: Path, root: Path) -> dict:
             classes = Counter()
             for name in names:
                 if name.lower().endswith(".dex"):
-                    header = jar.read(name)[:112]
-                    dex = {"path": name, "sizeBytes": jar.getinfo(name).file_size}
-                    if len(header) >= 44 and header[:4] == b"dex\\n":
-                        dex.update({
-                            "version": header[4:7].decode("ascii", errors="replace"),
-                            "fileSizeHeader": int.from_bytes(header[32:36], "little"),
-                            "headerSize": int.from_bytes(header[36:40], "little"),
-                            "endianTag": hex(int.from_bytes(header[40:44], "little"))
-                        })
-                    else:
-                        dex["headerError"] = "invalid DEX magic/header"
+                    raw_dex = jar.read(name)
+                    dex = {"path": name, "sizeBytes": len(raw_dex)}
+                    try:
+                        dex.update(inspect_dex(raw_dex))
+                    except Exception as exc:
+                        dex["headerError"] = str(exc)
                     item["dexFiles"].append(dex)
                 elif name.lower().endswith(".so"):
+                    parts = name.split("/")
+                    known_abis = {"armeabi-v7a", "arm64-v8a", "x86", "x86_64", "riscv64"}
+                    abi = next((part for part in parts if part in known_abis), "unknown")
                     item["nativeLibraries"].append({
                         "path": name,
+                        "abi": abi,
                         "sizeBytes": jar.getinfo(name).file_size
                     })
                 if name.endswith(".class"):
