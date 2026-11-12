@@ -2,45 +2,43 @@
 
 部署入口：`/netdisk/`
 
-## 页面功能
-- 夸克、百度、阿里云盘、UC 的公开网页索引搜索入口。
-- Cookie / Token 在当前浏览器填写和本地保存。
-- JSON 账号备份、导入、清除。
-- 两种已从整合包实际配置结构核实的凭据补丁导出。
+## 当前页面能力
+- 夸克、百度、阿里云盘、UC 的公开网页索引搜索。
+- Cookie / Token 在浏览器本地填写、保存、导入和导出。
+- 将凭据补丁合并到用户选定的原始 JSON，并下载合并文件；不上传文件、不覆盖原始文件。
+- 合并前解析 JSON；合并后保留原有其他字段。
 
-## 已核实的 TVBox 配置字段
+## 已核实的字段结构
 
-### 拾光线路 env.json
-整合包内 `sources/星微/tvboxTW/本地【拾光线路】/config/env.json` 的字段结构包含：
-- `quark_cookie`
-- `baidu_cookie`
-- `uc_cookie`
-- `uc_token`
-
-页面的“导出拾光 env 凭据补丁”仅导出上述四个字段。请将其合并进原 env.json，保留原文件其他配置，不要直接用补丁覆盖整个 env.json。
+### 拾光 env.json
+审计的原始文件路径：`sources/星微/tvboxTW/本地【拾光线路】/config/env.json`。
+字段：`quark_cookie`、`baidu_cookie`、`uc_cookie`、`uc_token`。
+页面的 env 合并只写入用户非空填写的字段，原配置其他设置保持不变。
 
 ### 星微 JAR ext
-整合包内 `jar-configs/xw-dlao-88d04426c4.json` 的两个站点 ext 结构包含：
-- `quarkCookie`
-- `ucCookie`
-- `token`
-- `site_urls`
-- `url_key`
-- `threadinfo`
+审计文件：`jar-configs/xw-dlao-88d04426c4.json`。
+匹配的 ext 结构：`site_urls` 数组、`url_key` 字符串、`threadinfo` 对象，并具有 `token`、`ucCookie`、`quarkCookie` 字段。
+页面只更新满足该结构的 ext 对象；不会修改其他站点或 JAR ext。
+`token` 的真实服务归属尚未完全确认，因此页面要求单独填写“JAR ext 专用 token”，不会把夸克或 UC Token 自动猜测映射过去。
 
-页面的“导出星微 JAR ext 凭据补丁”只导出已确认的 Cookie 字段和 token 字段，不覆盖站点 URL、线程或其他 ext 配置。token 的具体服务归属及各站点实际读取逻辑尚未由 JAR 字节码/运行测试完全确认，导出值需要按目标站点自行核对。
+## 操作方法
+1. 在可信设备打开网盘中心，填写对应 Cookie / Token。
+2. 选择原始 `env.json` 或对应 JAR 配置 JSON。
+3. 点击“合并凭据并下载”。
+4. 先备份原文件，再将合并后的文件放回原配置位置，或按 TVBox/影视仓支持的配置导入方式导入。
+5. 重启或刷新对应客户端配置后验证。
 
-## 尚未实现的运行时注入
-本项目通过 GitHub Pages 发布静态资源。浏览器 localStorage 不会自动同步到 TVBox、影视仓、drpy Python 进程或 JAR 进程。导出的 JSON 是可手动合并的凭据补丁，不是远程账号同步服务，也不会自动改写已发布的 Release ZIP。
+## 尚未实现的运行时同步
+GitHub Pages 是静态网站。浏览器 localStorage 不会自动同步到 TVBox、影视仓、drpy Python 进程或 JAR 进程。本页通过本地合并原配置并下载实现安全的手动配置更新，不声称具备远程实时注入或云端账号同步。
 
-完整自动注入还需要在 TVBox 客户端支持的配置导入流程、JAR ext 消费点或受保护的后端服务中实现，并在目标客户端实测。静态页面不能安全地把浏览器 Cookie 推送给公开 GitHub 仓库。
+完整自动注入需要客户端明确支持的配置更新机制或受保护后端，并且必须对具体 JS/JAR 消费字段逐个实测。静态网页不应将网盘 Cookie 上传至公开 GitHub 仓库。
 
 ## 安全
-- 凭据只存当前浏览器 localStorage；不会提交到仓库或上传到 Pages。
-- 仅在可信设备使用；本地存储不是密码保险箱。
-- 不要把导出的凭据补丁上传到公开仓库、Issue、PR 或群聊。
+- 页面凭据仅存当前浏览器 localStorage；本地存储不是密码保险箱。
+- 文件合并在浏览器本地完成，不上传到服务器。
+- 不要把导出的账号备份或合并配置提交到公开仓库、Issue、PR 或聊天群。
 - 凭据泄漏后请在对应网盘平台撤销或更新。
 - 不提供密码登录代理、会员绕过或访问控制绕过。
 
-## 搜索范围
-搜索入口通过外部搜索引擎查询公开索引页面。结果有效性和授权状态需自行核验；本页不抓取或代理第三方网盘内容。
+## 搜索说明
+搜索按钮通过外部搜索引擎查询公开索引。结果有效性及授权状态需自行核验；页面不抓取或代理第三方网盘内容。
