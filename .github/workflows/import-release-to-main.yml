@@ -1,0 +1,117 @@
+name: Import latest Release into repository
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-release-to-main
+  cancel-in-progress: false
+
+jobs:
+  import-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Select latest Release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          TAG="$EVENT_TAG"
+          if [ -z "$TAG" ]; then
+            TAG="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            echo "::error::No published Release was found."
+            exit 1
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Selected Release: $TAG"
+
+      - name: Download Release ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/release-download"
+          gh release download "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "unified-tvbox-bundle.zip" \
+            --dir "$RUNNER_TEMP/release-download"
+          test -s "$RUNNER_TEMP/release-download/unified-tvbox-bundle.zip"
+
+      - name: Safely extract bundle
+        env:
+          ZIP_FILE: ${{ runner.temp }}/release-download/unified-tvbox-bundle.zip
+          OUTPUT_DIR: packages/unified
+        run: |
+          python - <<'PY'
+          import os, stat, zipfile
+          from pathlib import Path, PurePosixPath
+
+          archive = Path(os.environ["ZIP_FILE"])
+          output = Path(os.environ["OUTPUT_DIR"])
+          output.mkdir(parents=True, exist_ok=True)
+
+          total = 0
+          with zipfile.ZipFile(archive) as zf:
+              for info in zf.infolist():
+                  name = info.filename
+                  path = PurePosixPath(name)
+                  mode = info.external_attr >> 16
+
+                  if path.is_absolute() or ".." in path.parts or not path.parts:
+                      raise SystemExit(f"Unsafe ZIP path: {name}")
+                  if stat.S_ISLNK(mode):
+                      raise SystemExit(f"Symbolic links are not allowed: {name}")
+                  if info.is_dir():
+                      continue
+                  if info.file_size > 95 * 1024 * 1024:
+                      raise SystemExit(f"File exceeds GitHub's 100 MB limit: {name}")
+                  total += info.file_size
+                  if total > 1024 * 1024 * 1024:
+                      raise SystemExit("Expanded archive exceeds 1 GiB safety limit.")
+
+                  target = output.joinpath(*path.parts)
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  with zf.open(info) as src, target.open("wb") as dst:
+                      while chunk := src.read(1024 * 1024):
+                          dst.write(chunk)
+
+          files = [p for p in output.rglob("*") if p.is_file()]
+          if not files:
+              raise SystemExit("ZIP contained no files.")
+          print(f"Extracted {len(files)} files ({total} bytes) into {output}")
+          PY
+
+      - name: Commit extracted files to main
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A packages/unified
+          if git diff --cached --quiet; then
+            echo "No extracted-file changes to commit."
+            exit 0
+          fi
+          git commit -m "Import TVBox bundle from Release ${RELEASE_TAG}"
+          git push origin HEAD:main
+
+      - name: Show imported file summary
+        run: |
+          echo "Files now stored under packages/unified:"
+          find packages/unified -type f | sort
