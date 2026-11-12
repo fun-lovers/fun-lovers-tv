@@ -16,6 +16,9 @@
 | RT-012 | P1 | Douban and Hongguo spiders appended `..` to sys.path relative to process working directory | Importing `base.spider` could fail when client working directory differs from the script folder | Fixed on this branch: resolve the package root relative to `__file__` |
 | RT-013 | P1 | TVBox Python host APIs are not available in GitHub Pages build environment | Static hosting cannot execute Python spiders or local proxy handlers | Documented as a client-side runtime dependency; validate on supported clients |
 | RT-014 | P2 | Ruyi defines a standalone `Spider` class while Douban/Hongguo use the host Spider base | Different TVBox forks may load or call these scripts differently | Keep compatibility status unverified until client-specific smoke tests are run |
+| RT-015 | P2 | `ysc-doc.json` contains 79 index entries while `ysc-doc-source.json` contains 11; no deterministic generation contract is documented | Published catalogue and audit ledger may drift; the published index also contains 2 repeated URLs | Define whether these are separate roles, then add deterministic sync/deduplication checks without deleting entries silently |
+| RT-016 | P2 | 84 of 87 `ysc-doc-source.json` audit records have no `sourceType` value | Automated audit filters cannot classify most records reliably | Add schema validation and explicit classification rules; preserve unknown records until reviewed |
+| RT-017 | P2 | Unified ZIP unpacker validates traversal paths and CRC but has no explicit archive entry/expanded-size limits | Unexpectedly large or highly compressed archives can consume runner disk/time | Add bounded entry count, total uncompressed size and per-file size checks before extraction |
 
 ## Scope notes
 These are findings from the first-pass workflow/config/code review, not claims that every listed issue has already caused a production failure. Items requiring a full read or an actual TVBox client remain marked for further verification.
