@@ -58,10 +58,13 @@ jobs:
         run: |
           set -euo pipefail
           PINNED_COMMIT="ca23ffdbf5e429c5893ac60158668fc5af7af192"
+          EXPECTED_SHA256="fa829edf7d7e8e2453151322948940b85d9c9258144cbdd7430722e887e95a5d"
           mkdir -p drpy2/public/libs
           curl --fail --location --retry 3 --connect-timeout 20 "https://raw.githubusercontent.com/hjdhnx/dr_py/${PINNED_COMMIT}/libs/drpy2.min.js" -o drpy2/public/libs/drpy2.min.js
           test "$(wc -c < drpy2/public/libs/drpy2.min.js)" -gt 1000
-          sha256sum drpy2/public/libs/drpy2.min.js
+          ACTUAL_SHA256="$(sha256sum drpy2/public/libs/drpy2.min.js | awk '{print $1}')"
+          test "$ACTUAL_SHA256" = "$EXPECTED_SHA256"
+          echo "$ACTUAL_SHA256  drpy2.min.js"
           python drpy2/scripts/build_static.py --base-url https://example.github.io/fun-lovers-tv/drpy2 --output /tmp/tvbox-drpy2-build
           python -c "import json; from pathlib import Path; p=Path('/tmp/tvbox-drpy2-build/tvbox.json'); d=json.loads(p.read_text()); assert d['sites'] and all(s['type']==3 for s in d['sites']); assert (Path('/tmp/tvbox-drpy2-build/libs/drpy2.min.js')).is_file()"
       - name: Smoke-test unified bundle extraction and validation
