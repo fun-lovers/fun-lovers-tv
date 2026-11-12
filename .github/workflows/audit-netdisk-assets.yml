@@ -4,19 +4,41 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: "Release tag containing unified-tvbox-bundle.zip (blank = latest release)"
+        description: "Release tag containing unified-tvbox-bundle.zip (blank = latest published release)"
         required: false
         type: string
+  push:
+    branches: [main]
+    paths:
+      - "scripts/audit_netdisk_bundle.py"
+      - ".github/workflows/audit-netdisk-assets.yml"
 
 permissions:
   contents: read
 
+concurrency:
+  group: netdisk-assets-audit
+  cancel-in-progress: false
+
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile audit script
+        run: python -m py_compile scripts/audit_netdisk_bundle.py
+
+      - name: Run ZIP scanner and credential-redaction self-test
+        run: python scripts/audit_netdisk_bundle.py --self-test
+
       - name: Download unified bundle from Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -25,28 +47,27 @@ jobs:
           set -euo pipefail
           TAG="$RELEASE_TAG_INPUT"
           if [ -z "$TAG" ]; then
-            TAG="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 1 --json tagName,isDraft --jq '.[] | select(.isDraft == false) | .tagName' | head -n 1)"
+            TAG="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 20 --json tagName,isDraft --jq '[.[] | select(.isDraft == false)][0].tagName // empty')"
           fi
-          test -n "$TAG"
+          if [ -z "$TAG" ]; then
+            echo "No published Release found. Publish a Release containing unified-tvbox-bundle.zip first." >&2
+            exit 1
+          fi
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fxq "unified-tvbox-bundle.zip"; then
+            echo "Release $TAG does not contain unified-tvbox-bundle.zip." >&2
+            exit 1
+          fi
           gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "unified-tvbox-bundle.zip" --dir .
           test -s unified-tvbox-bundle.zip
-          echo "Auditing release tag: $TAG"
-      - name: Inventory existing netdisk and credential schema
-        run: |
-          python scripts/audit_netdisk_bundle.py unified-tvbox-bundle.zip netdisk-audit.json
-          python - <<'PY'
-          import json
-          d=json.load(open("netdisk-audit.json",encoding="utf-8"))
-          print("\\n=== MATCHED FILES ===")
-          for x in d["matched_files"]: print(x)
-          print("\\n=== CREDENTIAL FIELD NAMES ONLY ===")
-          print(", ".join(d["credential_key_names"]))
-          print("\\n=== JSON ENTRY COUNT ===")
-          print(len(d["json_entries"]))
-          PY
+          echo "Downloaded unified bundle from Release $TAG."
+
+      - name: Inventory netdisk assets and credential schema
+        run: python scripts/audit_netdisk_bundle.py unified-tvbox-bundle.zip netdisk-audit.json
+
       - name: Upload audit report
         uses: actions/upload-artifact@v4
         with:
           name: netdisk-asset-audit
           path: netdisk-audit.json
+          if-no-files-found: error
           retention-days: 14
