@@ -8,6 +8,9 @@ on:
       - 'drpy2/config/**'
       - 'drpy2/public/js/**'
       - 'scripts/check_runtime_contracts.py'
+      - 'scripts/unpack_unified_bundle.py'
+      - 'scripts/validate_unified_bundle.py'
+      - 'scripts/audit_unified_bundle.py'
       - '.github/workflows/deploy-drpy2-pages.yml'
       - 'refactor/**'
       - '.github/workflows/refactor-checks.yml'
@@ -62,6 +65,21 @@ jobs:
           PY
           python scripts/unpack_unified_bundle.py /tmp/sample-unified.zip /tmp/sample-unified
           python scripts/validate_unified_bundle.py /tmp/sample-unified
+      - name: Audit released unified bundle and JAR runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release download tvbox-bundle-v1 --repo "$GITHUB_REPOSITORY" --pattern "unified-tvbox-bundle.zip" --dir /tmp
+          python scripts/unpack_unified_bundle.py /tmp/unified-tvbox-bundle.zip /tmp/unified-release
+          python scripts/validate_unified_bundle.py /tmp/unified-release
+          python scripts/audit_unified_bundle.py /tmp/unified-release --output /tmp/jar-runtime-audit.json
+      - name: Upload JAR runtime audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: jar-runtime-audit
+          path: /tmp/jar-runtime-audit.json
+          if-no-files-found: error
       - name: Check JavaScript syntax
         run: |
           set -euo pipefail
