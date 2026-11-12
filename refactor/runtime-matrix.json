@@ -91,6 +91,7 @@
     "credentialedSources": {
       "youtube": "YOUTUBE_API_KEY",
       "vimeo": "VIMEO_ACCESS_TOKEN"
-    }
+    },
+    "runtimeSourceSha256": "fa829edf7d7e8e2453151322948940b85d9c9258144cbdd7430722e887e95a5d"
   }
 }
