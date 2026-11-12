@@ -18,6 +18,7 @@ on:
       - "scripts/unpack_unified_bundle.py"
       - "scripts/audit_netdisk_bundle.py"
       - "scripts/build_netdisk_catalog.py"
+      - "scripts/patch_quark_cookie_source.py"
       - ".github/workflows/deploy-drpy2-pages.yml"
       - ".github/workflows/audit-netdisk-assets.yml"
 
@@ -50,7 +51,8 @@ jobs:
             scripts/unpack_unified_bundle.py \
             scripts/validate_unified_bundle.py \
             scripts/audit_netdisk_bundle.py \
-            scripts/build_netdisk_catalog.py
+            scripts/build_netdisk_catalog.py \
+            scripts/patch_quark_cookie_source.py
           python scripts/validate_unified_bundle.py --self-test
           python scripts/audit_netdisk_bundle.py --self-test
 
@@ -120,6 +122,7 @@ jobs:
           set -euo pipefail
           if [ -f unified-tvbox-bundle.zip ]; then
             python scripts/unpack_unified_bundle.py unified-tvbox-bundle.zip dist/unified
+            python scripts/patch_quark_cookie_source.py dist/unified
             python scripts/validate_unified_bundle.py dist/unified
           else
             echo "No unified bundle attached to a published Release; continuing with the drpy2 site only."
@@ -158,6 +161,16 @@ jobs:
           print("Portal feature and credential mapping checks passed.")
           PY
           node --check /tmp/netdisk-portal.js
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          page = Path("netdisk/quark-cookie.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script>(.*?)</script>", page, flags=re.S)
+          if not scripts:
+              raise SystemExit("No Cookie page script found")
+          Path("/tmp/quark-cookie.js").write_text("\\n".join(scripts), encoding="utf-8")
+          PY
+          node --check /tmp/quark-cookie.js
 
       - name: Publish netdisk search and account center
         run: |
@@ -165,6 +178,8 @@ jobs:
           test -s netdisk/index.html
           mkdir -p dist/netdisk
           cp netdisk/index.html dist/netdisk/index.html
+          test -s netdisk/quark-cookie.html
+          cp netdisk/quark-cookie.html dist/netdisk/quark-cookie.html
           if [ -s netdisk/tvbox-sites.json ]; then cp netdisk/tvbox-sites.json dist/netdisk/tvbox-sites.json; fi
 
       - name: Configure Pages
