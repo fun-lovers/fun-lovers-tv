@@ -44,7 +44,7 @@ def read_uleb128(data: bytes, offset: int) -> tuple[int, int]:
 
 
 def inspect_dex(data: bytes) -> dict:
-    if len(data) < 112 or data[:4] != b"dex\\n":
+    if len(data) < 112 or data[:4] != b"dex\x5cn":
         raise ValueError("invalid DEX header")
     u32 = lambda offset: int.from_bytes(data[offset:offset + 4], "little")
     string_count, string_off = u32(56), u32(60)
@@ -59,7 +59,7 @@ def inspect_dex(data: bytes) -> dict:
     for index in range(string_count):
         item_off = u32(string_off + index * 4)
         _, start = read_uleb128(data, item_off)
-        end = data.find(b"\\0", start)
+        end = data.find(b"\x5c0", start)
         if end < 0:
             raise ValueError("unterminated DEX string")
         strings.append(data[start:end].decode("utf-8", errors="replace"))
