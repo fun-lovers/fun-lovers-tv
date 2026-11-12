@@ -18,6 +18,7 @@ from collections.abc import Mapping
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from html.parser import HTMLParser
 from typing import Any
+from pathlib import Path as _Path
 from urllib.parse import parse_qs, quote, urlencode, urlparse
 import requests
 try:
@@ -35,7 +36,7 @@ try:
 except Exception:
     try:
         import sys as _sys
-        _sys.path.append("..")
+        _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
         from base.spider import Spider as _BaseSpider
     except Exception:
         class _BaseSpider:
