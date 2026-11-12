@@ -7,7 +7,12 @@ import json
 import re
 import urllib.parse
 from datetime import date
-sys.path.append('..')
+from pathlib import Path
+
+# Resolve the package root from this file, not from the client's current directory.
+_PACKAGE_ROOT = str(Path(__file__).resolve().parents[1])
+if _PACKAGE_ROOT not in sys.path:
+    sys.path.insert(0, _PACKAGE_ROOT)
 from base.spider import Spider
 
 # 全部分组: key -> (接口路径, 数据key)。已在 2026-08-08 联网逐一验证。
