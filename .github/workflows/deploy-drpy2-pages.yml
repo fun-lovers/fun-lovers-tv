@@ -122,6 +122,13 @@ jobs:
             echo "No unified bundle attached to a published Release; continuing with the drpy2 site only."
           fi
 
+      - name: Publish netdisk search and account center
+        run: |
+          set -euo pipefail
+          test -s netdisk/index.html
+          mkdir -p dist/netdisk
+          cp netdisk/index.html dist/netdisk/index.html
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
