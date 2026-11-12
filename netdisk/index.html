@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><title>fun-lovers TV · 网盘中心</title>
+<style>
+:root{color-scheme:dark;--bg:#10141d;--panel:#1a2230;--line:#2d394b;--fg:#edf2fa;--muted:#9eacbf;--accent:#79b8ff;--ok:#8bd6a4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:900px;margin:auto;padding:24px 16px 60px}h1{font-size:28px;margin:0 0 6px}h2{font-size:20px;margin:0 0 14px}.sub,.hint{color:var(--muted);font-size:14px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}nav a,.btn{display:inline-block;padding:10px 14px;border:1px solid var(--line);border-radius:10px;color:var(--fg);text-decoration:none;background:#202c3d;cursor:pointer}
+section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+input,select,textarea{width:100%;background:#0e1520;color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:11px;font:inherit}
+label{display:block;margin:12px 0 5px;font-size:14px;color:#c7d3e3}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.btn.primary{background:#245c91;border-color:#397db9}.btn.danger{background:#512b35}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.card{border:1px solid var(--line);border-radius:12px;padding:14px}.card h3{margin:0 0 6px}.tag{font-size:12px;color:var(--ok)}
+#status{min-height:24px;color:var(--ok)}.warning{border-left:3px solid #e0ad55;padding-left:12px;color:#e7d4ac}
+small{color:var(--muted)}.hide{display:none!important}
+</style></head>
+<body><main>
+<h1>网盘搜索与账号中心</h1><div class="sub">fun-lovers/fun-lovers-tv · 静态页面 · 凭据仅保存在当前浏览器</div>
+<nav><a href="#search">网盘搜索</a><a href="#accounts">账号配置</a><a href="#transfer">导入 / 导出</a><a href="../unified/tvbox-unified.json">TVBox 主配置</a></nav>
+<section id="search"><h2>网盘资源搜索</h2>
+<p class="hint">输入片名或关键词，选择网盘后打开公开网页索引搜索。搜索结果由外部搜索引擎提供；本页不抓取或代理第三方网盘内容。</p>
+<label for="query">搜索关键词</label><input id="query" placeholder="例如：流浪地球 4K">
+<div class="grid" style="margin-top:14px">
+<div class="card"><h3>夸克网盘</h3><div class="hint">搜索公开索引页面</div><div class="actions"><button class="btn primary" data-search="quark">搜索夸克</button><a class="btn" href="https://pan.quark.cn/" target="_blank" rel="noopener">打开夸克</a></div></div>
+<div class="card"><h3>百度网盘</h3><div class="hint">搜索公开索引页面</div><div class="actions"><button class="btn primary" data-search="baidu">搜索百度</button><a class="btn" href="https://pan.baidu.com/" target="_blank" rel="noopener">打开百度</a></div></div>
+<div class="card"><h3>阿里云盘</h3><div class="hint">搜索公开索引页面</div><div class="actions"><button class="btn primary" data-search="aliyun">搜索阿里云盘</button><a class="btn" href="https://www.alipan.com/" target="_blank" rel="noopener">打开阿里云盘</a></div></div>
+<div class="card"><h3>UC 网盘</h3><div class="hint">搜索公开索引页面</div><div class="actions"><button class="btn primary" data-search="uc">搜索 UC</button><a class="btn" href="https://drive.uc.cn/" target="_blank" rel="noopener">打开 UC 网盘</a></div></div>
+</div><p class="hint">提示：公开索引不保证资源可用或拥有授权。请遵守内容版权、平台条款及所在地法律。</p></section>
+<section id="accounts"><h2>账号配置中心</h2>
+<p class="warning">安全说明：这是纯静态 GitHub Pages 页面。凭据只存入此浏览器的 localStorage，不会上传到 GitHub；不要在公用设备使用。清除浏览器站点数据会删除本地配置。</p>
+<div class="grid">
+<div><label for="quarkCookie">夸克 Cookie</label><textarea id="quarkCookie" rows="3" autocomplete="off" placeholder="粘贴夸克授权 Cookie"></textarea></div>
+<div><label for="baiduCookie">百度网盘 Cookie</label><textarea id="baiduCookie" rows="3" autocomplete="off" placeholder="粘贴百度网盘授权 Cookie"></textarea></div>
+<div><label for="ucCookie">UC 网盘 Cookie</label><textarea id="ucCookie" rows="3" autocomplete="off" placeholder="粘贴 UC 网盘授权 Cookie"></textarea></div>
+<div><label for="quarkToken">夸克 Token（如爬虫要求）</label><input id="quarkToken" type="password" autocomplete="off"></div>
+<div><label for="ucToken">UC Token</label><input id="ucToken" type="password" autocomplete="off"></div>
+<div><label for="baiduToken">百度 Token（如爬虫要求）</label><input id="baiduToken" type="password" autocomplete="off"></div>
+<div><label for="aliyunToken">阿里云盘 Token（如爬虫要求）</label><input id="aliyunToken" type="password" autocomplete="off"></div>
+</div>
+<div class="actions"><button class="btn primary" id="save">保存到本设备</button><button class="btn" id="reveal">显示 / 隐藏凭据</button><button class="btn danger" id="clear">清除本设备凭据</button></div>
+<p id="status" role="status"></p><p class="hint">目前识别到的历史爬虫字段包括 quarkCookie / quark_cookie、baidu_cookie、ucCookie / uc_cookie、uc_token、token、accessToken、refreshToken 等。不同爬虫字段并不统一，保存的表单不会自动注入 TVBox 运行进程。</p>
+</section>
+<section id="transfer"><h2>导入 / 导出账号配置</h2><p class="hint">导出文件仅保存在你的设备下载目录。请勿公开分享，文件可能包含可登录账号的敏感凭据。</p>
+<div class="actions"><button class="btn primary" id="export">导出 JSON</button><label class="btn" for="importFile">导入 JSON</label><input class="hide" id="importFile" type="file" accept="application/json,.json"></div>
+<p class="hint">导出结构包含 quarkCookie、baidu_cookie、ucCookie、token 等常见兼容字段。请先核对你正在使用的具体 TVBox/JAR 爬虫是否读取这些字段，再导入其对应配置。</p></section>
+<footer class="hint">版本 1.0 · 不提供账号登录代理、不上传凭据、不绕过会员或访问控制。</footer>
+</main>
+<script>
+(function(){
+'use strict';
+const STORE='funlovers.netdisk.credentials.v1';
+const fields=['quarkCookie','baiduCookie','ucCookie','quarkToken','ucToken','baiduToken','aliyunToken'];
+const $=id=>document.getElementById(id);
+const read=()=>{const out={};fields.forEach(k=>out[k]=$(k).value.trim());return out;};
+const status=m=>{$('status').textContent=m;};
+function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||'{}');fields.forEach(k=>{$(k).value=typeof d[k]==='string'?d[k]:'';});}catch(e){status('本地配置读取失败，请检查浏览器存储设置。');}}
+$('save').addEventListener('click',()=>{try{localStorage.setItem(STORE,JSON.stringify(read()));status('已保存到当前浏览器，不会上传到 GitHub。');}catch(e){status('保存失败：浏览器可能禁用了本地存储。');}});
+$('clear').addEventListener('click',()=>{if(!confirm('确定清除此设备保存的全部网盘凭据？'))return;localStorage.removeItem(STORE);fields.forEach(k=>$(k).value='');status('已清除此设备的网盘凭据。');});
+$('reveal').addEventListener('click',()=>fields.forEach(k=>{const e=$(k);e.type=e.type==='password'?'text':'password';}));
+$('export').addEventListener('click',()=>{const d=read();const cfg={version:1,updatedAt:new Date().toISOString(),accounts:{quark:{cookie:d.quarkCookie,token:d.quarkToken},baidu:{cookie:d.baiduCookie,token:d.baiduToken},uc:{cookie:d.ucCookie,token:d.ucToken},aliyun:{token:d.aliyunToken}},compat:{quarkCookie:d.quarkCookie,quark_cookie:d.quarkCookie,baidu_cookie:d.baiduCookie,ucCookie:d.ucCookie,uc_cookie:d.ucCookie,uc_token:d.ucToken,token:d.quarkToken,accessToken:d.aliyunToken}};const blob=new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tvbox-netdisk-accounts.local.json';a.click();URL.revokeObjectURL(a.href);status('已生成本地 JSON 文件，请妥善保管。');});
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());const a=d.accounts||{};const values={quarkCookie:a.quark?.cookie??d.quarkCookie??d.quark_cookie,baiduCookie:a.baidu?.cookie??d.baidu_cookie,ucCookie:a.uc?.cookie??d.ucCookie??d.uc_cookie,quarkToken:a.quark?.token,ucToken:a.uc?.token??d.uc_token,baiduToken:a.baidu?.token,aliyunToken:a.aliyun?.token};fields.forEach(k=>$(k).value=typeof values[k]==='string'?values[k]:'');status('已导入表单；点击“保存到本设备”后才会写入本地存储。');}catch(err){status('导入失败：文件不是有效的账号 JSON。');}e.target.value='';});
+const hosts={quark:'site:pan.quark.cn',baidu:'site:pan.baidu.com/s',aliyun:'site:alipan.com/s',uc:'site:drive.uc.cn'};
+document.querySelectorAll('[data-search]').forEach(b=>b.addEventListener('click',()=>{const q=$('query').value.trim();if(!q){status('请先输入搜索关键词。');$('query').focus();return;}const url='https://www.google.com/search?q='+encodeURIComponent(hosts[b.dataset.search]+' '+q);window.open(url,'_blank','noopener');}));
+load();
+})();
+</script></body></html>
