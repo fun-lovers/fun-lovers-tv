@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><title>夸克 Cookie 配置 · fun-lovers TV</title>
+<style>
+:root{color-scheme:dark;--bg:#10141d;--panel:#1a2230;--line:#2d394b;--fg:#edf2fa;--muted:#9eacbf;--ok:#8bd6a4;--warn:#e7d4ac}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:820px;margin:auto;padding:24px 16px 56px}h1{font-size:26px;margin:0 0 6px}h2{font-size:19px;margin:0 0 12px}.muted,small{color:var(--muted);font-size:14px}section{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin:15px 0}label{display:block;margin:12px 0 6px;color:#c7d3e3;font-size:14px}textarea{width:100%;min-height:130px;background:#0e1520;color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:12px;font:inherit;resize:vertical}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.btn{border:1px solid var(--line);border-radius:9px;padding:10px 14px;background:#202c3d;color:var(--fg);font:inherit;cursor:pointer;text-decoration:none}.primary{background:#245c91;border-color:#397db9}.warning{border-left:3px solid #e0ad55;padding:8px 12px;color:var(--warn)}.check{display:flex;gap:9px;align-items:center;margin:12px 0}.status{min-height:26px;color:var(--ok)}code{overflow-wrap:anywhere}
+</style></head>
+<body><main>
+<h1>夸克 Cookie 配置</h1><p class="muted">为 TVBox / 影视仓生成专用本地导入配置 · fun-lovers/fun-lovers-tv</p>
+<section><h2>1. 填写夸克 Cookie</h2>
+<p class="warning">Cookie 不会上传到 GitHub 或服务器，只保存在当前浏览器本地。生成的配置文件会包含 Cookie，请勿公开分享或提交到仓库。不要把 Cookie 发到聊天中。</p>
+<label for="cookie">夸克 Cookie</label><textarea id="cookie" autocomplete="off" spellcheck="false" placeholder="粘贴夸克网盘登录后的 Cookie"></textarea>
+<div class="row"><button class="btn" id="toggle">显示 / 隐藏</button><button class="btn" id="save">保存到本设备</button><button class="btn" id="clear">清除本设备</button></div><p id="status" class="status" role="status"></p></section>
+<section><h2>2. 生成 TVBox 专用配置</h2>
+<p class="muted">本页读取公开主配置，只修改“[星微] 👶夸克┃[网盘]”站点：改用仓库内置的真实夸克网盘解析模块，并将 Cookie 写入该站点 ext。其他站点和设置保持原样。</p>
+<label class="check"><input id="original" type="checkbox" checked> 启用原画下载线路</label>
+<label class="check"><input id="infinite" type="checkbox" checked> 启用夸克直链线路</label>
+<label class="check"><input id="transfer" type="checkbox" checked> 启用转存 / 转码线路</label>
+<div class="row"><button class="btn primary" id="generate">生成并下载 TVBox 配置</button><a class="btn" href="../unified/tvbox-unified.json" target="_blank" rel="noopener">查看公开主配置</a></div>
+<p class="muted">下载文件名：tvbox-quark-cookie.local.json。文件只在本设备生成，不会上传。</p></section>
+<section><h2>3. 导入 TVBox / 影视仓</h2>
+<ol><li>填写 Cookie，点击“生成并下载 TVBox 配置”。</li><li>打开 TVBox / 影视仓的配置管理，选择“本地文件 / 文件导入”（菜单名称因客户端版本而异）。</li><li>选择刚下载的 tvbox-quark-cookie.local.json，导入后进入“[星微] 👶夸克┃[网盘]”搜索并测试播放。</li><li>若客户端只支持 URL 导入而不支持本地文件，请勿把含 Cookie 的配置上传到公开 Pages；使用客户端支持的本地 ext / 本地配置方式。</li></ol>
+<p class="warning">该文件包含个人 Cookie。不要上传到公开仓库、Issue、PR 或分享给他人。点击“清除本设备”只清除浏览器副本，不会撤销夸克账号登录会话。</p></section>
+<p class="muted"><a href="./index.html">返回网盘搜索与账号中心</a> · <a href="../unified/tvbox-unified.json">TVBox 主配置</a></p>
+</main>
+<script>
+(function(){
+'use strict';
+const KEY='funlovers.tvbox.quark.cookie.v1';
+const $=id=>document.getElementById(id);
+const status=m=>{$('status').textContent=m;};
+try{$('cookie').value=localStorage.getItem(KEY)||'';}catch(e){status('浏览器本地存储不可用；仍可临时填写并生成配置。');}
+$('toggle').addEventListener('click',()=>{$('cookie').style.webkitTextSecurity=$('cookie').style.webkitTextSecurity==='none'?'disc':'none';});
+$('save').addEventListener('click',()=>{try{localStorage.setItem(KEY,$('cookie').value.trim());status('Cookie 已保存在当前浏览器。');}catch(e){status('保存失败：浏览器可能禁用了本地存储。');}});
+$('clear').addEventListener('click',()=>{if(!confirm('确定清除本设备保存的夸克 Cookie？'))return;try{localStorage.removeItem(KEY);}catch(e){}$('cookie').value='';status('已清除本设备保存的 Cookie。');});
+$('generate').addEventListener('click',async()=>{
+ const cookie=$('cookie').value.trim();if(cookie.length<10){status('请先粘贴有效的夸克 Cookie。');return;}
+ try{
+  const response=await fetch('../unified/tvbox-unified.json',{cache:'no-store'});if(!response.ok)throw new Error('读取主配置失败：HTTP '+response.status);
+  const config=await response.json();if(!config||!Array.isArray(config.sites))throw new Error('主配置格式异常：缺少 sites 数组');
+  const matches=config.sites.filter(s=>s&&s.key==='xw_bad1f_cat_58');if(matches.length!==1)throw new Error('目标夸克站点数量异常：'+matches.length);
+  const site=matches[0];site.api='./sources/星微/tvboxTW/本地【拾光线路】/open/wanpan.js';site.type=3;site.searchable=1;site.quickSearch=0;
+  const previous=site.ext&&typeof site.ext==='object'&&!Array.isArray(site.ext)?site.ext:{};
+  site.ext={...previous,quark_cookie:cookie,line_order:['夸克'],quark_original:$('original').checked?1:0,quark_infinite:$('infinite').checked?1:0,quark_transfer:$('transfer').checked?1:0,threads:'16'};
+  const blob=new Blob([JSON.stringify(config,null,2)],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='tvbox-quark-cookie.local.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+  status('配置已生成并下载。请在 TVBox / 影视仓中通过本地文件导入；Cookie 未上传。');
+ }catch(e){status('生成失败：'+e.message);}
+});
+})();
+</script></body></html>
