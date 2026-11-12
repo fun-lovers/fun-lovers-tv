@@ -20,6 +20,7 @@
 | RT-016 | P2 | 84 of 87 `ysc-doc-source.json` audit records have no `sourceType` value | Automated audit filters cannot classify most records reliably | Add schema validation and explicit classification rules; preserve unknown records until reviewed |
 | RT-017 | P2 | Unified ZIP unpacker originally had no explicit archive entry/expanded-size limits | Unexpectedly large or highly compressed archives could consume runner disk/time | Fixed on this branch: cap entry count, per-file and total expanded sizes, compression ratio; reject duplicate names, backslashes and symlinks |
 | RT-018 | P2 | YouTube JS rule always sent an empty `pageToken`, so later result pages repeated page one | Search pagination did not follow the YouTube Data API response contract | Fixed on this branch: cache `nextPageToken` per query and request subsequent pages using the returned token |
+| RT-019 | P1 | Unified release contains 29 Android DEX-based JARs (28 DEX 035, 1 DEX 037), not ordinary JVM `.class` JARs; 4 include native libraries | Requires compatible Android/Dalvik ART + CatVod host APIs; native modules require ARM ABIs | Mapped by CI: 25 JAR config JSON files, 69 references, 4 ARM32 + 4 ARM64 native libraries; actual load tests remain pending on target clients |
 
 ## Scope notes
 These are findings from the first-pass workflow/config/code review, not claims that every listed issue has already caused a production failure. Items requiring a full read or an actual TVBox client remain marked for further verification.
