@@ -18,7 +18,7 @@ small{color:var(--muted)}.hide{display:none!important}
 </style></head>
 <body><main>
 <h1>网盘搜索与账号中心</h1><div class="sub">fun-lovers/fun-lovers-tv · 静态页面 · 凭据仅保存在当前浏览器</div>
-<nav><a href="#search">网盘搜索</a><a href="#accounts">账号配置</a><a href="#transfer">导入 / 导出</a><a href="../unified/tvbox-unified.json">TVBox 主配置</a></nav>
+<nav><a href="#search">网盘搜索</a><a href="#tvbox-sites">TVBox 内置源</a><a href="#accounts">账号配置</a><a href="#transfer">导入 / 导出</a><a href="../unified/tvbox-unified.json">TVBox 主配置</a></nav>
 <section id="search"><h2>网盘资源搜索</h2>
 <p class="hint">输入片名或关键词，选择网盘后打开公开网页索引搜索。搜索结果由外部搜索引擎提供；本页不抓取或代理第三方网盘内容。</p>
 <label for="query">搜索关键词</label><input id="query" placeholder="例如：流浪地球 4K">
@@ -28,6 +28,12 @@ small{color:var(--muted)}.hide{display:none!important}
 <div class="card"><h3>阿里云盘</h3><div class="hint">搜索公开索引页面</div><div class="actions"><button class="btn primary" data-search="aliyun">搜索阿里云盘</button><a class="btn" href="https://www.alipan.com/" target="_blank" rel="noopener">打开阿里云盘</a></div></div>
 <div class="card"><h3>UC 网盘</h3><div class="hint">搜索公开索引页面</div><div class="actions"><button class="btn primary" data-search="uc">搜索 UC</button><a class="btn" href="https://drive.uc.cn/" target="_blank" rel="noopener">打开 UC 网盘</a></div></div>
 </div><p class="hint">提示：公开索引不保证资源可用或拥有授权。请遵守内容版权、平台条款及所在地法律。</p></section>
+<section id="tvbox-sites"><h2>TVBox 内置网盘搜索源</h2>
+<p class="hint">以下列表由发布版 TVBox 主配置自动生成，展示实际集成的 type=3 搜索源。它们不是本网页的外部搜索链接；请在 TVBox / 影视仓导入主配置后使用。凭据仍按各爬虫配置字段管理。</p>
+<div id="tvboxSiteSummary" class="tag">正在读取 TVBox 配置清单…</div>
+<div id="tvboxSiteList" class="grid" style="margin-top:12px"></div>
+<p class="hint"><a href="../unified/tvbox-unified.json">打开 TVBox 主配置</a> · <a href="./tvbox-sites.json">查看网盘源清单 JSON</a></p>
+</section>
 <section id="accounts"><h2>账号配置中心</h2>
 <p class="warning">安全说明：这是纯静态 GitHub Pages 页面。凭据只存入此浏览器的 localStorage，不会上传到 GitHub；不要在公用设备使用。清除浏览器站点数据会删除本地配置。</p>
 <div class="grid">
@@ -98,6 +104,25 @@ $('mergeDownload').addEventListener('click',async()=>{
 $('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());const a=d.accounts||{};const values={quarkCookie:a.quark?.cookie??d.quarkCookie??d.quark_cookie,baiduCookie:a.baidu?.cookie??d.baidu_cookie,ucCookie:a.uc?.cookie??d.ucCookie??d.uc_cookie,quarkToken:a.quark?.token,ucToken:a.uc?.token??d.uc_token,baiduToken:a.baidu?.token,aliyunToken:a.aliyun?.token};fields.forEach(k=>$(k).value=typeof values[k]==='string'?values[k]:'');status('已导入表单；点击“保存到本设备”后才会写入本地存储。');}catch(err){status('导入失败：文件不是有效的账号 JSON。');}e.target.value='';});
 const hosts={quark:'site:pan.quark.cn',baidu:'site:pan.baidu.com/s',aliyun:'site:alipan.com/s',uc:'site:drive.uc.cn'};
 document.querySelectorAll('[data-search]').forEach(b=>b.addEventListener('click',()=>{const q=$('query').value.trim();if(!q){status('请先输入搜索关键词。');$('query').focus();return;}const url='https://www.google.com/search?q='+encodeURIComponent(hosts[b.dataset.search]+' '+q);window.open(url,'_blank','noopener');}));
+async function loadTvboxSites(){
+ const summary=$('tvboxSiteSummary'), list=$('tvboxSiteList');
+ try{
+  const response=await fetch('./tvbox-sites.json',{cache:'no-store'});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  const data=await response.json();
+  summary.textContent='已集成 '+data.total+' 个相关 TVBox 搜索源，其中 '+data.cloudDriveTotal+' 个名称明确标记为网盘/云盘；实际可用性以客户端实测为准。';
+  list.textContent='';
+  data.sites.forEach(site=>{
+   const card=document.createElement('div');card.className='card';
+   const title=document.createElement('h3');title.textContent=site.name||site.key;
+   const meta=document.createElement('div');meta.className='hint';
+   meta.textContent='type='+site.type+' · '+(site.searchable===1?'支持搜索':'搜索标记未声明')+' · '+(site.quickSearch===1?'快速搜索':'非快速搜索');
+   const api=document.createElement('small');api.textContent=site.api;
+   card.append(title,meta,api);list.appendChild(card);
+  });
+ }catch(error){summary.textContent='暂时无法读取已发布的 TVBox 网盘源清单：'+error.message+'。请稍后刷新或直接导入主配置。';}
+}
 load();
+loadTvboxSites();
 })();
 </script></body></html>
