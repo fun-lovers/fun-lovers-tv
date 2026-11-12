@@ -54,10 +54,14 @@ jobs:
         run: python single-tvbox/scripts/validate.py
       - name: Compile Python sources
         run: python -m compileall -q single-tvbox/py scripts drpy2/scripts
-      - name: Smoke-test static drpy2 build
+      - name: Smoke-test static drpy2 build with pinned upstream runtime
         run: |
+          set -euo pipefail
+          PINNED_COMMIT="ca23ffdbf5e429c5893ac60158668fc5af7af192"
           mkdir -p drpy2/public/libs
-          python -c "from pathlib import Path; Path('drpy2/public/libs/drpy2.min.js').write_text('/* CI placeholder */' + 'x' * 1500, encoding='utf-8')"
+          curl --fail --location --retry 3 --connect-timeout 20 "https://raw.githubusercontent.com/hjdhnx/dr_py/${PINNED_COMMIT}/libs/drpy2.min.js" -o drpy2/public/libs/drpy2.min.js
+          test "$(wc -c < drpy2/public/libs/drpy2.min.js)" -gt 1000
+          sha256sum drpy2/public/libs/drpy2.min.js
           python drpy2/scripts/build_static.py --base-url https://example.github.io/fun-lovers-tv/drpy2 --output /tmp/tvbox-drpy2-build
           python -c "import json; from pathlib import Path; p=Path('/tmp/tvbox-drpy2-build/tvbox.json'); d=json.loads(p.read_text()); assert d['sites'] and all(s['type']==3 for s in d['sites']); assert (Path('/tmp/tvbox-drpy2-build/libs/drpy2.min.js')).is_file()"
       - name: Smoke-test unified bundle extraction and validation
