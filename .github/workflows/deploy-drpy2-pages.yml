@@ -123,6 +123,29 @@ jobs:
             echo "No unified bundle attached to a published Release; continuing with the drpy2 site only."
           fi
 
+      - name: Validate netdisk portal and credential export mappings
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          page = Path("netdisk/index.html").read_text(encoding="utf-8")
+          required = [
+              'id="exportEnv"', 'id="exportJar"',
+              'quark_cookie', 'baidu_cookie', 'uc_cookie', 'uc_token',
+              'quarkCookie', 'ucCookie',
+          ]
+          missing = [item for item in required if item not in page]
+          if missing:
+              raise SystemExit("Missing portal features or verified field mappings: " + ", ".join(missing))
+          scripts = re.findall(r"<script>(.*?)</script>", page, flags=re.S)
+          if not scripts:
+              raise SystemExit("No inline portal script found")
+          Path("/tmp/netdisk-portal.js").write_text("\\n".join(scripts), encoding="utf-8")
+          print("Portal feature and credential mapping checks passed.")
+          PY
+          node --check /tmp/netdisk-portal.js
+
       - name: Publish netdisk search and account center
         run: |
           set -euo pipefail
