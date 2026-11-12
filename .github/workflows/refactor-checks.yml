@@ -4,17 +4,13 @@ on:
   push:
     branches: [main, 'refactor/**']
     paths:
-      - 'single-tvbox/py/**'
-      - 'drpy2/config/**'
-      - 'drpy2/public/js/**'
-      - 'scripts/check_runtime_contracts.py'
-      - 'scripts/check_json_configs.py'
-      - 'scripts/unpack_unified_bundle.py'
-      - 'scripts/validate_unified_bundle.py'
-      - 'scripts/audit_unified_bundle.py'
-      - '.github/workflows/deploy-drpy2-pages.yml'
+      - 'single-tvbox/**'
+      - 'drpy2/**'
+      - 'addons/**'
+      - 'ysc-doc*.json'
+      - 'scripts/**'
+      - '.github/workflows/**'
       - 'refactor/**'
-      - '.github/workflows/refactor-checks.yml'
   pull_request:
     branches: [main]
     paths:
