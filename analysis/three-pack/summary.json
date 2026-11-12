@@ -1,0 +1,60 @@
+{
+  "sourcePackages": [
+    "星微",
+    "潇洒",
+    "宝盒"
+  ],
+  "siteRecords": 1563,
+  "files": {
+    "js": {
+      "paths": 273,
+      "unique": 190,
+      "duplicates": 83
+    },
+    "python": {
+      "paths": 145,
+      "unique": 129,
+      "duplicates": 16
+    },
+    "jar": {
+      "paths": 24,
+      "unique": 21,
+      "duplicates": 3
+    }
+  },
+  "uniqueFiles": 340,
+  "duplicatePathsRemoved": 102,
+  "includedAssets": {
+    "js": 190,
+    "python": 129,
+    "jar": 21
+  },
+  "unifiedMainSites": 300,
+  "jarLineConfigs": 16,
+  "jarLineSites": 1051,
+  "unresolvedNativeOrRemoteSites": 212,
+  "excludedSites": 0,
+  "excludedJars": 0,
+  "missingLocalReferences": 0,
+  "retainedCategories": [
+    "饭太硬",
+    "网盘",
+    "云盘",
+    "夸克",
+    "Internet Archive",
+    "NASA科学影像",
+    "此前指定排除内容"
+  ],
+  "keywordMatchesNonExclusive": {
+    "饭太硬": 49,
+    "网盘": 92,
+    "云盘": 25,
+    "夸克": 16,
+    "internetArchive": 0,
+    "archiveOrg": 0,
+    "nasa": 0,
+    "nasaScience": 0
+  },
+  "availability": "Not verified by live website or target TVBox playback tests",
+  "deployment": "Runtime ZIP is not uploaded to this branch; upload as unified-tvbox-bundle.zip to publish via Pages"
+}
