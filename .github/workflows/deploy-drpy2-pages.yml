@@ -154,7 +154,7 @@ jobs:
           required = [
               'id="exportEnv"', 'id="exportJar"',
               'quark_cookie', 'baidu_cookie', 'uc_cookie', 'uc_token',
-              'quarkCookie', 'ucCookie', 'id="mergeFile"', 'id="mergeDownload"', 'id="jarToken"',
+              'quarkCookie', 'ucCookie', 'id="mergeFile"', 'id="mergeDownload"', 'id="jarToken"', 'id="tvboxSiteSummary"', 'id="tvboxSiteList"', 'loadTvboxSites',
               'site_urls', 'threadinfo', 'quark_cookie', 'uc_token',
           ]
           missing = [item for item in required if item not in page]
