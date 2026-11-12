@@ -12,6 +12,10 @@
 | RT-008 | P2 | VOD health check does not verify media bytes or playback | Endpoint health can overstate usability | Separate API, media URL and client playback status |
 | RT-009 | P2 | Live playlists are not covered by the same health pipeline | Broken M3U/channel URLs may remain unnoticed | Add bounded playlist/stream checks with clear rate limits |
 | RT-010 | P2 | Multiple catalogues have no fully documented single-source generation contract | Configuration drift and duplicates | Define canonical inputs and deterministic generated outputs |
+| RT-011 | P1 | Ruyi spider disabled TLS certificate verification in its session and individual requests | HTTPS traffic could be intercepted without certificate validation | Fixed on this branch: enable certificate verification and stop globally suppressing urllib3 TLS warnings |
+| RT-012 | P1 | Douban and Hongguo spiders appended `..` to sys.path relative to process working directory | Importing `base.spider` could fail when client working directory differs from the script folder | Fixed on this branch: resolve the package root relative to `__file__` |
+| RT-013 | P1 | TVBox Python host APIs are not available in GitHub Pages build environment | Static hosting cannot execute Python spiders or local proxy handlers | Documented as a client-side runtime dependency; validate on supported clients |
+| RT-014 | P2 | Ruyi defines a standalone `Spider` class while Douban/Hongguo use the host Spider base | Different TVBox forks may load or call these scripts differently | Keep compatibility status unverified until client-specific smoke tests are run |
 
 ## Scope notes
 These are findings from the first-pass workflow/config/code review, not claims that every listed issue has already caused a production failure. Items requiring a full read or an actual TVBox client remain marked for further verification.
