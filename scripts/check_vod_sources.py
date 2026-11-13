@@ -89,6 +89,8 @@ def request_json(url: str) -> tuple[dict[str, Any] | None, int | None, str | Non
         return None, exc.code, f"HTTP {exc.code}"
     except urllib.error.URLError as exc:
         reason = getattr(exc, "reason", exc)
+        if isinstance(reason, (TimeoutError, socket.timeout)):
+            return None, None, "request timed out"
         return None, None, f"network error: {reason.__class__.__name__}"
     except (TimeoutError, socket.timeout):
         return None, None, "request timed out"
@@ -133,13 +135,14 @@ def extract_play_url(item: dict[str, Any]) -> tuple[str | None, str]:
     return None, "play_field_missing"
 
 
-def load_sources(index: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def load_sources(index: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     audit = index.get("audit", [])
     if not isinstance(audit, list):
         raise ValueError("index.audit must be an array")
     vod_entries = [entry for entry in audit if isinstance(entry, dict) and entry.get("sourceType") == "vod" and entry.get("decision") == "included"]
     unique: dict[str, dict[str, Any]] = {}
     config_errors: list[dict[str, Any]] = []
+    config_timeouts: list[dict[str, Any]] = []
     for entry in vod_entries:
         source_url = entry.get("url")
         ok, why = safe_http_url(source_url)
@@ -148,7 +151,11 @@ def load_sources(index: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict
             continue
         config, http_status, error = request_json(source_url)
         if error:
-            config_errors.append({"source": entry.get("name", "unknown"), "stage": "source_config_fetch", "http_status": http_status, "error": error})
+            record = {"source": entry.get("name", "unknown"), "stage": "source_config_fetch", "http_status": http_status, "error": error}
+            if error == "request timed out":
+                config_timeouts.append(record)
+            else:
+                config_errors.append(record)
             continue
         sites = config.get("sites") if config else None
         if not isinstance(sites, list):
@@ -168,7 +175,7 @@ def load_sources(index: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict
             unique[key]["sites"].append({"name": site.get("name", "unnamed"), "key": site.get("key"), "type": site.get("type")})
             if entry.get("name") not in unique[key]["sources"]:
                 unique[key]["sources"].append(entry.get("name", "unknown"))
-    return list(unique.values()), config_errors
+    return list(unique.values()), config_errors, config_timeouts
 
 
 def check_api(item: dict[str, Any]) -> dict[str, Any]:
@@ -187,7 +194,9 @@ def check_api(item: dict[str, Any]) -> dict[str, Any]:
     list_data, list_http_status, list_error = request_json(with_query(api, ac="list", pg=1))
     result["list_http_status"] = list_http_status
     if list_error:
-        result["list_status"] = "unreachable_or_invalid"
+        result["list_status"] = "timeout" if list_error == "request timed out" else "unreachable_or_invalid"
+        result["detail_status"] = "not_checked_timeout" if list_error == "request timed out" else "not_checked"
+        result["play_url_status"] = "not_checked_timeout" if list_error == "request timed out" else "not_checked"
         result["error"] = list_error
         return result
     rows = extract_list(list_data or {})
@@ -214,7 +223,8 @@ def check_api(item: dict[str, Any]) -> dict[str, Any]:
     detail_data, detail_http_status, detail_error = request_json(with_query(api, ac="detail", ids=vod_id))
     result["detail_http_status"] = detail_http_status
     if detail_error:
-        result["detail_status"] = "unavailable_or_invalid"
+        result["detail_status"] = "timeout" if detail_error == "request timed out" else "unavailable_or_invalid"
+        result["play_url_status"] = "not_checked_timeout" if detail_error == "request timed out" else "not_checked"
         result["detail_error"] = detail_error
         return result
     detail_rows = extract_list(detail_data or {})
@@ -254,6 +264,7 @@ def markdown_report(report: dict[str, Any]) -> str:
         f"- Detail APIs responding with data: {summary['detail_ok']}",
         f"- Detail samples containing an HTTP(S) play URL: {summary['play_url_present']}",
         f"- Config/schema errors: {summary['config_errors']}",
+        f"- Timeouts (non-fatal): {summary.get('timeout_count', 0)}",
         "",
         "> Note: an HTTP(S) play URL being present is only a format check; this workflow does not fetch media bytes or guarantee playback in TVBox.",
         "",
@@ -265,6 +276,17 @@ def markdown_report(report: dict[str, Any]) -> str:
         note = result.get("error") or result.get("detail_error") or ""
         note = str(note).replace("|", "\\|")
         lines.append(f"| {result.get('host') or ''} | {names} | {result.get('list_status')} | {result.get('detail_status')} | {result.get('play_url_status')} | {note} |")
+    if report.get("config_timeouts"):
+        lines.extend(["", "## Timeouts (non-fatal)", ""])
+        for timeout in report["config_timeouts"]:
+            lines.append(f"- {timeout.get('source', '')} / {timeout.get('stage', '')}: {timeout.get('error', 'request timed out')}")
+    api_timeouts = [item for item in report["results"] if item.get("list_status") == "timeout" or item.get("detail_status") == "timeout"]
+    if api_timeouts:
+        lines.extend(["", "## API timeouts (non-fatal)", ""])
+        for item in api_timeouts:
+            sites = ", ".join(str(site.get("name", "")) for site in item.get("sites", []))
+            stage = "catalog" if item.get("list_status") == "timeout" else "detail"
+            lines.append(f"- {sites} / {stage}: request timed out ({item.get('api', '')})")
     if report["config_errors"]:
         lines.extend(["", "## Configuration errors", ""])
         for error in report["config_errors"]:
@@ -283,7 +305,7 @@ def main() -> int:
     args = parser.parse_args()
 
     index = json.loads(Path(args.index).read_text(encoding="utf-8"))
-    apis, config_errors = load_sources(index)
+    apis, config_errors, config_timeouts = load_sources(index)
     site_entries = sum(len(item["sites"]) for item in apis)
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         results = list(pool.map(check_api, apis))
@@ -295,6 +317,9 @@ def main() -> int:
         "detail_ok": sum(item.get("detail_status") == "ok" for item in results),
         "play_url_present": sum(item.get("play_url_status") == "http_url_found" for item in results),
         "config_errors": len(config_errors),
+        "config_timeouts": len(config_timeouts),
+        "api_timeouts": sum(item.get("list_status") == "timeout" or item.get("detail_status") == "timeout" for item in results),
+        "timeout_count": len(config_timeouts) + sum(item.get("list_status") == "timeout" or item.get("detail_status") == "timeout" for item in results),
         "list_status_counts": status_counts(results),
     }
     report = {
@@ -302,6 +327,7 @@ def main() -> int:
         "checker_version": "1.0",
         "summary": summary,
         "config_errors": config_errors,
+        "config_timeouts": config_timeouts,
         "results": results,
         "limitations": [
             "A sample HTTP(S) play URL is checked for presence and syntax only.",
@@ -318,7 +344,12 @@ def main() -> int:
     if args.summary:
         Path(args.summary).write_text(md_text, encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False))
-    has_failures = bool(config_errors) or any(item.get("list_status") != "ok" or item.get("detail_status") != "ok" or item.get("play_url_status") != "http_url_found" for item in results)
+    has_failures = bool(config_errors) or any(
+        item.get("list_status") not in ("ok", "timeout")
+        or item.get("detail_status") not in ("ok", "timeout", "not_checked_timeout")
+        or item.get("play_url_status") not in ("http_url_found", "not_checked_timeout")
+        for item in results
+    )
     return 2 if args.fail_on_unavailable and has_failures else 0
 
 
