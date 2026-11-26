@@ -2,7 +2,7 @@
 """TVBox / 影视仓 Spider 配置校验、合并、更新与接口检测工具."""
 from __future__ import annotations
 import argparse, concurrent.futures, datetime as dt, ipaddress, json, re, socket, sys
-import urllib.error, urllib.parse, urllib.request
+import urllib.error, urllib.parse, urllib.request, time
 from pathlib import Path
 from typing import Any
 
@@ -180,12 +180,22 @@ def check_one(url: str, source: str, timeout: int):
     state = "ok" if status is not None and 200 <= status < 400 else ("timeout" if error == "timeout" else "failed")
     return {"url": url, "source": source, "status": status, "state": state, "method": method, "final_url": final, "error": error}
 
-def check_config(cfg: dict, timeout: int, limit: int):
+def check_with_retry(url: str, source: str, timeout: int, retries: int):
+    result = check_one(url, source, timeout)
+    attempts = 1
+    while result["state"] == "timeout" and attempts <= retries:
+        time.sleep(min(2 * attempts, 5))
+        result = check_one(url, source, timeout)
+        attempts += 1
+    result["attempts"] = attempts
+    return result
+
+def check_config(cfg: dict, timeout: int, limit: int, retries: int = 1):
     pairs = list(collect_urls(cfg).items())[:limit]
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
-        results = list(pool.map(lambda pair: check_one(pair[0], pair[1], timeout), pairs))
+        results = list(pool.map(lambda pair: check_with_retry(pair[0], pair[1], timeout, retries), pairs))
     summary = {"total": len(results), "ok": sum(x["state"] == "ok" for x in results), "failed": sum(x["state"] == "failed" for x in results), "timeout": sum(x["state"] == "timeout" for x in results), "skipped": max(0, len(collect_urls(cfg)) - len(results))}
-    return {"summary": summary, "results": results, "note": "HTTP 可达不代表 API 协议正确或媒体一定能播放；需在 TVBox/影视仓实测。"}
+    return {"summary": summary, "results": results, "note": "HTTP 可达不代表 API 协议正确或媒体一定能播放；需在 TVBox/影视仓实测。超时 URL 已按 retries 设置自动复测。"}
 
 def update_remote(url: str, output: str, timeout: int):
     status, body, error, final = request(url, "GET", timeout, MAX_BYTES)
@@ -204,7 +214,7 @@ def main():
     sub = parser.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("validate"); p.add_argument("configs", nargs="+")
     p = sub.add_parser("merge"); p.add_argument("configs", nargs="+"); p.add_argument("-o", "--output", required=True)
-    p = sub.add_parser("check"); p.add_argument("configs", nargs="+"); p.add_argument("--json-out", default="reports/spider-health.json"); p.add_argument("--timeout", type=int, default=TIMEOUT); p.add_argument("--limit", type=int, default=200)
+    p = sub.add_parser("check"); p.add_argument("configs", nargs="+"); p.add_argument("--json-out", default="reports/spider-health.json"); p.add_argument("--timeout", type=int, default=TIMEOUT); p.add_argument("--limit", type=int, default=200); p.add_argument("--retries", type=int, default=1, help="超时后额外复测次数")
     p = sub.add_parser("update"); p.add_argument("url"); p.add_argument("-o", "--output", required=True); p.add_argument("--timeout", type=int, default=TIMEOUT)
     args = parser.parse_args()
     try:
@@ -230,7 +240,7 @@ def main():
         reports = []
         for path, cfg in zip(args.configs, configs):
             errors, warnings = validate(cfg, path)
-            reports.append({"config": path, "format": detect_format(cfg), "validation_errors": errors, "warnings": warnings, **check_config(cfg, args.timeout, args.limit)})
+            reports.append({"config": path, "format": detect_format(cfg), "validation_errors": errors, "warnings": warnings, **check_config(cfg, args.timeout, args.limit, max(0, args.retries))})
         report = {"checked_at": dt.datetime.now(dt.timezone.utc).isoformat(), "configs": reports,
                   "summary": {"configs": len(reports), "urls": sum(x["summary"]["total"] for x in reports), "ok": sum(x["summary"]["ok"] for x in reports), "failed": sum(x["summary"]["failed"] for x in reports), "timeout": sum(x["summary"]["timeout"] for x in reports)}}
         out = Path(args.json_out); out.parent.mkdir(parents=True, exist_ok=True)
