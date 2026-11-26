@@ -132,7 +132,13 @@ def collect_urls(cfg: dict) -> dict[str, str]:
     for field in ("parses", "lives"):
         for i, item in enumerate(cfg.get(field, [])):
             if isinstance(item, dict):
-                append_url(found, item.get("url"), f"{field}[{i}].url")
+                value = item.get("url")
+                # 解析接口通常以 url= 留待客户端注入真实视频地址；空参数探测会产生误报。
+                if field == "parses" and isinstance(value, str):
+                    query = urllib.parse.parse_qsl(urllib.parse.urlsplit(value).query, keep_blank_values=True)
+                    if any(key.lower() == "url" and not val for key, val in query):
+                        value = None
+                append_url(found, value, f"{field}[{i}].url")
                 append_url(found, item.get("epg"), f"{field}[{i}].epg")
     for i, item in enumerate(cfg.get("urls", [])):
         append_url(found, item.get("url") if isinstance(item, dict) else item, f"urls[{i}]")
@@ -148,6 +154,25 @@ def collect_urls(cfg: dict) -> dict[str, str]:
     return found
 
 def check_one(url: str, source: str, timeout: int):
+    # CMS 采集接口需请求 ac=list，单纯 HEAD 不足以验证 API 是否返回 JSON。
+    if source.startswith("sites[") and source.endswith(".api"):
+        parsed = urllib.parse.urlsplit(url)
+        query = dict(urllib.parse.parse_qsl(parsed.query, keep_blank_values=True))
+        query.update({"ac": "list", "pg": "1"})
+        probe = urllib.parse.urlunsplit((parsed.scheme, parsed.netloc, parsed.path, urllib.parse.urlencode(query), parsed.fragment))
+        status, body, error, final = request(probe, "GET", timeout, 64 * 1024)
+        method = "GET ac=list"
+        if status is not None and 200 <= status < 400 and body:
+            try:
+                payload = json.loads(body.decode("utf-8-sig"))
+                valid = isinstance(payload, dict) and any(k in payload for k in ("code", "list", "data", "class"))
+                if valid:
+                    return {"url": url, "probe_url": probe, "source": source, "status": status, "state": "ok", "method": method, "final_url": final, "error": ""}
+                error = "响应不是预期 CMS JSON 结构"
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                error = "响应不是有效 JSON"
+        state = "timeout" if error == "timeout" else "failed"
+        return {"url": url, "probe_url": probe, "source": source, "status": status, "state": state, "method": method, "final_url": final, "error": error}
     status, body, error, final = request(url, "HEAD", timeout)
     method = "HEAD"
     if status in (405, 501) or status is None:
