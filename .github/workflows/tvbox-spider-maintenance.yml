@@ -2,6 +2,11 @@ name: TVBox Spider config maintenance
 
 on:
   workflow_dispatch:
+    inputs:
+      remote_config_url:
+        description: "可选：远程 TVBox JSON 配置地址，仅下载为预览，不覆盖正式配置"
+        required: false
+        type: string
   schedule:
     - cron: '41 2 * * *'
   push:
@@ -45,11 +50,17 @@ jobs:
             --timeout 8 \
             --limit 250 \
             --json-out reports/spider-health.json
-      - name: Upload maintenance report
+      - name: Download remote config preview (manual input only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.remote_config_url != '' }}
+        env:
+          REMOTE_CONFIG_URL: ${{ inputs.remote_config_url }}
+        run: |
+          python scripts/manage_tvbox.py update "$REMOTE_CONFIG_URL" -o reports/remote-config-preview.json
+      - name: Upload maintenance reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: tvbox-spider-health-${{ github.run_number }}
-          path: reports/spider-health.json
+          path: reports/*.json
           if-no-files-found: error
           retention-days: 30
