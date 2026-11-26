@@ -47,7 +47,7 @@ jobs:
           python scripts/manage_tvbox.py check \
             single-tvbox/box.json \
             addons/tvbox-vod-verified.json \
-            --timeout 8 \
+            --timeout 20 \
             --limit 250 \
             --json-out reports/spider-health.json
       - name: Download remote config preview (manual input only)
