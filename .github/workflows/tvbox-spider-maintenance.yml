@@ -48,6 +48,7 @@ jobs:
             single-tvbox/box.json \
             addons/tvbox-vod-verified.json \
             --timeout 20 \
+            --retries 1 \
             --limit 250 \
             --json-out reports/spider-health.json
       - name: Download remote config preview (manual input only)
