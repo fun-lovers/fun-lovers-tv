@@ -29,3 +29,11 @@
 - HTTP 200 只代表 URL 可达，不代表 API 协议正确、内容有授权或媒体可播放。
 - Python Spider 需目标 TVBox 分支支持相应 Python Spider API；不同客户端分支可能存在兼容差异。
 - 仅添加你有权使用的官方或明确授权的接口。公开可访问不等于获得转播或内容分发授权。
+
+
+## 2026-11-26 检测异常处置
+
+- 从主配置移除返回 HTTP 403 的 `api.ffzyapi.com` 站点；不通过伪造请求头或代理绕过服务端访问限制。
+- 从附加 VOD 配置移除 DNS 无法解析的 `aosikazy9.com` 及返回 HTTP 403 的 `cj.ffzyapi.com`。
+- 移除 IPTV-org 不存在的 `https://iptv-org.github.io/epg/guides/all.xml`。官方项目提供的是 EPG 数据/来源索引（例如 `https://iptv-org.github.io/api/guides.json`），它不是可直接替代 XMLTV 的单一 XML 节目单，因此在确认 TVBox 可用的 XMLTV 源前不配置错误地址。
+- 未自动替换为未经核验或未经授权的第三方源。可达性恢复后仍需在客户端验证实际播放。
