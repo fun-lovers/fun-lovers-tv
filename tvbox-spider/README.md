@@ -20,7 +20,7 @@
 
 ## 自动任务
 
-.github/workflows/tvbox-spider-maintenance.yml 每天运行，也支持手动运行。默认只检测仓库中现有配置，不会自动导入未知第三方源、不替换生产配置、不执行 Spider JAR 或 Python Spider。报告作为 Actions Artifact 保存。
+.github/workflows/tvbox-spider-maintenance.yml 每天运行，也支持手动运行。默认只检测仓库中现有配置，不会自动导入未知第三方源、不替换生产配置、不执行 Spider JAR 或 Python Spider。手动运行时可填写 remote_config_url，工具会下载并校验远程 JSON，作为 Artifact 中的预览文件，不会自动覆盖正式配置。只有在你确认远程上游属于官方或明确授权来源后，才应把预览合并进正式配置。报告作为 Actions Artifact 保存。
 
 ## 安全与兼容边界
 
