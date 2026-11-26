@@ -1,0 +1,55 @@
+name: TVBox Spider config maintenance
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '41 2 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'single-tvbox/box.json'
+      - 'single-tvbox/py/**'
+      - 'addons/tvbox-vod-verified.json'
+      - 'scripts/manage_tvbox.py'
+      - 'tvbox-spider/**'
+      - '.github/workflows/tvbox-spider-maintenance.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tvbox-spider-maintenance
+  cancel-in-progress: false
+
+jobs:
+  validate-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate TVBox configs and Python Spider paths
+        run: |
+          python scripts/manage_tvbox.py validate \
+            single-tvbox/box.json \
+            addons/tvbox-vod-verified.json
+      - name: Check Spider, APIs, parser and playlist URLs
+        run: |
+          python scripts/manage_tvbox.py check \
+            single-tvbox/box.json \
+            addons/tvbox-vod-verified.json \
+            --timeout 8 \
+            --limit 250 \
+            --json-out reports/spider-health.json
+      - name: Upload maintenance report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tvbox-spider-health-${{ github.run_number }}
+          path: reports/spider-health.json
+          if-no-files-found: error
+          retention-days: 30
